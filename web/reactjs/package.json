@@ -1,0 +1,22 @@
+{
+  "name": "react-redux-material-dashboard",
+  "version": "0.0.1",
+  "description": "A project template for react and redux",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server -p 3030 ./public",
+    "build": "webpack --config ./webpack/webpack.prod.js",
+    "dev:build": "webpack --config ./webpack/webpack.dev.js",
+    "dev:run": "npm run dev:build && webpack-dev-server --config ./webpack/webpack.dev.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paulwizviz/react-skeleton.git"
+  },
+  "keywords": [
+    "React",
+    "Redux"
+  ],
+  "author": "Paul Sitoh",
+  "license": "Apache-2.0"
+}

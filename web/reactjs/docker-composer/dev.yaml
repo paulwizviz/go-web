@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+
+  ui-dev:
+    container_name: ui-dev
+    image: ${DEV_IMAGE_NAME}:${IMAGE_TAG}
+    working_dir: /opt
+    command: npm run dev:run
+    expose:
+      - "3030"
+    ports:
+      - "3030:3030"
+    volumes:
+      - ${PWD}/src:/opt/src
+      - ${PWD}/.eslintrc.json:/opt/.eslintrc.json
+    networks:
+      - react_ui-network
+
+networks:
+  react_ui-network:
