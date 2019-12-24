@@ -1,6 +1,7 @@
 package rest
 
 import (
+	"log"
 	"net/http"
 	"time"
 
@@ -10,6 +11,8 @@ import (
 func Start() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", homehandler)
+	r.HandleFunc("/users", usershandler)
+	r.Use(mux.CORSMethodMiddleware(r))
 	http.Handle("/", r)
 	srv := &http.Server{
 		Handler:      r,
@@ -17,5 +20,6 @@ func Start() {
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
+	log.Printf("Starting rest server %v", srv.Addr)
 	srv.ListenAndServe()
 }

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/paulwizviz/go-react/internal/rest"
 	"github.com/spf13/cobra"
 )
 
@@ -16,7 +17,7 @@ var rootCmd = &cobra.Command{
 	Short: "go-react is a cli app",
 	Long:  goreactUseCase(),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Hello world")
+		rest.Start()
 	},
 }
 
