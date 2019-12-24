@@ -12,8 +12,8 @@ RUN cd /opt && \
     npm install --save-dev error-overlay-webpack-plugin && \
     npm install --save-dev eslint-loader eslint eslint-plugin-react && \
     npm install --save-dev babel-eslint && \
-    npm install --save react react-dom react-router-dom react-redux && \
-    npm install --save redux redux-logger redux-actions redux-thunk redux-promise-middleware && \
+    npm install --save react react-dom react-redux react-router-dom && \
+    npm install --save redux redux-logger redux-thunk redux-promise-middleware && \
     npm install --save @material-ui/core @material-ui/icons && \
     npm install --save history && \
     npm install --save prop-types &&\
@@ -22,7 +22,8 @@ RUN cd /opt && \
     npm install --save axios 
 
 COPY ./webpack /opt/webpack
-COPY ./.babelrc /opt/.babelrc
+COPY .babelrc /opt/.babelrc
+COPY ./images /opt/images
 COPY ./.eslintrc.json /opt/.eslintrc.json
 
 CMD ["npm","run","dev:run"]
@@ -34,6 +35,7 @@ COPY --from=development ./opt/package.json /opt/package.json
 COPY --from=development ./opt/webpack /opt/webpack
 COPY --from=development ./opt/.babelrc /opt/.babelrc
 COPY --from=development ./opt/node_modules /opt/node_modules
+COPY --from=development ./opt/images /opt/images
 COPY ./src /opt/src
 
 RUN cd /opt && npm run build

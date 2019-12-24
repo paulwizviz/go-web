@@ -4,14 +4,14 @@ services:
 
   development:
     build:
-      context: ../
+      context: .
       dockerfile: Dockerfile
       target: development
     image: ${DEV_IMAGE_NAME}:${IMAGE_TAG}
 
   production:
     build:
-      context: ../
+      context: .
       dockerfile: Dockerfile
     image: ${PROD_IMAGE_NAME}:${IMAGE_TAG}
   

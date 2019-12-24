@@ -1,7 +1,7 @@
 {
-  "name": "react-redux-material-dashboard",
+  "name": "react-skeleton",
   "version": "0.0.1",
-  "description": "A project template for react and redux",
+  "description": "A skeleton react project",
   "main": "index.js",
   "scripts": {
     "start": "http-server -p 3030 ./public",

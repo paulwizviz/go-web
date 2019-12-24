@@ -1,6 +1,3 @@
-// Copyright 2019 Paul Sitoh
-// SPDX-License-Identifier: Apache-2.0
-
 const baseConfig = require('./webpack.base');
 const merge = require('webpack-merge');
 const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');

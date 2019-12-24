@@ -1,6 +1,3 @@
-// Copyright 2019 Paul Sitoh
-// SPDX-License-Identifier: Apache-2.0
-
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
@@ -9,7 +6,7 @@ const BUILD_DIR = path.resolve(__dirname, '..', 'public');
 const SRC_DIR = path.resolve(__dirname, '..', 'src');
 
 module.exports = {
-  entry: path.resolve(SRC_DIR, 'index.js'),
+  entry: `${SRC_DIR}/index.js`,
   output: {
     path: BUILD_DIR,
     publicPath: '/',
@@ -26,10 +23,10 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({ 
-      template: path.resolve(SRC_DIR, 'index.html')
+      template: path.resolve(SRC_DIR,'index.html')
     }),
     new CopyPlugin([
-      { from: path.resolve(SRC_DIR,'images'), to: path.resolve(BUILD_DIR,'images') },
+      { from: path.resolve(__dirname,'..','images'), to: path.resolve(BUILD_DIR,'images') },
     ]),
   ]
 }

@@ -1,6 +1,3 @@
-// Copyright 2019 Paul Sitoh
-// SPDX-License-Identifier: Apache-2.0
-
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 
