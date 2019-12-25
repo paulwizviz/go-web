@@ -1,7 +1,7 @@
 # Development
 FROM node:10.16.3 as development
 
-COPY ./package.json /opt/package.json
+COPY ./web/reactjs/package.json /opt/package.json
 
 RUN cd /opt && \
     npm install --save-dev mocha chai && \
@@ -21,10 +21,10 @@ RUN cd /opt && \
     npm install --save clsx && \
     npm install --save axios 
 
-COPY ./webpack /opt/webpack
-COPY .babelrc /opt/.babelrc
-COPY ./images /opt/images
-COPY ./.eslintrc.json /opt/.eslintrc.json
+COPY ./web/reactjs/webpack /opt/webpack
+COPY ./web/reactjs/.babelrc /opt/.babelrc
+COPY ./web/reactjs/images /opt/images
+COPY ./web/reactjs/.eslintrc.json /opt/.eslintrc.json
 
 CMD ["npm","run","dev:run"]
 
@@ -36,7 +36,7 @@ COPY --from=development ./opt/webpack /opt/webpack
 COPY --from=development ./opt/.babelrc /opt/.babelrc
 COPY --from=development ./opt/node_modules /opt/node_modules
 COPY --from=development ./opt/images /opt/images
-COPY ./src /opt/src
+COPY ./web/reactjs/src /opt/src
 
 RUN cd /opt && npm run build
 
@@ -44,7 +44,7 @@ RUN cd /opt && npm run build
 FROM node:10.16.3
 
 COPY --from=production /opt/public /opt/public
-COPY ./package.json /opt/package.json
+COPY ./web/reactjs/package.json /opt/package.json
 RUN cd /opt && npm install --save-dev http-server
 
 CMD ["npm", "start"]

@@ -1,0 +1,33 @@
+version: "3.7"
+
+services:
+
+  ui-dev:
+    container_name: ui-dev
+    image: ${UI_DEV_IMAGE_NAME}:${IMAGE_TAG}
+    working_dir: /opt
+    command: npm run dev:run
+    expose:
+      - "3030"
+    ports:
+      - "3030:3030"
+    volumes:
+      - ../../web/reactjs/src:/opt/src
+      - ../../web/reactjs/.eslintrc.json:/opt/.eslintrc.json
+    networks:
+      - go_react-network
+
+  api-dev:
+    container_name: api-dev
+    image: ${API_DEV_IMAGE_NAME}:${IMAGE_TAG}
+    working_dir: /opt
+    command: bash -c /usr/local/bin/api
+    expose:
+      - "9000"
+    ports:
+      - "9000:9000"
+    networks:
+      - go_react-network
+
+networks:
+  go_react-network:
