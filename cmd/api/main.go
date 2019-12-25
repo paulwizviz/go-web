@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/paulwizviz/go-react/cmd/dashboard/cli"
+	"github.com/paulwizviz/go-react/cmd/api/cli"
 )
 
 func main() {
