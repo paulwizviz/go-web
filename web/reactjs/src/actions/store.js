@@ -12,9 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { applyMiddleware, createStore, combineReducers } from 'redux';
+import { createLogger } from 'redux-logger';
+import { createPromise } from 'redux-promise-middleware';
+import { usersReducer } from './Users/reducers';
 
-import {App} from './App';
-
-ReactDOM.render(<App/>, document.getElementById('app'));
+export const store = createStore(
+    combineReducers({usersReducer}),
+    {},
+    applyMiddleware(createPromise({types:{fulfilled: 'success'}}), createLogger())
+);

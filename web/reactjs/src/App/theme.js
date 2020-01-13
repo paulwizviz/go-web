@@ -12,9 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { createMuiTheme } from '@material-ui/core';
 
-import {App} from './App';
+import { blue } from '@material-ui/core/colors';
 
-ReactDOM.render(<App/>, document.getElementById('app'));
+const theme = createMuiTheme({
+    palette: {
+        primary: blue,
+    },
+    typography: {
+        useNextVariants: true,
+    },
+});
+
+export default theme;

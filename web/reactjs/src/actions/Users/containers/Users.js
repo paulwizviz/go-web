@@ -12,9 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
+import { Users } from '../../../presentation';
+import axios from 'axios';
 
-import {App} from './App';
+const mapStateToProps = (state) => {
+    return {
+        users: state.usersReducer.users
+    };
+};
 
-ReactDOM.render(<App/>, document.getElementById('app'));
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchUser: () => dispatch({type: 'FETCH_USERS', payload: axios.get('http://localhost:9000/users')})
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Users);

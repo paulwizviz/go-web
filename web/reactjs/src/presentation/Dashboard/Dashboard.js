@@ -13,8 +13,32 @@
 // limitations under the License.
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import Grid from '@material-ui/core/Grid';
 
-import {App} from './App';
+import { makeStyles } from '@material-ui/core/styles';
 
-ReactDOM.render(<App/>, document.getElementById('app'));
+const useStyles = makeStyles(theme => ({
+    root: {
+        padding: theme.spacing(4)
+    }
+}));
+
+const Dashboard = () => {
+
+    const classes = useStyles();
+
+    return (
+        <div className={classes.root}>
+            <Grid container spacing={1}>
+                <Grid item lg={3} sm={6} xl={3} xs={12}>
+                    Grid1
+                </Grid>
+                <Grid item xs={12}>
+                    grid2
+                </Grid>
+            </Grid>
+        </div>
+    );
+};
+
+export default Dashboard;

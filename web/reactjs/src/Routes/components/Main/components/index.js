@@ -12,9 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-import {App} from './App';
-
-ReactDOM.render(<App/>, document.getElementById('app'));
+export { default as Topbar } from './Topbar';
+export { default as Sidebar } from './Sidebar';
+export { default as Footer } from './Footer';

@@ -13,8 +13,26 @@
 // limitations under the License.
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import Box from '@material-ui/core/Box';
 
-import {App} from './App';
+import { makeStyles } from '@material-ui/core/styles';
 
-ReactDOM.render(<App/>, document.getElementById('app'));
+const useStyles = makeStyles(theme => ({
+    root: {
+        padding: theme.spacing(4)
+    }
+}));
+
+const DashboardItem = () => {
+
+    const classes = useStyles();
+
+    return (
+        <div className={classes.root}>
+            <Box container spacing={1}>
+            </Box>
+        </div>
+    );
+};
+  
+export default DashboardItem;

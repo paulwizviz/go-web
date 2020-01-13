@@ -12,9 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-import {App} from './App';
-
-ReactDOM.render(<App/>, document.getElementById('app'));
+export { default as Dashboard } from './Dashboard';
+export { default as NotFound } from './NotFound';
+export { default as Users } from './Users';
