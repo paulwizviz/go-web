@@ -48,7 +48,9 @@ CONTAINER ID        IMAGE                         COMMAND                  CREAT
 fd4927ff7e13        paulwizviz/go-api-dev:0.0     "bash -c /usr/local/…"   3 hours ago         Up 9 seconds        0.0.0.0:9000->9000/tcp   api-dev
 ```
 
-5. Open your browser with the following url `localhost:3030` and, if no error, you will see a simple button labelled `FETCH USER`. Click on the button and if all goes well you will see:
+5. Open your browser with the following url `localhost:3030` and, if no error, you will see a dashbaord like UI.
+
+6. In the sidebar select the option `users` and you will see in the main dashboard a simple button labelled `FETCH USER`. Click on the button and if all goes well you will see:
 
 ```
 {"data":"{users: [{\"name\":\"Albert\"}.{\"name\":\"Beatrice\"}]}","status":200,"statusText":"OK","headers":{"content-length":"48","content-type":"application/json"},"config":{"url":"http://localhost:9000/users","method":"get","headers":{"Accept":"application/json, text/plain, */*"},"transformRequest":[null],"transformResponse":[null],"timeout":0,"xsrfCookieName":"XSRF-TOKEN","xsrfHeaderName":"X-XSRF-TOKEN","maxContentLength":-1},"request":{}}
