@@ -58,7 +58,7 @@ const NotFound = () => {
                         <img
                             alt="Under development"
                             className={classes.image}
-                            src="/images/underdevelopment.jpg"
+                            src="/images/logos/underdevelopment.png"
                         />
                     </div>
                 </Grid>
