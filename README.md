@@ -1,20 +1,22 @@
 # Combined ReactJS and Golang app
 
-This project demonstrates a desktop executable browser based app built from a combination of ReactJS and Go codes. ReactJS powers the UI interface and Go powers the RESTful API. In this particular case, Docker is also used as a runtime environment. However, it is possible to build and run the app on your desktop natively. But I leave it to you to experiment.
+This project demonstrates a desktop executable browser based app built from a combination of ReactJS and Go codes. ReactJS powers the UI interface and Go powers the RESTful API. 
 
-Why ReactJS and Golang?
+The app is built as a Linux based app and it is executed from within a Docker container in the location `/usr/local/bin/go-react`. Please refer to [Dockerfile](./build/Dockerfile) where you will see the build process. Study the build process, which also applies to creating other platform (e.g. macOS, Windows, etc) based apps. Please refer to Go instruction on how to build for [multiple platforms](https://binx.io/blog/2018/11/25/go-cross-compilation/).
 
-There is no particular reason. This project is simply to demonstrate how you could combined the two into a single but yet coherent project repo. Having said that, an argument could be made on the grounds that this project is essentially a web stack; either language could have accomplished both goals on their own.
+**IMPORTANT:** This is not a production ready nor a real working application that you can use out of the box to fulfil some real world use case. It is purely to demonstrate concept or use it as a template to create similar projects.
 
-However, in my particular experience, where I find myself more competent at writing backend stuff in Go and needing help from more competent UI developers (where there is more experience developers from the Javascript world), this approach might seemed like a good compromise for developing cross platform Desktop app. In this particular case, I could do the backend whilst working collaboratively with a Javascript based developers who will focus on the frontend.
+## Why ReactJS and Golang?
 
-NOTE: This is not a production ready nor a real working application that you can use out of the box to fulfil some real world use case. It is purely to demonstrate concept or use it as a template to create similar projects
+There is no particular reason. Having said that, an argument could be made on the grounds that this project is essentially a web stack; either language could have accomplished both goals on their own.
+
+However, this particular use case is to demonstrate a scenario where a developer maybe more competent at writing backend stuff in Go and needing help from more competent UI developers (where there is more experience developers from the Javascript world). 
+
+The project also serve to demonstrate that following the recommended [Go project layout](https://github.com/golang-standards/project-layout) allow for two different code-based to exists coherently in a single repository.
 
 ## Prerequisite
 
-You are expected to have Go coding knowledge, ideally, ReactJS/Redux and Docker.
-
-Please also acquaint yourself with the recommended [Go project layout](https://github.com/golang-standards/project-layout) which this project is based on.
+You are expected to have working knowledge of Go and ReactJS/Redux.
 
 In order to run the project out-of-the-box, please ensure you have the following items installed:
 
@@ -28,12 +30,12 @@ In order to run the project out-of-the-box, please ensure you have the following
 
 2. Navigate into the project folder, run the following command to build the project.
 ```
-    ./scripts/devOps.sh build <give it an image tag>
+    ./scripts/prodOps.sh build <version number e.g. 0.0>
 ```
 
 3. In the same project location, run the following command to start the app so it runs locally.
 ```
-    ./scripts/devOps.sh start <image you use to build the project>
+    ./scripts/prodOps.sh start <version number e.g. 0.0>
 ```
 This runs the ReactJS app in development mode.
 
@@ -43,9 +45,8 @@ This runs the ReactJS app in development mode.
 ```
 You should see the following something similar to this:
 ```
-CONTAINER ID        IMAGE                         COMMAND                  CREATED             STATUS              PORTS                    NAMES
-395b4de26ec8        paulwizviz/react-ui-dev:0.0   "docker-entrypoint.s…"   3 hours ago         Up 8 seconds        0.0.0.0:3030->3030/tcp   ui-dev
-fd4927ff7e13        paulwizviz/go-api-dev:0.0     "bash -c /usr/local/…"   3 hours ago         Up 9 seconds        0.0.0.0:9000->9000/tcp   api-dev
+CONTAINER ID        IMAGE                     COMMAND                  CREATED             STATUS                      PORTS                                            NAMES
+d353cfc12065        paulwizviz/go-react:0.0   "bash -c /usr/local/…"   19 seconds ago      Up 18 seconds               0.0.0.0:3000->3000/tcp, 0.0.0.0:9000->9000/tcp   go-react
 ```
 
 5. Open your browser with the following url `localhost:3030` and, if no error, you will see a dashbaord like UI.
@@ -58,7 +59,11 @@ fd4927ff7e13        paulwizviz/go-api-dev:0.0     "bash -c /usr/local/…"   3 h
 
 If you reached this far it means you have a fully working out-of-the-box app.
 
-NOTE: This was app was built and tested in macOS (Catalina). You may need to adjust (especially the script `devOps.sh`) to accomodate for Linux or Windows (please build your own powershell or whatever appropriate shell).
+NOTE:
+
+1. The Go RESTful API is implemented [here](./internal/rest/userhandler.go). This is a simple REST interface delivering a hardcoded set of users as shown in step 6 above.
+
+2. The ReactJS-Redux implementation is found [here](./web/reactjs).
 
 ## What can you do with this project?
 

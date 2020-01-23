@@ -21,7 +21,7 @@ RUN cd /opt && \
     npm install --save-dev mocha chai && \
     npm install --save-dev webpack webpack-cli webpack-dev-server webpack-merge && \
     npm install --save-dev html-webpack-plugin copy-webpack-plugin uglifyjs-webpack-plugin webpack-merge && \ 
-    npm install --save-dev @babel/core babel-loader @babel/preset-env @babel/preset-react && \
+    npm install --save-dev @babel/core babel-loader @babel/preset-env @babel/preset-react @babel/polyfill && \
     npm install --save-dev http-server && \
     npm install --save-dev error-overlay-webpack-plugin && \
     npm install --save-dev eslint-loader eslint eslint-plugin-react && \
@@ -45,14 +45,15 @@ CMD ["npm","run","dev:run"]
 # Production
 FROM node:10.16.3 as production
 
+COPY --from=development ./opt/package-lock.json /opt/package-lock.json
 COPY --from=development ./opt/package.json /opt/package.json
+COPY --from=development ./opt/node_modules /opt/node_modules
 COPY --from=development ./opt/webpack /opt/webpack
 COPY --from=development ./opt/.babelrc /opt/.babelrc
-COPY --from=development ./opt/node_modules /opt/node_modules
 COPY --from=development ./opt/images /opt/images
 COPY ./web/reactjs/src /opt/src
 
-RUN cd /opt && npm run build
+RUN cd /opt && npm audit fix && npm run build
 
 # Release
 FROM golang:1.13.3
@@ -61,13 +62,13 @@ WORKDIR /opt
 
 COPY ./cmd ./cmd
 COPY ./internal ./internal
-COPY ./scripts/ops.sh ./scripts/ops.sh
+COPY ./build/go-rice.sh ./build/go-rice.sh
 COPY --from=production /opt/public ./web
 
 COPY ./go.mod ./go.mod
 COPY ./go.sum ./go.sum
 
 RUN go get github.com/GeertJohan/go.rice/rice && \
-    ./scripts/ops.sh && \
+    ./build/go-rice.sh && \
     go mod download && \
     go build -o /usr/local/bin/go-react ./cmd/go-react
