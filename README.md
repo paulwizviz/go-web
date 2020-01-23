@@ -6,7 +6,7 @@ The app is built as a Linux based app and it is executed from within a Docker co
 
 **IMPORTANT:** This is not a production ready nor a real working application that you can use out of the box to fulfil some real world use case. It is purely to demonstrate concept or use it as a template to create similar projects.
 
-## Why ReactJS and Golang?
+## Why ReactJS and Golang?
 
 There is no particular reason. Having said that, an argument could be made on the grounds that this project is essentially a web stack; either language could have accomplished both goals on their own.
 
