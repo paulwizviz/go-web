@@ -9,8 +9,7 @@ export IMAGE_NAME=paulwizviz/go-react
 
 function checkImageTag() {
     if [ -z ${IMAGE_TAG} ]; then
-        echo "Set image tag"
-        echo "echo $0 $COMMAND image_tag"
+        echo "echo $0 $COMMAND version_number"
         exit 1
     fi
 }
@@ -20,7 +19,7 @@ function build() {
 }
 
 function clean() {
-    docker-compose -f ./deployment/compose/dev.yaml down
+    docker-compose -f ./deployment/compose/prod.yaml down
     docker rmi -f $(docker images --filter "dangling=true" -q)
 }
 
@@ -30,16 +29,16 @@ case $COMMAND in
         build
         ;;
     "start")
-        docker-compose -f ./deployment/compose/dev.yaml up
+        docker-compose -f ./deployment/compose/prod.yaml up
         ;;
     "stop")
-        docker-compose -f ./deployment/compose/dev.yaml down
+        docker-compose -f ./deployment/compose/prod.yaml down
         ;;
     "clean")
         clean
         ;;
     *)
-        echo "$0 (build | start | stop | clean) image_tag"
+        echo "$0 (build | start | stop | clean) version_number"
         echo "image_tag   string values"
         ;;
 esac
