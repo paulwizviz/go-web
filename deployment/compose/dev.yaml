@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+
+  ui:
+    image: ${UI_IMAGE_NAME}:${IMAGE_TAG}
+    container_name: ui
+    working_dir: /opt
+    expose:
+      - "3030"
+    ports:
+      - "3030:3030"
+    working_dir: /opt
+    command: npm run dev:run
+    volumes:
+      - ${PWD}/web/reactjs/src:/opt/src
+    networks:
+      - go_react-network-dev
+
+networks:
+  go_react-network-dev:

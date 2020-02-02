@@ -5,8 +5,7 @@ services:
   go-react:
     image: ${IMAGE_NAME}:${IMAGE_TAG}
     container_name: go-react
-    working_dir: /opt
-    command: bash -c /usr/local/bin/go-react
+    #command: bash -c /usr/local/bin/go-react
     expose:
       - "9000"
       - "3000"
@@ -14,7 +13,7 @@ services:
       - "9000:9000"
       - "3000:3000"
     networks:
-      - go_react-network
+      - go_react-network-prod
 
 networks:
-  go_react-network:
+  go_react-network-prod:

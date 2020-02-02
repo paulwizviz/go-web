@@ -2,7 +2,8 @@
 
 This project demonstrates a desktop executable browser based app built from a combination of ReactJS and Go codes. ReactJS powers the UI interface and Go powers the RESTful API. 
 
-The app is built as a Linux based app and it is executed from within a Docker container in the location `/usr/local/bin/go-react`. Please refer to [Dockerfile](./build/Dockerfile) where you will see the build process. Study the build process, which also applies to creating other platform (e.g. macOS, Windows, etc) based apps. Please refer to Go instruction on how to build for [multiple platforms](https://binx.io/blog/2018/11/25/go-cross-compilation/).
+
+Please refer to [Dockerfile](./build/Dockerfile) where you will see the build process. Study the build process, which also applies to creating other platform (e.g. macOS, Windows, etc) based apps. Please refer to Go instruction on how to build for [multiple platforms](https://binx.io/blog/2018/11/25/go-cross-compilation/).
 
 **IMPORTANT:** This is not a production ready nor a real working application that you can use out of the box to fulfil some real world use case. It is purely to demonstrate concept or use it as a template to create similar projects.
 
@@ -30,28 +31,26 @@ In order to run the project out-of-the-box, please ensure you have the following
 
 2. Navigate into the project folder, run the following command to build the project.
 ```
-    ./scripts/prodOps.sh build <version number e.g. 0.0>
+    ./scripts/build.sh package <version number e.g. 0.0>
+```
+You will find native apps for Linux, macOS and Windows in this location:
+```
+    ./build/package
 ```
 
-3. In the same project location, run the following command to start the app so it runs locally.
+3. To see the app in action, select the a version appropriate for your platform. Assuming you are on macOS, to execute your app, run the following command:
 ```
-    ./scripts/prodOps.sh start <version number e.g. 0.0>
+    ./build/package/macOS/go-react
 ```
-This runs the ReactJS app in development mode.
-
-4. The app is based on the following default ports ReactJS (30303) and API (9000). To see that the app is running properly, run the following command:
+You should see the following information in your console:
 ```
-    docker ps -a
-```
-You should see the following something similar to this:
-```
-CONTAINER ID        IMAGE                     COMMAND                  CREATED             STATUS                      PORTS                                            NAMES
-d353cfc12065        paulwizviz/go-react:0.0   "bash -c /usr/local/…"   19 seconds ago      Up 18 seconds               0.0.0.0:3000->3000/tcp, 0.0.0.0:9000->9000/tcp   go-react
+2020/02/02 17:19:50 Starting react 3000
+2020/02/02 17:19:50 Starting rest server 0.0.0.0:9000
 ```
 
-5. Open your browser with the following url `localhost:3030` and, if no error, you will see a dashbaord like UI.
+4. The app is based on the following default ports ReactJS (3000) and API (9000). To see that the app is running open your browser with the following url `localhost:3000` and, if no error, you will see a dashbaord like UI.
 
-6. In the sidebar select the option `users` and you will see in the main dashboard a simple button labelled `FETCH USER`. Click on the button and if all goes well you will see:
+5. In the sidebar select the option `users` and you will see in the main dashboard a simple button labelled `FETCH USER`. Click on the button and if all goes well you will see:
 
 ```
 {"data":"{users: [{\"name\":\"Albert\"}.{\"name\":\"Beatrice\"}]}","status":200,"statusText":"OK","headers":{"content-length":"48","content-type":"application/json"},"config":{"url":"http://localhost:9000/users","method":"get","headers":{"Accept":"application/json, text/plain, */*"},"transformRequest":[null],"transformResponse":[null],"timeout":0,"xsrfCookieName":"XSRF-TOKEN","xsrfHeaderName":"X-XSRF-TOKEN","maxContentLength":-1},"request":{}}
