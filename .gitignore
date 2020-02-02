@@ -1,3 +1,6 @@
 # macOS system files
 .DS_Store
 ./build/package/
+build/package/linux/go-react
+build/package/macOS/go-react
+build/package/windows/go-react.exe
