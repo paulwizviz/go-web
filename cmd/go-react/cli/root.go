@@ -39,7 +39,7 @@ var rootCmd = &cobra.Command{
 		}()
 		router := mux.NewRouter()
 		router.PathPrefix("/").Handler(http.FileServer(rice.MustFindBox("../../../web").HTTPBox()))
-		log.Printf("Starting web")
+		log.Printf("Starting react %d", 3000)
 		log.Fatal(http.ListenAndServe("0.0.0.0:3000", router))
 	},
 }
