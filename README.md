@@ -3,8 +3,6 @@
 This project demonstrates a desktop executable browser based app built from a combination of ReactJS and Go codes. ReactJS powers the UI interface and Go powers the RESTful API. 
 
 
-Please refer to [Dockerfile](./build/Dockerfile) where you will see the build process. Study the build process, which also applies to creating other platform (e.g. macOS, Windows, etc) based apps. Please refer to Go instruction on how to build for [multiple platforms](https://binx.io/blog/2018/11/25/go-cross-compilation/).
-
 **IMPORTANT:** This is not a production ready nor a real working application that you can use out of the box to fulfil some real world use case. It is purely to demonstrate concept or use it as a template to create similar projects.
 
 ## Why ReactJS and Golang?
@@ -63,6 +61,12 @@ NOTE:
 1. The Go RESTful API is implemented [here](./internal/rest/userhandler.go). This is a simple REST interface delivering a hardcoded set of users as shown in step 6 above.
 
 2. The ReactJS-Redux implementation is found [here](./web/reactjs).
+
+## How does this work?
+
+Please refer to [Dockerfile](./build/Dockerfile) where you will see the build process. Study the build process, which also applies to creating other platform (e.g. macOS, Windows, etc) based apps. 
+
+Please also refer to Go instruction on how to build for [multiple platforms](https://binx.io/blog/2018/11/25/go-cross-compilation/).
 
 ## What can you do with this project?
 
