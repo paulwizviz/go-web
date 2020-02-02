@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Development
+# Development phase
+# In this phase, we setup the build artefacts for the ReactJS webapp.
 FROM node:10.16.3 as development
 
 COPY ./web/reactjs/package.json /opt/package.json
@@ -42,7 +43,13 @@ COPY ./web/reactjs/.eslintrc.json /opt/.eslintrc.json
 
 CMD ["npm","run","dev:run"]
 
-# Production
+# Production phase
+# Extract the ReactJS build artefacts from the development phase,
+# build the web artefacts and placed it in folder ./opt/web
+#    bundle.js
+#    images/
+#    index.html
+# 
 FROM node:10.16.3 as production
 
 COPY --from=development ./opt/package-lock.json /opt/package-lock.json
@@ -55,7 +62,10 @@ COPY ./web/reactjs/src /opt/src
 
 RUN cd /opt && npm audit fix && npm run build
 
-# Release
+# Release phase
+# Utilising a go packaging tool github.com/GeertJohan/go.rice
+# the web artefacts is packaged into a file name rice-box.go.
+# Go builder then generates multiple versions of the native apps.
 FROM golang:1.13.3
 
 WORKDIR /opt
