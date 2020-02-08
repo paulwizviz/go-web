@@ -25,7 +25,7 @@ import {
     Dashboard as DashboardView,
     NotFound as NotFoundView,
     Auth as AuthView,
-   
+    Settings as SettingsView,
 } from '../presentation';
 
 import { Users as UsersView } from '../actions';
@@ -37,6 +37,7 @@ const Routes = () => {
             <RouteWithLayout component={AuthView} exact layout={MinimumLayout} path="/auth"/>
             <RouteWithLayout component={DashboardView} exact layout={MainLayout} path="/dashboard"/>
             <RouteWithLayout component={UsersView} exact layout={MainLayout} path="/users"/>
+            <RouteWithLayout component={SettingsView} exact layout={MainLayout} path="/settings"/>
             <RouteWithLayout component={NotFoundView} exact layout={MinimumLayout} path="/not-found"/>
             <Redirect to="/not-found" />
         </Switch>

@@ -12,8 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export { default as Dashboard } from './Dashboard';
-export { default as NotFound } from './NotFound';
-export { default as Users } from './Users';
-export { default as Auth } from './Auth';
-export { default as Settings } from './Settings';
+import React from 'react';
+import Grid from '@material-ui/core/Grid';
+
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+    root: {
+        padding: theme.spacing(4)
+    }
+}));
+
+const Settings = () => {
+    const classes = useStyles();
+
+    return (
+        <div className={classes.root}>
+            
+        </div>
+    );
+
+}
+
+export default Settings;
