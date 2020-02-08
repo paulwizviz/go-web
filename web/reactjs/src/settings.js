@@ -12,24 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { connect } from 'react-redux';
-import { Users } from '../../../presentation';
-import axios from 'axios';
-import settings from '../../../settings';
+const settings = {
+    restPort: 9000
+}
 
-const mapStateToProps = (state) => {
-    return {
-        users: state.usersReducer.users
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        fetchUser: () => dispatch({type: 'FETCH_USERS', payload: axios.get(`http://localhost:${settings.restPort}/users`)})
-    };
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Users);
+export default settings;
