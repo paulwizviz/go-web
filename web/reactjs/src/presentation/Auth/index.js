@@ -12,7 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export { default as Dashboard } from './Dashboard';
-export { default as NotFound } from './NotFound';
-export { default as Users } from './Users';
-export { default as Auth } from './Auth';
+export { default } from './Auth';

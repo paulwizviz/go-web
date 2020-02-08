@@ -24,6 +24,7 @@ import {
 import { 
     Dashboard as DashboardView,
     NotFound as NotFoundView,
+    Auth as AuthView,
    
 } from '../presentation';
 
@@ -33,6 +34,7 @@ const Routes = () => {
     return (
         <Switch>
             <Redirect exact from="/" to="/dashboard"/>
+            <RouteWithLayout component={AuthView} exact layout={MinimumLayout} path="/auth"/>
             <RouteWithLayout component={DashboardView} exact layout={MainLayout} path="/dashboard"/>
             <RouteWithLayout component={UsersView} exact layout={MainLayout} path="/users"/>
             <RouteWithLayout component={NotFoundView} exact layout={MinimumLayout} path="/not-found"/>
