@@ -74,7 +74,7 @@ const Sidebar = props => {
         },
         {
             title: 'Authentication',
-            href: '/sign-in',
+            href: '/auth',
             icon: <LockOpenIcon />
         },
         {
