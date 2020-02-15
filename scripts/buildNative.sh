@@ -15,7 +15,7 @@ function checkImageTag() {
 }
 
 function build() {
-    docker build -f ./build/Dockerfile -t ${IMAGE_NAME}:${IMAGE_TAG} .
+    docker build -f ./build/Dockerfile.native -t ${IMAGE_NAME}:${IMAGE_TAG} .
 }
 
 function container() {
