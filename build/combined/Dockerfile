@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Development phase
+# nodedev phase
 # In this phase, we setup the build artefacts for the ReactJS webapp.
-FROM node:10.16.3 as development
+FROM node:10.16.3 as nodedev
 
 COPY ./web/reactjs/package.json /opt/package.json
 
@@ -44,20 +44,20 @@ COPY ./web/reactjs/.eslintrc.json /opt/.eslintrc.json
 CMD ["npm","run","dev:run"]
 
 # Production phase
-# Extract the ReactJS build artefacts from the development phase,
+# Extract the ReactJS build artefacts from the nodedev phase,
 # build the web artefacts and placed it in folder ./opt/web
 #    bundle.js
 #    images/
 #    index.html
 # 
-FROM node:10.16.3 as production
+FROM node:10.16.3 as nodeprod
 
-COPY --from=development ./opt/package-lock.json /opt/package-lock.json
-COPY --from=development ./opt/package.json /opt/package.json
-COPY --from=development ./opt/node_modules /opt/node_modules
-COPY --from=development ./opt/webpack /opt/webpack
-COPY --from=development ./opt/.babelrc /opt/.babelrc
-COPY --from=development ./opt/images /opt/images
+COPY --from=nodedev ./opt/package-lock.json /opt/package-lock.json
+COPY --from=nodedev ./opt/package.json /opt/package.json
+COPY --from=nodedev ./opt/node_modules /opt/node_modules
+COPY --from=nodedev ./opt/webpack /opt/webpack
+COPY --from=nodedev ./opt/.babelrc /opt/.babelrc
+COPY --from=nodedev ./opt/images /opt/images
 COPY ./web/reactjs/src /opt/src
 
 RUN cd /opt && npm audit fix && npm run build
@@ -66,14 +66,14 @@ RUN cd /opt && npm audit fix && npm run build
 # Utilising a go packaging tool github.com/GeertJohan/go.rice
 # the web artefacts is packaged into a file name rice-box.go.
 # Go builder then generates multiple versions of the native apps.
-FROM golang:1.13.3
+FROM golang:1.13.3 as gobuild
 
 WORKDIR /opt
 
 COPY ./cmd ./cmd
 COPY ./internal ./internal
-COPY ./build/go-rice.sh ./build/go-rice.sh
-COPY --from=production /opt/public ./web
+COPY ./build/combined/go-rice.sh ./build/go-rice.sh
+COPY --from=nodeprod /opt/public ./web
 
 COPY ./go.mod ./go.mod
 COPY ./go.sum ./go.sum
@@ -81,6 +81,11 @@ COPY ./go.sum ./go.sum
 RUN go get github.com/GeertJohan/go.rice/rice && \
     ./build/go-rice.sh && \
     go mod download && \
-    go build -o ./build/package/linux/go-react ./cmd/go-react && \
-    env GOOS=darwin GOARCH=amd64 go build -o ./build/package/macOS/go-react ./cmd/go-react && \
-    env GOOS=windows GOARCH=amd64 go build -o ./build/package/windows/go-react.exe ./cmd/go-react
+    env CGO_ENABLED=0 env GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o ./build/package/go-react ./cmd/go-react
+
+# Trying to use scratch but it is not working not sure why
+FROM scratch
+
+COPY --from=gobuild /opt/build/package/go-react /usr/local/bin/go-react
+
+CMD ["/usr/local/bin/go-react"]
