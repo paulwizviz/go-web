@@ -13,7 +13,8 @@
 # limitations under the License.
 
 # nodedev phase
-# In this phase, we setup the build artefacts for the ReactJS webapp.
+# In this phase, we pull artefacts to build ReactJS webapp for
+# development
 FROM node:10.16.3 as nodedev
 
 COPY ./web/reactjs/package.json /opt/package.json
@@ -43,9 +44,11 @@ COPY ./web/reactjs/.eslintrc.json /opt/.eslintrc.json
 
 CMD ["npm","run","dev:run"]
 
-# Production phase
-# Extract the ReactJS build artefacts from the nodedev phase,
-# build the web artefacts and placed it in folder ./opt/web
+# nodeprod phase
+# Extract the ReactJS artefacts from the nodedev phase,
+# build a production version of web artefacts and placed it 
+# in folder 
+# ./opt/web
 #    bundle.js
 #    images/
 #    index.html
@@ -62,10 +65,10 @@ COPY ./web/reactjs/src /opt/src
 
 RUN cd /opt && npm audit fix && npm run build
 
-# Release phase
+# gobuild phase
 # Utilising a go packaging tool github.com/GeertJohan/go.rice
 # the web artefacts is packaged into a file name rice-box.go.
-# Go builder then generates multiple versions of the native apps.
+# Go builder then generates a version for linux platform.
 FROM golang:1.13.3 as gobuild
 
 WORKDIR /opt
@@ -78,14 +81,17 @@ COPY --from=nodeprod /opt/public ./web
 COPY ./go.mod ./go.mod
 COPY ./go.sum ./go.sum
 
+# Set build flags to enable it to build artefacts that
+# can be packed into scratch image.
+# CGO_ENABLED=0 disable cross platform build - i.e. no need for libc
 RUN go get github.com/GeertJohan/go.rice/rice && \
     ./build/go-rice.sh && \
     go mod download && \
     env CGO_ENABLED=0 env GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o ./build/package/go-react ./cmd/go-react
 
-# Trying to use scratch but it is not working not sure why
+# Pack artefacts from gobuild phase into scratch for deployment
 FROM scratch
 
-COPY --from=gobuild /opt/build/package/go-react /usr/local/bin/go-react
+COPY --from=gobuild /opt/build/package/go-react /go-react
 
-CMD ["/usr/local/bin/go-react"]
+CMD ["/go-react"]
