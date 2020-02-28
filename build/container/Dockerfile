@@ -75,7 +75,7 @@ WORKDIR /opt
 
 COPY ./cmd ./cmd
 COPY ./internal ./internal
-COPY ./build/combined/go-rice.sh ./build/go-rice.sh
+COPY ./build/container/go-rice.sh ./build/go-rice.sh
 COPY --from=nodeprod /opt/public ./web
 
 COPY ./go.mod ./go.mod
