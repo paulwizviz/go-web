@@ -19,9 +19,10 @@ import (
 	"net/http"
 	"os"
 
+	"go-web/internal/rest"
+
 	rice "github.com/GeertJohan/go.rice"
 	"github.com/gorilla/mux"
-	"github.com/paulwizviz/go-react/internal/rest"
 	"github.com/spf13/cobra"
 )
 
