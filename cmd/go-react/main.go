@@ -15,7 +15,7 @@
 package main
 
 import (
-	"github.com/paulwizviz/go-react/cmd/go-react/cli"
+	"go-web/cmd/go-react/cli"
 )
 
 func main() {
