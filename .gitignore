@@ -1,5 +1,10 @@
 # macOS system files
 .DS_Store
+
+# Ignore node_modules
+node_modules
+
+# Ignore build packages
 ./build/package/
 build/package/linux/go-react
 build/package/macOS/go-react
