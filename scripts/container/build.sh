@@ -28,8 +28,8 @@ function checkImageTag() {
     fi
 }
 
-function build() {
-    docker build -f ./build/container/Dockerfile -t ${IMAGE_NAME}:${IMAGE_TAG} .
+function package() {
+    docker build -f ./build/production/Dockerfile.container -t ${IMAGE_NAME}:${IMAGE_TAG} .
 }
 
 function cleanDocker() {
@@ -43,7 +43,7 @@ function run() {
 case $COMMAND in
     "package")
         checkImageTag
-        build
+        package
         ;;
     "run")
         checkImageTag
