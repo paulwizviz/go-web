@@ -22,7 +22,7 @@ export IMAGE_TAG=current
 export IMAGE_NAME=paulwizviz/go-react-native
 
 function build() {
-    docker build -f ./build/production/Dockerfile.native -t ${IMAGE_NAME}:${IMAGE_TAG} .
+    docker build -f ./build/native/Dockerfile -t ${IMAGE_NAME}:${IMAGE_TAG} .
 }
 
 function container() {
