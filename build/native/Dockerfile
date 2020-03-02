@@ -31,29 +31,21 @@ RUN npm install && npm audit fix && npm run build
 # Utilising a go packaging tool github.com/GeertJohan/go.rice
 # the web artefacts is packaged into a file name rice-box.go.
 # Go builder then generates a version for linux platform.
-FROM golang:1.13.3 as gobuild
+FROM golang:1.13.3
 
 WORKDIR /opt
 
 COPY ./cmd ./cmd
 COPY ./internal ./internal
-COPY ./build/production/go-rice.sh ./build/go-rice.sh
+COPY ./build/go-rice.sh ./build/go-rice.sh
 COPY --from=nodebuild /opt/public ./web
 
 COPY ./go.mod ./go.mod
 COPY ./go.sum ./go.sum
 
-# Set build flags to enable it to build artefacts that
-# can be packed into scratch image.
-# CGO_ENABLED=0 disable cross platform build - i.e. no need for libc
 RUN go get github.com/GeertJohan/go.rice/rice && \
     ./build/go-rice.sh && \
     go mod download && \
-    env CGO_ENABLED=0 env GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o ./build/package/go-react ./cmd/go-react
-
-# Pack artefacts from gobuild phase into scratch for deployment
-FROM scratch
-
-COPY --from=gobuild /opt/build/package/go-react /go-react
-
-CMD ["/go-react"]
+    env GOOS=linux GOARCH=amd64 go build -o ./build/package/linux/go-react ./cmd/go-react && \
+    env GOOS=darwin GOARCH=amd64 go build -o ./build/package/macOS/go-react ./cmd/go-react && \
+    env GOOS=windows GOARCH=amd64 go build -o ./build/package/windows/go-react.exe ./cmd/go-react
