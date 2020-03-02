@@ -14,19 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-export IMAGE_NAME=paulwizviz/go-node-builder
+export IMAGE_NAME=paulwizviz/go-node-dev
 export IMAGE_TAG=current
 
-function package() {
+function build() {
     docker build -f ./build/node/Dockerfile -t ${IMAGE_NAME}:${IMAGE_TAG} .
 }
 
-function node_modules() {
-    if [ -d ./build/node_modules ]; then
-        rm -rf ./build/node_modules
-    fi
-    docker cp $CONTAINER_ID:/opt/node_modules ./build
-}
+function clean(){
     
-package
-node_modules
+}
+
+build
