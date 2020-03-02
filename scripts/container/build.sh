@@ -18,8 +18,7 @@ COMMAND="$1"
 
 export IMAGE_TAG="$2"
 
-export COMPOSE_PROJECT_NAME=go-react-prod
-export IMAGE_NAME=paulwizviz/go-react
+export IMAGE_NAME=paulwizviz/go-react-container
 
 function checkImageTag() {
     if [ -z "$IMAGE_TAG" ]; then
@@ -32,7 +31,7 @@ function package() {
     docker build -f ./build/production/Dockerfile.container -t ${IMAGE_NAME}:${IMAGE_TAG} .
 }
 
-function cleanDocker() {
+function clean() {
     docker rmi -f $(docker images --filter "dangling=true" -q)
 }
 
@@ -51,7 +50,7 @@ case $COMMAND in
         ;;
     "clean")
         checkImageTag
-        cleanDocker
+        clean
         ;;
     *)
         echo "$0 [package | clean | run ] version_number"
