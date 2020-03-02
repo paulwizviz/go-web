@@ -21,11 +21,6 @@ function package() {
     docker build -f ./build/node/Dockerfile -t ${IMAGE_NAME}:${IMAGE_TAG} .
 }
 
-function container() {
-    id=$(docker create $CONTAINER_NAME ${IMAGE_NAME}:${IMAGE_TAG})
-    CONTAINER_ID="${id:0:12}"
-}
-
 function node_modules() {
     if [ -d ./build/node_modules ]; then
         rm -rf ./build/node_modules
@@ -34,5 +29,4 @@ function node_modules() {
 }
     
 package
-container
 node_modules
