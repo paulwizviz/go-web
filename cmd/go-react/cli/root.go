@@ -18,6 +18,7 @@ import (
 	"fmt"
 	"os"
 
+	"go-web/internal/proxy"
 	"go-web/internal/rest"
 	"go-web/internal/webserver"
 
@@ -36,7 +37,10 @@ var rootCmd = &cobra.Command{
 		go func() {
 			rest.Run()
 		}()
-		webserver.Run()
+		go func() {
+			webserver.Run()
+		}()
+		proxy.Run()
 	},
 }
 
