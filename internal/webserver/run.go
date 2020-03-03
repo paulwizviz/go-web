@@ -12,38 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package cli
+package webserver
 
 import (
-	"fmt"
-	"os"
+	"log"
+	"net/http"
 
-	"go-web/internal/rest"
-	"go-web/internal/webserver"
-
-	"github.com/spf13/cobra"
+	rice "github.com/GeertJohan/go.rice"
+	"github.com/gorilla/mux"
 )
 
-func goreactUseCase() string {
-	return `go-react is a example cli toolkit to startup a ReactJS web`
-}
-
-var rootCmd = &cobra.Command{
-	Use:   "go-react",
-	Short: "go-react is a cli app",
-	Long:  goreactUseCase(),
-	Run: func(cmd *cobra.Command, args []string) {
-		go func() {
-			rest.Run()
-		}()
-		webserver.Run()
-	},
-}
-
-// Execute is the cli entry point
-func Execute() {
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+func Run() {
+	router := mux.NewRouter()
+	router.PathPrefix("/").Handler(http.FileServer(rice.MustFindBox("../../web").HTTPBox()))
+	log.Printf("Starting react %d", 3000)
+	log.Fatal(http.ListenAndServe("0.0.0.0:3000", router))
 }
