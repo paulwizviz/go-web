@@ -1,5 +1,5 @@
 #!/bin/bash
 
-pushd ./cmd/go-react/cli
+pushd ./internal/webserver
     rice embed-go
 popd
