@@ -24,32 +24,19 @@ Click on the template button and follow the instructions from Github.
 
 When you create a scaffold from this template you get the following:
 
-1. A functional proxy and baseline web and API server for you to extend from.
+1. An example ReactJS frontend that you can extend or draw lesson.
 
-2. An example ReactJS frontend that you can extend or draw lesson.
+2. A environment to support web development.
 
-3. A environment to support web development.
+3. Build scripts -- Docker based -- to create native (macOS, Linux and Windows) app or container based app.
 
-4. Build scripts -- Docker based -- to create native (macOS, Linux and Windows) app or container based app.
+4. The scaffold is based on Go modules (i.e. Go11+)
 
-5. The scaffold is based on Go modules (i.e. Go11+)
+## How do I extend/modify my scaffold?
 
-## How is my scaffold layout?
+Please refer to:
 
-Your scaffold follows the [Go project layout](https://github.com/golang-standards/project-layout). In your scaffold you will find the follow:
+* [Architecture](./docs/Arch.md)
 
-### `build`
-
-This folder contains artefacts, mainly Dockerfiles, to responsible for creating native apps or container images.
-
-### `cmd`
-
-This folder contains the source codes or Go main package for user facing aspect of you app namely your exectuables. This folder should only containts codes to initialise, starting and stopping your application process.
-
-### `web`
-
-This folder contains source codes, in the context of your initial scaffold ReactJS, for building the web app. You should only keep your webapp source code and its build artefacts here and no where else. 
-
-### `internal`
-
-This folder contains all the Go dependencies that are used to support Go packages in `cmd`. The Go packages in this folder are not exportable.
+* [Build](./docs/Build.md)
+ 
