@@ -15,7 +15,6 @@
 import { connect } from 'react-redux';
 import { Users } from '../../../presentation';
 import axios from 'axios';
-//import settings from '../../../settings';
 
 const mapStateToProps = (state) => {
     return {
