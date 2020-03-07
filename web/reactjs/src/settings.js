@@ -14,6 +14,6 @@
 
 const settings = {
     restPort: 9000
-}
+};
 
 export default settings;

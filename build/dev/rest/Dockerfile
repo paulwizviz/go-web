@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Copyright 2020 Paul Sitoh
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,15 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-export IMAGE_NAME=paulwizviz/go-node-dev
-export IMAGE_TAG=current
+FROM golang:1.13.3
 
-function build() {
-    docker build -f ./build/node/Dockerfile -t ${IMAGE_NAME}:${IMAGE_TAG} .
-}
+WORKDIR /opt
 
-function clean(){
-    
-}
+COPY ./cmd ./cmd
+COPY ./internal ./internal
 
-build
+COPY ./go.mod ./go.mod
+COPY ./go.sum ./go.sum
+
+RUN go mod download && \
+    go build -o /usr/local/bin/go-rest ./cmd/go-rest

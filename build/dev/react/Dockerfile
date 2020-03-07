@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Development build
-# In this phase, we pull artefacts to build ReactJS webapp for
 FROM node:10.16.3
 
 WORKDIR /opt

@@ -14,11 +14,11 @@
 
 import React from 'react';
 
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { Paper, Grid, TextField, Button, FormControlLabel, Checkbox } from '@material-ui/core';
-import { Face, Fingerprint } from '@material-ui/icons'
+import { Face, Fingerprint } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
     margin: {
@@ -61,11 +61,11 @@ const Auth = () => {
                         } label="Remember me" />
                     </Grid>
                     <Grid item>
-                        <Button disableFocusRipple disableRipple style={{ textTransform: "none" }} variant="text" color="primary">Forgot password ?</Button>
+                        <Button disableFocusRipple disableRipple style={{ textTransform: 'none' }} variant="text" color="primary">Forgot password ?</Button>
                     </Grid>
                 </Grid>
                 <Grid container justify="center" style={{ marginTop: '10px' }}>
-                    <Button variant="outlined" color="primary" style={{ textTransform: "none" }}>Login</Button>
+                    <Button variant="outlined" color="primary" style={{ textTransform: 'none' }}>Login</Button>
                 </Grid>
             </div>
         </Paper>
