@@ -14,7 +14,6 @@
 
 import React from 'react';
 
-//import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { Paper, Grid, TextField, Button, FormControlLabel, Checkbox } from '@material-ui/core';
