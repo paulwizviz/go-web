@@ -21,7 +21,7 @@ IMAGE_TAG=current
 IMAGE_NAME=paulwizviz/go-react-native
 
 function build() {
-    docker build -f ./build/native/Dockerfile -t ${IMAGE_NAME}:${IMAGE_TAG} .
+    docker build -f ./build/production/native/Dockerfile -t ${IMAGE_NAME}:${IMAGE_TAG} .
 }
 
 function container() {

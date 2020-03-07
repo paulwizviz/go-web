@@ -29,7 +29,7 @@ function checkImageTag() {
 }
 
 function package() {
-    docker build -f ./build/container/Dockerfile -t ${IMAGE_NAME}:${IMAGE_TAG} .
+    docker build -f ./build/production/container/Dockerfile -t ${IMAGE_NAME}:${IMAGE_TAG} .
 }
 
 function clean() {
