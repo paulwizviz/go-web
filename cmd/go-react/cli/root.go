@@ -21,6 +21,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var port int
+
 func goreactUseCase() string {
 	return `go-react is a example cli toolkit to startup a ReactJS web`
 }
@@ -34,6 +36,8 @@ var rootCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(restCmd)
 	rootCmd.AddCommand(frontendCmd)
+
+	rootCmd.PersistentFlags().IntVarP(&port, "port", "p", 80, "startup default port 80")
 }
 
 // Execute is the cli entry point
