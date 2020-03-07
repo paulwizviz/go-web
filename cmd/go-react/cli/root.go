@@ -16,13 +16,8 @@ package cli
 
 import (
 	"fmt"
-	"go-web/internal/rest"
-	"go-web/internal/webserver"
-	"log"
-	"net/http"
 	"os"
 
-	"github.com/gorilla/mux"
 	"github.com/spf13/cobra"
 )
 
@@ -34,14 +29,11 @@ var rootCmd = &cobra.Command{
 	Use:   "go-react",
 	Short: "go-react is a cli app",
 	Long:  goreactUseCase(),
-	Run: func(cmd *cobra.Command, args []string) {
-		port := "80"
-		router := mux.NewRouter()
-		rest.Run(router)
-		webserver.Run(router)
-		log.Printf("Starting on port %v", port)
-		log.Fatal(http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", port), router))
-	},
+}
+
+func init() {
+	rootCmd.AddCommand(restCmd)
+	rootCmd.AddCommand(frontendCmd)
 }
 
 // Execute is the cli entry point
