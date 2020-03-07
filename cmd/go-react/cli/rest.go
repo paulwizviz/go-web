@@ -14,7 +14,6 @@ var restCmd = &cobra.Command{
 	Use:   "rest",
 	Short: "Subcommand to start rest server only",
 	Run: func(cmd *cobra.Command, args []string) {
-		port := "9000"
 		router := mux.NewRouter()
 		rest.Run(router)
 		log.Printf("Starting on port %v", port)

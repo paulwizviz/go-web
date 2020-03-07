@@ -15,7 +15,6 @@ var frontendCmd = &cobra.Command{
 	Use:   "frontend",
 	Short: "frontend is a subcommand start frontend services",
 	Run: func(cmd *cobra.Command, args []string) {
-		port := "80"
 		router := mux.NewRouter()
 		rest.Run(router)
 		webserver.Run(router)
