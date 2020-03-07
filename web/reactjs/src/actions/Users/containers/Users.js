@@ -25,7 +25,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchUser: () => dispatch({type: 'FETCH_USERS', payload: axios.get(`http://localhost:${settings.restPort}/users`)})
+        fetchUser: () => dispatch({type: 'FETCH_USERS', payload: axios.get(`/api/users`)})
     };
 };
 

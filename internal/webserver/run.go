@@ -15,16 +15,12 @@
 package webserver
 
 import (
-	"log"
 	"net/http"
 
 	rice "github.com/GeertJohan/go.rice"
 	"github.com/gorilla/mux"
 )
 
-func Run() {
-	router := mux.NewRouter()
+func Run(router *mux.Router) {
 	router.PathPrefix("/").Handler(http.FileServer(rice.MustFindBox("../../web").HTTPBox()))
-	log.Printf("Starting react %d", 3000)
-	log.Fatal(http.ListenAndServe("0.0.0.0:3000", router))
 }
