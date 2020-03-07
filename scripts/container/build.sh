@@ -18,6 +18,7 @@ COMMAND="$1"
 
 export IMAGE_TAG="$2"
 
+# Modify image name to suit your project
 export IMAGE_NAME=paulwizviz/go-react-container
 
 function checkImageTag() {
@@ -32,11 +33,12 @@ function package() {
 }
 
 function clean() {
+    docker rmi -f ${IMAGE_NAME}:${IMAGE_TAG}
     docker rmi -f $(docker images --filter "dangling=true" -q)
 }
 
 function run() {
-    docker run -p 3000:3000 -p 8000:9000 ${IMAGE_NAME}:${IMAGE_TAG}
+    docker run -p 80:80 ${IMAGE_NAME}:${IMAGE_TAG}
 }
 
 case $COMMAND in

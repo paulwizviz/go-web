@@ -14,19 +14,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This is under development
-
 COMMAND="$1"
 
-export IMAGE_TAG=current
-export IMAGE_NAME=paulwizviz/go-react-native
+# Feel free to modify these variables accordingly
+IMAGE_TAG=current
+IMAGE_NAME=paulwizviz/go-react-native
 
 function build() {
     docker build -f ./build/native/Dockerfile -t ${IMAGE_NAME}:${IMAGE_TAG} .
 }
 
 function container() {
-    id=$(docker create $CONTAINER_NAME ${IMAGE_NAME}:${IMAGE_TAG})
+    id=$(docker create ${IMAGE_NAME}:${IMAGE_TAG})
     CONTAINER_ID="${id:0:12}"
 }
 
@@ -44,10 +43,11 @@ function package() {
     docker cp $CONTAINER_ID:/opt/build/package/macOS/ ./build/package/
     mkdir -p ./build/package/windows
     docker cp $CONTAINER_ID:/opt/build/package/windows/ ./build/package/
+    docker rm -f $CONTAINER_ID
 }
 
 function cleanDocker() {
-    docker rm -f $(docker ps -aq)
+    docker rmi -f ${IMAGE_NAME}:${IMAGE_TAG}
     docker rmi -f $(docker images --filter "dangling=true" -q)
 }
 
