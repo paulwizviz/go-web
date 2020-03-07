@@ -1,0 +1,43 @@
+version: '3.4'
+
+services:
+
+    router:
+        image: binocarlos/noxy
+        ports:
+            - 80:80
+        environment:
+            - NOXY_DEFAULT_HOST=react
+            - NOXY_DEFAULT_PORT=3030
+            - NOXY_DEFAULT_WS=1
+            - NOXY_API_FRONT=/api
+            - NOXY_API_HOST=rest
+            - NOXY_API_PORT=9000
+        networks:
+            - go_web_network
+
+    react:
+        image: ${REACT_IMAGE_NAME}:${IMAGE_TAG}
+        container_name: react
+        expose:
+            - 3030
+        ports:
+            - 3030:3030
+        volumes:
+            - ../../web/reactjs/src:/opt/src
+        networks:
+            - go_web_network
+
+    rest:
+        image: ${REST_IMAGE_NAME}:${IMAGE_TAG}
+        command: ["/usr/local/bin/go-rest","-p","9000"]
+        container_name: rest
+        expose:
+            - 9000
+        ports:
+            - 9000:9000
+        networks:
+            - go_web_network
+
+networks:
+    go_web_network:

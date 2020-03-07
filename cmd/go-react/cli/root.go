@@ -34,7 +34,6 @@ var rootCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(restCmd)
 	rootCmd.AddCommand(frontendCmd)
 
 	rootCmd.PersistentFlags().IntVarP(&port, "port", "p", 80, "startup default port 80")
