@@ -13,20 +13,20 @@ NOTE: All scripts are BASH based and located in the folder `scripts`
 
 ### Native macOS, Linux and Windows
 
-2. Run the command `./scripts/native/build.sh package`
+2. Run the command `./scripts/production/native/build.sh package`
 
 3. You will find your build arfects in the folder `./build/package/<native platform>`
 
 ### Docker container based app
 
-2. Edit the script `./scripts/container/build.sh` and modify the variable `$IMAGE_NAME` to one that suits your project
+2. Edit the script `./scripts/production/container/build.sh` and modify the variable `$IMAGE_NAME` to one that suits your project
 
-3. Run the command `./scripts/container/build.sh package <image tag>`, where `<image tag>` is any unique string value e.g. version number
+3. Run the command `./scripts/production/container/build.sh package <image tag>`, where `<image tag>` is any unique string value e.g. version number
 
 4. You will find your build arfects in the folder `./build/package/<native platform>`
 
 ## Clean project
 
-* Native apps run the command `./scripts/native/build.sh clean`
+* Native apps run the command `./scripts/production/native/build.sh clean`
 
-* Container run the command `./scripts/container/build.sh clean <image tag>` 
+* Container run the command `./scripts/production/container/build.sh clean <image tag>` 
