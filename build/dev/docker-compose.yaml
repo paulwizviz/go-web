@@ -6,6 +6,7 @@ services:
         image: binocarlos/noxy
         ports:
             - 80:80
+        container_name: router
         environment:
             - NOXY_DEFAULT_HOST=react
             - NOXY_DEFAULT_PORT=3030
