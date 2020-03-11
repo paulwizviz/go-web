@@ -32,6 +32,19 @@ When you create a scaffold from this template you get the following:
 
 4. The scaffold is based on Go modules (i.e. Go11+)
 
+## Is there a sample app I can use?
+
+Yes. Follow the following steps:
+
+1. [build](./docs/Build.md) a production native app. 
+
+2. Open an terminal and navigate to `./build/package/<platform of your choice>`.
+
+3. Activate the app `go-react` (for macOS and Linux) or `go-react` (for windows). By default the
+app will run require port 80 to be available.
+
+4. Assuming you have no problem with STEP 3, open a browser with url to `localhost`.
+
 ## How do I extend/modify my scaffold?
 
 Please refer to:

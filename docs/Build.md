@@ -39,7 +39,10 @@ c6c3bfb538ce        binocarlos/noxy           "bash /run.sh"           21 second
 
 3. Run the command `./scripts/production/container/build.sh package <image tag>`, where `<image tag>` is any unique string value e.g. version number
 
-4. You will find your build arfects in the folder `./build/package/<native platform>`
+4. Run the command `docker images` and out-of-the-box, you will see the following Docker images listed:
+```
+paulwizviz/go-react-container   0.0                 273d6b7a1b46        5 minutes ago       9.07MB
+```
 
 ## Clean project
 
