@@ -1,8 +1,14 @@
 # Overview
 
-This a template to help you scaffold a project for creating a native macOS, Linux, Windows and/or Container app powered by a combination of Web UI frameworks (ReactJS, Vue, etc) and Go framework. 
+This a template to help you creating a native macOS, Linux, Windows and/or Container app powered by a combination of Web UI frameworks (ReactJS, Vue, etc) and Go framework. 
 
-This is **NOT** a Go module or library.
+This project is **NOT** a Go module or library where you would `go get` packages fore inclusion into your project. You will need to create a scaffold to use it. The scafold is presented in a way to help you extend, modify or create new features.
+
+There is a sample app is primarily to demonstrates steps involve in building a functional apps. The sample app does **NOT** represent any specific use case but you can use it as a basis to build a fully functional production release or deployment. Or you can replace the sample app with equivalent implementation and project configurations.
+
+## How do I scaffold a project from this template?
+
+Click on the template button and follow the instructions from Github.
 
 ## What do I get out-of-the-box when I create a scaffold?
 
@@ -26,23 +32,15 @@ In order to build apps based on this template ensure you have the following item
 
 3. (Optional) Node (out-of-the-box you don't need this because this template uses Docker to build the node part)
 
-## How to scaffold a project from this template?
+## How do I see the sample app in action?
 
-Click on the template button and follow the instructions from Github.
-
-## Is there a sample app I can use?
-
-Yes follow these steps:
-
-1. Click on this [doc](./docs/Build.md) and build a production native app. 
+1. Assuming you have already clone this project, click on this [doc](./docs/Build.md) and follow the steps to build a representative production native app. 
 
 2. Open an terminal and navigate to `./build/package/<platform of your choice>`.
 
 3. Activate the app `go-react` (for macOS and Linux) or `go-react.exe` (for windows). By default the app will run require port 80 to be available. If you need the app to use other ports type the command `go-react --help`.
 
 4. Assuming you have no problem with STEP 3, open a browser with url to `localhost`.
-
-NOTE: The sample app is only intented to illustrate concept and if appropriate for you to extend into a full production or mission ready application. The sample app is **NOT** intended for production use.
 
 ## How do I extend/modify my scaffold?
 
