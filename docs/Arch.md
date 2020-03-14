@@ -1,28 +1,57 @@
 # Architecture
 
-When you create scaffold, you'll find a skeleton ReactJS and Go based web/rest backend. This does not mean you are confined to building projects based on these technologies. You can easily replace the ReactJS source with VueJS or any other framework. You can easily extends the Go REST backend.
+This project has been architect to support you, as developers, create and package your web UI and RESTful interfaces into a single macOS, Linux and Windows app or a single Docker container.
 
 ## Project layout
 
-To support architecture goal, the layout of your scaffold is based on the [standard Go project layout](https://github.com/golang-standards/project-layout).
+The layout of your scaffold is based on the [standard Go project layout](https://github.com/golang-standards/project-layout).
 
-Out-of-the-box, you will find the following artefacts, and these are 
+Out-of-the-box, you will find the following folders and these are as follows:
 
-### `build`
+### `./build`
 
-This folder contains artefacts, mainly Dockerfiles, responsible for creating native apps or container images.
+This folder includes artefacts to help you build development and production artefacts.
 
-### `cmd`
+* [./build/dev](./build/dev) folder includes Dockerfiles to create a container of the sample ReactJS UI found in this project and a container of Go based REST server to support development activities.
 
-This folder contains the source codes or Go main package for user facing aspect of you app namely your exectuables. This folder should only containts codes to initialise, starting and stopping your application process.
+* [./build/production](./build/production) folder containers Dockerfiles to produce native macOS, Linux and Windows app or a Docker image for a containerisable version of your app.
 
-### `web`
+* [./build/go-rice.sh](./build/go-rice.sh) script to pre-generate a Go source file embedding the ReactJS artefacts in byte code form.
 
-This folder contains source codes, in the context of your initial scaffold ReactJS, for building the web app. You should only keep your webapp source code and its build artefacts here and no where else. 
+A folder named `package`, not version controlled, will be generated containing native apps for macOS, Linux and Windows platform.
 
-### `internal`
+### `./cmd`
 
-This folder contains all the Go dependencies that are used to support Go packages in `cmd`. The Go packages in this folder are not exportable.
+This folder includes source codes to create two types of cli executables:
+
+* `go-react` to activate a combined ReactJS and REST app;
+
+* `go-rest` to activate a standalone RESTFul server.
+
+These executables is based on the following Go frameworks [Cobra](https://github.com/spf13/cobra) and [Viper](https://github.com/spf13/viper)
+
+### `./deployments`
+
+This folder contains a `docker-compose.yaml` use to deploy a local docker network comprising of three containers to support development work. The containers are:
+
+* An nginx-styled reverse proxy known as noxy based on this [implementation](https://github.com/binocarlos/noxy)
+
+* A react container built from this project see [./build/dev/react/Dockerfile](./build/dev/react/Dockerfile)
+
+* A Go based RESTFul container built from this project see [./build/dev/rest/Dockerfile](./build/dev/rest/Dockerfile)
+
+### `./internal`
+
+This folder container source codes to build an embedded webserver package and RESTFul endpoints. The codes are packaged as follows:
+
+* `rest` containing codes for a RESTful server
+* `webserver` containing codes for an embedded webserver
+
+The name of this folder has a special impact on project scoping. Please refer to this [doc](https://blog.learngoprogramming.com/special-packages-and-directories-in-go-1d6295690a6b) for explanation before you modify it.
+
+### `./web`
+
+This folder contains a demonstration RectJS sub project where you have all the necessary artefacts to create a web UI. 
 
 ## Modifying/extending scaffold
 
