@@ -36,9 +36,9 @@ This folder contains a `docker-compose.yaml` use to deploy a local docker networ
 
 * An nginx-styled reverse proxy known as noxy based on this [implementation](https://github.com/binocarlos/noxy)
 
-* A react container built from this project see [./build/dev/react/Dockerfile](./build/dev/react/Dockerfile)
+* A react container built from this project see [./build/dev/react/Dockerfile](../build/dev/react/Dockerfile)
 
-* A Go based RESTFul container built from this project see [./build/dev/rest/Dockerfile](./build/dev/rest/Dockerfile)
+* A Go based RESTFul container built from this project see [./build/dev/rest/Dockerfile](../build/dev/rest/Dockerfile)
 
 ### `./internal`
 
