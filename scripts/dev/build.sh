@@ -26,15 +26,15 @@ function package() {
 }
 
 function run() {
-    docker-compose -f ./build/dev/docker-compose.yaml up -d
+    docker-compose -f ./deployments/dev/docker-compose/docker-compose.yaml up -d
 }
 
 function stop(){
-    docker-compose -f ./build/dev/docker-compose.yaml down
+    docker-compose -f ./deployments/dev/docker-compose.yaml down
 }
 
 function clean(){
-    docker-compose -f ./build/dev/docker-compose.yaml down
+    docker-compose -f ./deployments/dev/docker-compose.yaml down
     docker rmi -f ${REACT_IMAGE_NAME}:${IMAGE_TAG}
     docker rmi -f ${REST_IMAGE_NAME}:${IMAGE_TAG}
     docker rmi -f $(docker images --filter "dangling=true" -q)
