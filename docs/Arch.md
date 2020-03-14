@@ -12,11 +12,11 @@ Out-of-the-box, you will find the following folders and these are as follows:
 
 This folder includes artefacts to help you build development and production artefacts.
 
-* [./build/dev](./build/dev) folder includes Dockerfiles to create a container of the sample ReactJS UI found in this project and a container of Go based REST server to support development activities.
+* [./build/dev](../build/dev) folder includes Dockerfiles to create a container of the sample ReactJS UI found in this project and a container of Go based REST server to support development activities.
 
-* [./build/production](./build/production) folder containers Dockerfiles to produce native macOS, Linux and Windows app or a Docker image for a containerisable version of your app.
+* [./build/production](../build/production) folder containers Dockerfiles to produce native macOS, Linux and Windows app or a Docker image for a containerisable version of your app.
 
-* [./build/go-rice.sh](./build/go-rice.sh) script to pre-generate a Go source file embedding the ReactJS artefacts in byte code form.
+* [./build/go-rice.sh](../build/go-rice.sh) script to pre-generate a Go source file embedding the ReactJS artefacts in byte code form.
 
 A folder named `package`, not version controlled, will be generated containing native apps for macOS, Linux and Windows platform.
 
