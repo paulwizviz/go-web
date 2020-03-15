@@ -15,7 +15,7 @@
 # node phase
 # In this phase, we pull artefacts to build ReactJS webapp for
 # development
-FROM node:10.16.3 as nodebuild
+FROM node:13.10.1 as nodebuild
 
 WORKDIR /opt
 
