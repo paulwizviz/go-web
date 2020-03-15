@@ -26,7 +26,7 @@ function package() {
 }
 
 function run() {
-    docker-compose -f ./deployments/dev/docker-compose/docker-compose.yaml up -d
+    docker-compose -f ./deployments/dev/docker-compose.yaml up -d
 }
 
 function stop(){
