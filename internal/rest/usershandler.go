@@ -15,13 +15,36 @@
 package rest
 
 import (
-	"fmt"
+	"encoding/json"
 	"net/http"
 )
+
+type user struct {
+	Name     string `json:"name"`
+	Password string `json:"password"`
+}
+
+func mockUsers() []user {
+	return []user{
+		user{
+			Name:     "Albert",
+			Password: "albert1234",
+		},
+		user{
+			Name:     "Beatrice",
+			Password: "beatrice1234",
+		},
+	}
+}
+
+func usersPayload() []byte {
+	payload, _ := json.Marshal(mockUsers())
+	return payload
+}
 
 func usershandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader((http.StatusOK))
-	fmt.Fprintf(w, `{users: [{"name":"Albert"}.{"name":"Beatrice"}]}`)
+	w.Write(usersPayload())
 }
