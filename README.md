@@ -1,26 +1,28 @@
 # Overview
 
-This a template to help you creating a native macOS, Linux, Windows and/or Container app powered by a combination of Web UI frameworks (ReactJS, Vue, etc) and Go framework. 
+This a template to help you scaffold a project to create macOS, Linux and Windows native app or Docker base app that combine Web UI framework (e.g. ReactJS, Vue, etc) in a single package.
 
-This project is **NOT** a Go module or library where you would `go get` packages fore inclusion into your project. You will need to create a scaffold to use it. The scafold is presented in a way to help you extend, modify or create new features.
+This project is **NOT** a Go module or library where you would `go get` packages for inclusion into your project.
 
-There is a sample app is primarily to demonstrates steps involve in building a functional apps. The sample app does **NOT** represent any specific use case but you can use it as a basis to build a fully functional production release or deployment. Or you can replace the sample app with equivalent implementation and project configurations.
+The scaffold generated from this template includes a sample app. The app is intended to demonstrates steps involve in building functional apps. The sample app does **NOT** represent any specific use case but you can extend it into a fully functional production release or deployment. You may also elect to replace the sample app with one configured to work within the context of the scaffold.
 
 ## How do I scaffold a project from this template?
 
-Click on the template button and follow the instructions from Github.
+At the top this page, you should see a green coloured button named `Use this template`. Click on the button and follow the instructions from Github.
 
 ## What do I get out-of-the-box when I create a scaffold?
 
 You'll get the following:
 
-1. An example ReactJS frontend that you can extend or use it to learn concept and then replace with other equivalent framework such as Vue.
+1. A ReactJS sub-project
 
-2. An environment to support both Web and Go development.
+2. Go codes to manage app configuration, startup sequence and network operations
 
-3. Build scripts -- Docker based -- to create native (macOS, Linux and Windows) app or container based app.
+3. Go implementation of a webserver and RESTful server
 
-4. The underlying codes are based on Go modules (i.e. Go11+).
+4. Build scripts -- Docker based -- to create native (macOS, Linux and Windows) app or Docker image app.
+
+5. A locally deployable development environment
 
 ## Prerequisite
 
@@ -34,11 +36,14 @@ In order to build apps based on this template ensure you have the following item
 
 ## How do I see the sample app in action?
 
-1. Assuming you have already clone this project, click on this [doc](./docs/Build.md) and follow the steps to build a representative production native app. 
+Follow these steps:
 
-2. Open an terminal and navigate to `./build/package/<platform of your choice>`.
+1. Build the sample app (please refer to [doc](./docs/Build.md) for instruction 
 
-3. Activate the app `go-react` (for macOS and Linux) or `go-react.exe` (for windows). By default the app will run require port 80 to be available. If you need the app to use other ports type the command `go-react --help`.
+2. Open an terminal and navigate to `./build/package/<platform of your choice>`
+
+3. Activate the app `go-react` (for macOS and Linux) or `go-react.exe` (for windows)
+NOTE: By default the app will run require port 80 to be available. If you need the app to use other ports type the command `go-react --help`.
 
 4. Assuming you have no problem with STEP 3, open a browser with url to `localhost`.
 
