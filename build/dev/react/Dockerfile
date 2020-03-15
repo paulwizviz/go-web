@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM node:10.16.3
+FROM node:13.10.1
 
 WORKDIR /opt
 
