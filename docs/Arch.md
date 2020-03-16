@@ -24,9 +24,9 @@ A folder named `package`, not version controlled, will be generated containing n
 
 This folder includes source codes to create two types of cli executables:
 
-* `go-react` to activate a combined ReactJS and REST app;
+* `goreact` to activate a combined ReactJS and REST app;
 
-* `go-rest` to activate a standalone RESTFul server.
+* `gorest` to activate a standalone RESTFul server.
 
 These executables is based on the following Go frameworks [Cobra](https://github.com/spf13/cobra) and [Viper](https://github.com/spf13/viper)
 
