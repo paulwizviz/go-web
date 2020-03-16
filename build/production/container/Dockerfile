@@ -49,11 +49,11 @@ COPY ./go.sum ./go.sum
 RUN go get github.com/GeertJohan/go.rice/rice && \
     ./build/go-rice.sh && \
     go mod download && \
-    env CGO_ENABLED=0 env GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o ./build/package/go-react ./cmd/go-react
+    env CGO_ENABLED=0 env GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o ./build/package/goreact ./cmd/goreact
 
 # Pack artefacts from gobuild phase into scratch for deployment
 FROM scratch
 
-COPY --from=gobuild /opt/build/package/go-react /go-react
+COPY --from=gobuild /opt/build/package/goreact /goreact
 
-CMD ["/go-react"]
+CMD ["/goreact"]

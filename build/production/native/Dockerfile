@@ -46,6 +46,6 @@ COPY ./go.sum ./go.sum
 RUN go get github.com/GeertJohan/go.rice/rice && \
     ./build/go-rice.sh && \
     go mod download && \
-    env GOOS=linux GOARCH=amd64 go build -o ./build/package/linux/go-react ./cmd/go-react && \
-    env GOOS=darwin GOARCH=amd64 go build -o ./build/package/macOS/go-react ./cmd/go-react && \
-    env GOOS=windows GOARCH=amd64 go build -o ./build/package/windows/go-react.exe ./cmd/go-react
+    env GOOS=linux GOARCH=amd64 go build -o ./build/package/linux/goreact ./cmd/goreact && \
+    env GOOS=darwin GOARCH=amd64 go build -o ./build/package/macOS/goreact ./cmd/goreact && \
+    env GOOS=windows GOARCH=amd64 go build -o ./build/package/windows/goreact.exe ./cmd/goreact
