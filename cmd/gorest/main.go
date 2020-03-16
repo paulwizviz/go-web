@@ -1,7 +1,7 @@
 package main
 
 import (
-	"go-web/cmd/go-rest/cli"
+	"goweb/cmd/gorest/cli"
 )
 
 func main() {

@@ -2,8 +2,8 @@ package cli
 
 import (
 	"fmt"
-	"go-web/internal/rest"
-	"go-web/internal/webserver"
+	"goweb/internal/rest"
+	"goweb/internal/webserver"
 	"log"
 	"net/http"
 

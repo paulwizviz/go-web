@@ -12,12 +12,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package cli
 
 import (
-	"go-web/cmd/go-react/cli"
+	"fmt"
+	"os"
+
+	"github.com/spf13/cobra"
 )
 
-func main() {
-	cli.Execute()
+var port int
+
+func goreactUseCase() string {
+	return `goreact is a example cli toolkit to startup a ReactJS web`
+}
+
+var rootCmd = &cobra.Command{
+	Use:   "goreact",
+	Short: "goreact is a cli app",
+	Long:  goreactUseCase(),
+}
+
+func init() {
+	rootCmd.AddCommand(frontendCmd)
+
+	rootCmd.PersistentFlags().IntVarP(&port, "port", "p", 80, "startup default port 80")
+}
+
+// Execute is the cli entry point
+func Execute() {
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 }

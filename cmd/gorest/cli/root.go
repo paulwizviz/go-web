@@ -2,7 +2,7 @@ package cli
 
 import (
 	"fmt"
-	"go-web/internal/rest"
+	"goweb/internal/rest"
 	"log"
 	"net/http"
 
@@ -13,7 +13,7 @@ import (
 var port int
 
 func appName() string {
-	return "go-rest"
+	return "gorest"
 }
 
 func useCase() string {
