@@ -12,15 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package webserver
+package server
 
 import (
+	"goweb/internal"
 	"net/http"
 
 	rice "github.com/GeertJohan/go.rice"
 	"github.com/gorilla/mux"
 )
 
-func Run(router *mux.Router) {
-	router.PathPrefix("/").Handler(http.FileServer(rice.MustFindBox("../../web").HTTPBox()))
+func WebRun(router *mux.Router) {
+	router.PathPrefix(internal.URLRootPath).Handler(http.FileServer(rice.MustFindBox("../../web").HTTPBox()))
 }

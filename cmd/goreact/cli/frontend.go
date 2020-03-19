@@ -2,8 +2,7 @@ package cli
 
 import (
 	"fmt"
-	"goweb/internal/rest"
-	"goweb/internal/webserver"
+	"goweb/internal/server"
 	"log"
 	"net/http"
 
@@ -16,8 +15,8 @@ var frontendCmd = &cobra.Command{
 	Short: "frontend is a subcommand start frontend services",
 	Run: func(cmd *cobra.Command, args []string) {
 		router := mux.NewRouter()
-		rest.Run(router)
-		webserver.Run(router)
+		server.RESTRun(router)
+		server.WebRun(router)
 		log.Printf("Starting on port %v", port)
 		log.Fatal(http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", port), router))
 	},
