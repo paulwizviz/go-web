@@ -17,9 +17,10 @@ import { applyMiddleware, createStore, combineReducers } from 'redux';
 import { createLogger } from 'redux-logger';
 import { createPromise } from 'redux-promise-middleware';
 import { usersReducer } from './Users/reducers';
+import { authReducer } from './Auth/reducers';
 
 export const store = createStore(
-    combineReducers({usersReducer}),
+    combineReducers({usersReducer, authReducer}),
     {},
     applyMiddleware(createPromise({types:{fulfilled: 'success'}}), createLogger())
 );
