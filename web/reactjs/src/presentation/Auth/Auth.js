@@ -13,11 +13,11 @@
 // limitations under the License.
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Paper, Grid, TextField, Button, FormControlLabel, Checkbox } from '@material-ui/core';
-import { Face, Fingerprint } from '@material-ui/icons';
+import { Grid, TextField, Button } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     margin: {
@@ -29,46 +29,40 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const Auth = () => {
+const Auth = ({authenticate,user}) => {
     const classes = useStyles();
-
     return (
-        <Paper className={classes.padding}>
-            <div className={classes.margin}>
-                <Grid container spacing={8} alignItems="flex-end">
-                    <Grid item>
-                        <Face />
-                    </Grid>
-                    <Grid item md={true} sm={true} xs={true}>
-                        <TextField id="username" label="Username" type="email" fullWidth autoFocus required />
-                    </Grid>
+        <div className={classes.root}>
+            <Grid container spacing={8} alignItems="flex-end">
+                <Grid item md={true} sm={true} xs={true}>
+                    <TextField id="username" label="Username" type="email" fullWidth autoFocus required />
                 </Grid>
-                <Grid container spacing={8} alignItems="flex-end">
-                    <Grid item>
-                        <Fingerprint />
-                    </Grid>
-                    <Grid item md={true} sm={true} xs={true}>
-                        <TextField id="username" label="Password" type="password" fullWidth required />
-                    </Grid>
+            </Grid>
+            <Grid container spacing={8} alignItems="flex-end">
+                <Grid item md={true} sm={true} xs={true}>
+                    <TextField id="username" label="Password" type="password" fullWidth required />
                 </Grid>
-                <Grid container alignItems="center" justify="space-between">
-                    <Grid item>
-                        <FormControlLabel control={
-                            <Checkbox
-                                color="primary"
-                            />
-                        } label="Remember me" />
-                    </Grid>
-                    <Grid item>
-                        <Button disableFocusRipple disableRipple style={{ textTransform: 'none' }} variant="text" color="primary">Forgot password ?</Button>
-                    </Grid>
-                </Grid>
-                <Grid container justify="center" style={{ marginTop: '10px' }}>
-                    <Button variant="outlined" color="primary" style={{ textTransform: 'none' }}>Login</Button>
-                </Grid>
-            </div>
-        </Paper>
+            </Grid>
+            <Grid container justify="center" style={{ marginTop: '10px' }}>
+                <Button onClick={
+                    async () => await authenticate()
+                }
+                variant="outlined" 
+                color="primary" 
+                style={{ textTransform: 'none' }}>Login</Button>
+            </Grid>
+            <Grid item xs={12}>
+                {
+                    JSON.stringify(user)
+                }
+            </Grid>
+        </div>
     );
+};
+
+Auth.propTypes = {
+    user: PropTypes.object.isRequired,
+    authenticate: PropTypes.func.isRequired
 };
 
 export default Auth;

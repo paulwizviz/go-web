@@ -17,7 +17,7 @@ const initialAuthState = {
     autheticated: false,
     user: {
         id: null,
-        hash: null,
+        token: null,
         displayName: null
     },
     error: null
@@ -25,31 +25,31 @@ const initialAuthState = {
 
 const authReducer = (state = initialAuthState, action) => {
     switch (action.type) {
-        case 'AUTH_USER_PENDING': {
-            return {
-                ...state,
-                authenticating: true
-            };
-        }
-        case 'AUTH_USER_FULFILED': {
-            return {
-                ...state,
-                authenticating: false,
-                authenticated: true,
-                user: action.payload
-            }
-        }
-        case 'AUTH_USER_REJECTED': {
-            return {
-                ...state,
-                authenticating: false,
-                authenticated: false,
-                error: action.payload
-            }
-        }
-        default:
-            return state;
-    };
+    case 'AUTH_USER_PENDING': {
+        return {
+            ...state,
+            authenticating: true
+        };
+    }
+    case 'AUTH_USER_FULFILED': {
+        return {
+            ...state,
+            authenticating: false,
+            authenticated: true,
+            user: action.payload
+        };
+    }
+    case 'AUTH_USER_REJECTED': {
+        return {
+            ...state,
+            authenticating: false,
+            authenticated: false,
+            error: action.payload
+        };
+    }
+    default:
+        return state;
+    }
 };
 
 export default authReducer;
