@@ -2,7 +2,7 @@ package cli
 
 import (
 	"fmt"
-	"goweb/internal/rest"
+	"goweb/internal/server"
 	"log"
 	"net/http"
 
@@ -25,7 +25,7 @@ var rootCmd = &cobra.Command{
 	Short: fmt.Sprintf("%v is a RESTFul server", appName()),
 	Run: func(cmd *cobra.Command, args []string) {
 		router := mux.NewRouter()
-		rest.Run(router)
+		server.RESTRun(router)
 		log.Printf("Starting rest server on port %v", port)
 		log.Fatal(http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", port), router))
 	},
