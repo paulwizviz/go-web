@@ -21,14 +21,11 @@ import {
     RouteWithLayout 
 } from './components';
 
-import { 
+import {
+    Auth as AuthView,
     Dashboard as DashboardView,
     NotFound as NotFoundView,
-} from '../presentation';
-
-import {
-    Auth as AuthView
-} from '../actions';
+} from '../modules';
 
 const Routes = () => {
     return (

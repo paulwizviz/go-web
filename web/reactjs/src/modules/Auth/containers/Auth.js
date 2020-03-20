@@ -12,4 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export { default } from './Auth';
+import { connect } from 'react-redux';
+import { Auth } from '../components';
+import axios from 'axios';
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.authReducer.user
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        authenticate: () => dispatch({type: 'AUTH_USER', payload: axios.post('/api/auth')})
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Auth);

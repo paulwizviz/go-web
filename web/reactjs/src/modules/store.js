@@ -12,8 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export { default as Dashboard } from './Dashboard';
-export { default as NotFound } from './NotFound';
-export { default as Users } from './Users';
-export { default as Auth } from './Auth';
-export { default as Settings } from './Settings';
+import 'regenerator-runtime/runtime';
+import { applyMiddleware, createStore, combineReducers } from 'redux';
+import { createLogger } from 'redux-logger';
+import { createPromise } from 'redux-promise-middleware';
+import { authReducer } from './Auth/reducers';
+
+export const store = createStore(
+    combineReducers({authReducer}),
+    {},
+    applyMiddleware(createPromise({types:{fulfilled: 'success'}}), createLogger())
+);
