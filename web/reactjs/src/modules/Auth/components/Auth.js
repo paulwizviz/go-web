@@ -28,8 +28,8 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-
-const Auth = ({authenticate,user}) => {
+const Auth = (props) => {
+   
     const classes = useStyles();
     return (
         <div className={classes.root}>
@@ -45,7 +45,10 @@ const Auth = ({authenticate,user}) => {
             </Grid>
             <Grid container justify="center" style={{ marginTop: '10px' }}>
                 <Button onClick={
-                    async () => await authenticate()
+                    async () => {
+                        await props.authenticate();
+                        props.history.push('/Dashboard');
+                    }
                 }
                 variant="outlined" 
                 color="primary" 
@@ -53,7 +56,7 @@ const Auth = ({authenticate,user}) => {
             </Grid>
             <Grid item xs={12}>
                 {
-                    JSON.stringify(user)
+                    JSON.stringify(props.user)
                 }
             </Grid>
         </div>
@@ -61,6 +64,7 @@ const Auth = ({authenticate,user}) => {
 };
 
 Auth.propTypes = {
+    history: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
     authenticate: PropTypes.func.isRequired
 };
