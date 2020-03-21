@@ -12,14 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'regenerator-runtime/runtime';
-import { applyMiddleware, createStore, combineReducers } from 'redux';
-import { createLogger } from 'redux-logger';
-import { createPromise } from 'redux-promise-middleware';
-import { authReducer } from './Auth/reducers';
-
-export const store = createStore(
-    combineReducers({authReducer}),
-    {},
-    applyMiddleware(createPromise({types:{fulfilled: 'success'}}), createLogger())
-);
+export { default as authReducer} from './authReducer';

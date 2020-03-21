@@ -24,7 +24,7 @@ const browserHistory = createBrowserHistory();
 
 import { Routes } from '../Routes';
 import theme from './theme';
-import {store} from '../modules/store';
+import {store} from '../actions/store';
 
 export default class App extends React.Component {
     render() {
