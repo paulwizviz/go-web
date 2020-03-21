@@ -24,7 +24,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        authenticate: () => dispatch({type: 'AUTH_USER', payload: axios.post('/api/auth')})
+        authenticate: (userName, password) => dispatch({type: 'AUTH_USER', payload: axios.post('/api/auth',{'id':userName, 'secrets':password})})
     };
 };
 
