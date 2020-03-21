@@ -12,6 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export { default as Topbar } from './Topbar';
-export { default as Sidebar } from './Sidebar';
-export { default as Footer } from './Footer';
+export { default } from './MainLayout';

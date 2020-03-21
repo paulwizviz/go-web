@@ -19,7 +19,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 
-import { Topbar } from './components';
+import Topbar from './Topbar';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -31,7 +31,7 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const Minimal = props => {
+const MinimalLayout = props => {
     const { children } = props;
 
     const classes = useStyles();
@@ -44,9 +44,9 @@ const Minimal = props => {
     );
 };
 
-Minimal.propTypes = {
+MinimalLayout.propTypes = {
     children: PropTypes.node,
     className: PropTypes.string
 };
 
-export default Minimal;
+export default MinimalLayout;
