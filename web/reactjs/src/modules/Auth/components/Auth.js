@@ -15,58 +15,81 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 import { Grid, TextField, Button } from '@material-ui/core';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = theme => ({
     margin: {
         margin: theme.spacing.unit * 2,
     },
     padding: {
         padding: theme.spacing.unit
     }
-}));
+});
 
-const Auth = (props) => {
-   
-    const classes = useStyles();
-    return (
-        <div className={classes.root}>
-            <Grid container spacing={8} alignItems="flex-end">
-                <Grid item md={true} sm={true} xs={true}>
-                    <TextField id="username" label="Username" type="email" fullWidth autoFocus required />
+class Auth extends React.Component {
+
+    constructor(props){
+        super(props);
+        this.state = {
+            username: '',
+            password: '',
+        };
+        this.usernameHandler = this.usernameHandler.bind(this);
+        this.passwordHandler = this.passwordHandler.bind(this);
+    }
+
+    usernameHandler(event) {
+        this.setState({
+            ...this.state,
+            username: event.target.value
+        });
+    } 
+    passwordHandler(event){
+        this.setState({
+            ...this.state,
+            password: event.target.value
+        });
+    }
+
+    render(){
+        const {classes, authenticate, user, history} = this.props;
+        return (
+            <div className={classes.root}>
+                <Grid container spacing={8} alignItems="flex-end">
+                    <Grid item md={true} sm={true} xs={true}>
+                        <TextField onChange={this.usernameHandler} value={this.state.username} id="username" label="Username" type="email" fullWidth autoFocus required />
+                    </Grid>
                 </Grid>
-            </Grid>
-            <Grid container spacing={8} alignItems="flex-end">
-                <Grid item md={true} sm={true} xs={true}>
-                    <TextField id="username" label="Password" type="password" fullWidth required />
+                <Grid container spacing={8} alignItems="flex-end">
+                    <Grid item md={true} sm={true} xs={true}>
+                        <TextField onChange={this.passwordHandler} value={this.state.password} id="username" label="Password" type="password" fullWidth required />
+                    </Grid>
                 </Grid>
-            </Grid>
-            <Grid container justify="center" style={{ marginTop: '10px' }}>
-                <Button onClick={
-                    async () => {
-                        await props.authenticate();
-                        props.history.push('/Dashboard');
+                <Grid container justify="center" style={{ marginTop: '10px' }}>
+                    <Button onClick={
+                        async () => {
+                            await authenticate(this.state.username, this.state.password);
+                            if (user.id != null) {
+                                history.push('/Dashboard');
+                            }
+                        }
                     }
-                }
-                variant="outlined" 
-                color="primary" 
-                style={{ textTransform: 'none' }}>Login</Button>
-            </Grid>
-            <Grid item xs={12}>
-                {
-                    JSON.stringify(props.user)
-                }
-            </Grid>
-        </div>
-    );
-};
+                    variant="outlined" 
+                    color="primary" 
+                    style={{ textTransform: 'none' }}>Login</Button>
+                </Grid>
+            </div>
+        );
+    }
+}
 
 Auth.propTypes = {
+    classes: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
     authenticate: PropTypes.func.isRequired
 };
 
-export default Auth;
+export default withStyles(useStyles)(Auth);
