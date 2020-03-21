@@ -12,6 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export { default as Main } from './Main';
-export { default as Minimal } from './Minimal';
-export { default as RouteWithLayout } from './RouteWithLayout';
+export { default } from './components';

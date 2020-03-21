@@ -18,7 +18,9 @@ import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import { useMediaQuery } from '@material-ui/core';
 
-import { Sidebar, Topbar, Footer } from './components';
+import Sidebar from './Sidebar';
+import Topbar from './Topbar';
+import Footer from './Footer';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -36,7 +38,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const Main = (props) => {
+const MainLayout = (props) => {
     const { children } = props;
 
     const classes = useStyles();
@@ -78,8 +80,8 @@ const Main = (props) => {
     );
 };
 
-Main.propTypes = {
+MainLayout.propTypes = {
     children: PropTypes.node
 };
 
-export default Main;
+export default MainLayout;
