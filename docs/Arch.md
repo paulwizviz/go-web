@@ -12,11 +12,11 @@ Out-of-the-box, you will find the following folders and these are as follows:
 
 This folder includes artefacts to help you build development and production artefacts.
 
-* [./build/dev](../build/dev) folder includes Dockerfiles to create a container of the sample ReactJS UI found in this project and a container of Go based REST server to support development activities.
+* [./build/package/dev](../build/package/dev) folder includes Dockerfiles to create a container of the sample ReactJS UI found in this project and a container of Go based REST server to support development activities.
 
-* [./build/production](../build/production) folder containers Dockerfiles to produce native macOS, Linux and Windows app or a Docker image for a containerisable version of your app.
+* [./build/package/production](../build/package/production) folder containers Dockerfiles to produce native macOS, Linux and Windows app or a Docker image for a containerisable version of your app.
 
-* [./build/go-rice.sh](../build/go-rice.sh) script to pre-generate a Go source file embedding the ReactJS artefacts in byte code form.
+* [./build/package/go-rice.sh](../build/package/go-rice.sh) script to pre-generate a Go source file embedding the ReactJS artefacts in byte code form.
 
 A folder named `package`, not version controlled, will be generated containing native apps for macOS, Linux and Windows platform.
 
@@ -44,8 +44,9 @@ This folder contains a `docker-compose.yaml` use to deploy a local docker networ
 
 This folder container source codes to build an embedded webserver package and RESTFul endpoints. The codes are packaged as follows:
 
-* `rest` containing codes for a RESTful server
-* `webserver` containing codes for an embedded webserver
+* `server` containing codes for a RESTful and web servers;
+
+* `usermgmt` containing codes for user management handler.
 
 The name of this folder has a special impact on project scoping. Please refer to this [doc](https://blog.learngoprogramming.com/special-packages-and-directories-in-go-1d6295690a6b) for explanation before you modify it.
 
