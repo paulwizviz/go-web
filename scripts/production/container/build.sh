@@ -29,7 +29,7 @@ function checkImageTag() {
 }
 
 function package() {
-    docker build -f ./build/production/container/Dockerfile -t ${IMAGE_NAME}:${IMAGE_TAG} .
+    docker build -f ./build/package/production/container/Dockerfile -t ${IMAGE_NAME}:${IMAGE_TAG} .
 }
 
 function clean() {
@@ -37,24 +37,16 @@ function clean() {
     docker rmi -f $(docker images --filter "dangling=true" -q)
 }
 
-function run() {
-    docker run -p 80:80 ${IMAGE_NAME}:${IMAGE_TAG}
-}
-
 case $COMMAND in
     "package")
         checkImageTag
         package
-        ;;
-    "run")
-        checkImageTag
-        run
         ;;
     "clean")
         checkImageTag
         clean
         ;;
     *)
-        echo "$0 [package | clean | run ] version_number"
+        echo "$0 [package | clean ] version_number"
         ;;
 esac

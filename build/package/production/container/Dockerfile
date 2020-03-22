@@ -19,6 +19,7 @@ FROM node:13.10.1 as nodebuild
 
 WORKDIR /opt
 
+COPY ./web/reactjs/package-lock.json /opt/package-lock.json
 COPY ./web/reactjs/package.json /opt/package.json
 COPY ./web/reactjs/webpack /opt/webpack
 COPY ./web/reactjs/.babelrc /opt/.babelrc
@@ -37,7 +38,7 @@ WORKDIR /opt
 
 COPY ./cmd ./cmd
 COPY ./internal ./internal
-COPY ./build/go-rice.sh ./build/go-rice.sh
+COPY ./build/package/go-rice.sh ./build/go-rice.sh
 COPY --from=nodebuild /opt/public ./web
 
 COPY ./go.mod ./go.mod

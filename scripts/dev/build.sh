@@ -21,8 +21,8 @@ export IMAGE_TAG=dev
 COMMAND="$1"
 
 function package() {
-    docker build -f ./build/dev/react/Dockerfile -t ${REACT_IMAGE_NAME}:${IMAGE_TAG} .
-    docker build -f ./build/dev/rest/Dockerfile -t ${REST_IMAGE_NAME}:${IMAGE_TAG} .
+    docker build -f ./build/package/dev/react/Dockerfile -t ${REACT_IMAGE_NAME}:${IMAGE_TAG} .
+    docker build -f ./build/package/dev/rest/Dockerfile -t ${REST_IMAGE_NAME}:${IMAGE_TAG} .
 }
 
 function run() {
@@ -54,6 +54,6 @@ case $COMMAND in
         clean
         ;;
     *)
-        echo "$0 [package | run | stop | cleam ]"
+        echo "$0 [package | run | stop | clean ]"
         ;;
 esac
