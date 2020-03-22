@@ -21,7 +21,7 @@ IMAGE_TAG=current
 IMAGE_NAME=paulwizviz/go-react-native
 
 function build() {
-    docker build -f ./build/production/native/Dockerfile -t ${IMAGE_NAME}:${IMAGE_TAG} .
+    docker build -f ./build/package/production/native/Dockerfile -t ${IMAGE_NAME}:${IMAGE_TAG} .
 }
 
 function container() {
@@ -30,19 +30,19 @@ function container() {
 }
 
 function cleanPackage() {
-    if [ -d ./build/package ]; then
-        rm -rf ./build/package
+    if [ -d ./build/native ]; then
+        rm -rf ./build/native
     fi
 }
 
 function package() {
     cleanPackage
-    mkdir -p ./build/package/linux
-    docker cp $CONTAINER_ID:/opt/build/package/linux/ ./build/package/
-    mkdir -p ./build/package/macOS
-    docker cp $CONTAINER_ID:/opt/build/package/macOS/ ./build/package/
-    mkdir -p ./build/package/windows
-    docker cp $CONTAINER_ID:/opt/build/package/windows/ ./build/package/
+    mkdir -p ./build/native/linux
+    docker cp $CONTAINER_ID:/opt/build/package/linux/ ./build/native
+    mkdir -p ./build/native/macOS
+    docker cp $CONTAINER_ID:/opt/build/package/macOS/ ./build/native
+    mkdir -p ./build/native/windows
+    docker cp $CONTAINER_ID:/opt/build/package/windows/ ./build/native
     docker rm -f $CONTAINER_ID
 }
 
