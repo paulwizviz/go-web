@@ -1,6 +1,6 @@
 # Build process
 
-Out-of-the-box you will find scripts to help you build native and container based apps based 
+Out-of-the-box you will find scripts to help you build sample native and container based apps based 
 on the included skeleton ReactJS and Go Rest API codes. If you plan to extend from the skeletons, 
 you just need to extend from these scripts. If you plan to replace the skeletons, please use this
 build script as inspiration.
@@ -31,7 +31,7 @@ c6c3bfb538ce        binocarlos/noxy           "bash /run.sh"           21 second
 
 2. Run the command `./scripts/production/native/build.sh package`
 
-3. You will find your build arfects in the folder `./build/package/<native platform>`
+3. You will find your build arfects in the folder `./build/native/<native platform>`
 
 ### Docker container based app
 

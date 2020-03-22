@@ -40,7 +40,7 @@ Follow these steps:
 
 1. Build the sample app (please refer to [doc](./docs/Build.md) for instruction 
 
-2. Open an terminal and navigate to `./build/package/<platform of your choice>`
+2. Open an terminal and navigate to `./build/native/<platform of your choice>`
 
 3. Activate the app `goreact` (for macOS and Linux) or `goreact.exe` (for windows)
 NOTE: By default the app will run require port 80 to be available. If you need the app to use other ports type the command `goreact --help`.
