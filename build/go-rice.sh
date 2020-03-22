@@ -1,5 +1,5 @@
 #!/bin/bash
 
-pushd ./internal/webserver
+pushd ./internal/server
     rice embed-go
 popd
