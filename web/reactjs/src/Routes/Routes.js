@@ -16,13 +16,15 @@ import React from 'react';
 import { Switch, Redirect } from 'react-router-dom';
 
 import {
-    Auth as AuthContain,
     Dashboard as DashboardView,
     NotFound as NotFoundView,
     MainLayout,
     MinimalLayout,
-} from '../modules';
+} from '../modules/components';
 
+import {
+    Auth as AuthContain,
+} from '../modules/containers';
 import RouteWithLayout from './RouteWithLayout';
 
 const Routes = () => {
