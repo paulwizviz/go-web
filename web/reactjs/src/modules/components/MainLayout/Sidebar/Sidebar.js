@@ -20,7 +20,8 @@ import { Divider, Drawer } from '@material-ui/core';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 
-import { Profile, SidebarNav } from './components';
+import Profile from './Profile';
+import SidebarNav from './SidebarNav';
 
 const useStyles = makeStyles(theme => ({
     drawer: {
@@ -46,8 +47,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Sidebar = props => {
-    const { open, variant, onClose, className, ...rest } = props;
-
+    const { open, variant, onClose, className, displayName, ...rest } = props;
     const classes = useStyles();
 
     const pages = [
@@ -75,7 +75,7 @@ const Sidebar = props => {
                 {...rest}
                 className={clsx(classes.root, className)}
             >
-                <Profile />
+                <Profile displayName={displayName}/>
                 <Divider className={classes.divider} />
                 <SidebarNav
                     className={classes.nav}
@@ -87,6 +87,7 @@ const Sidebar = props => {
 };
 
 Sidebar.propTypes = {
+    displayName: PropTypes.string,
     className: PropTypes.string,
     onClose: PropTypes.func,
     open: PropTypes.bool.isRequired,

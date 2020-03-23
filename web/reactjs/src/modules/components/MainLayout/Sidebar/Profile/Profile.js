@@ -36,12 +36,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Profile = props => {
-    const { className, ...rest } = props;
-
+    const { className, displayName, ...rest } = props;
     const classes = useStyles();
 
-    const user = {
-        name: 'Coder',
+    const userProfile = {
+        name: displayName,
         avatar: '/images/avatars/avatar.png',
         bio: 'Coder'
     };
@@ -55,21 +54,22 @@ const Profile = props => {
                 alt="Person"
                 className={classes.avatar}
                 component={RouterLink}
-                src={user.avatar}
+                src={userProfile.avatar}
                 to="/settings"
             />
             <Typography
                 className={classes.name}
                 variant="h4"
             >
-                {user.name}
+                {userProfile.name}
             </Typography>
-            <Typography variant="body2">{user.bio}</Typography>
+            <Typography variant="body2">{userProfile.bio}</Typography>
         </div>
     );
 };
 
 Profile.propTypes = {
+    displayName: PropTypes.string,
     className: PropTypes.string
 };
 

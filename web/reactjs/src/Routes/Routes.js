@@ -18,12 +18,12 @@ import { Switch, Redirect } from 'react-router-dom';
 import {
     Dashboard as DashboardView,
     NotFound as NotFoundView,
-    MainLayout,
     MinimalLayout,
 } from '../modules/components';
 
 import {
-    Auth as AuthContain,
+    MainLayout as MainLayoutContainer,
+    Auth as AuthContainer,
 } from '../modules/containers';
 import RouteWithLayout from './RouteWithLayout';
 
@@ -31,8 +31,8 @@ const Routes = () => {
     return (
         <Switch>
             <Redirect exact from="/" to="/auth"/>
-            <RouteWithLayout component={AuthContain} exact layout={MinimalLayout} path="/auth"/>
-            <RouteWithLayout component={DashboardView} exact layout={MainLayout} path="/dashboard"/>
+            <RouteWithLayout component={AuthContainer} exact layout={MinimalLayout} path="/auth"/>
+            <RouteWithLayout component={DashboardView} exact layout={MainLayoutContainer} path="/dashboard"/>
             <RouteWithLayout component={NotFoundView} exact layout={MinimalLayout} path="/not-found"/>
             <Redirect to="/not-found" />
         </Switch>

@@ -12,5 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export { default as Profile } from './Profile';
-export { default as SidebarNav } from './SidebarNav';
+import { connect } from 'react-redux';
+import { MainLayout } from '../../components';
+
+const mapStateToProps = (store) => {
+    return {
+        user: store.authReducer.user
+    };
+};
+
+export default connect(
+    mapStateToProps,
+)(MainLayout);
