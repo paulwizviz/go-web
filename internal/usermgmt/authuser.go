@@ -15,6 +15,7 @@
 package usermgmt
 
 import (
+	"fmt"
 	"goweb/internal"
 	"net/http"
 
@@ -23,10 +24,10 @@ import (
 
 // AuthUser represents a user who has been verified to use this app
 type AuthUser struct {
-	Authenticator func(id string, secrets string) ([]byte, error)
+	Authenticator func(id string, secrets string) (string, []byte, error)
 }
 
-func (a *AuthUser) Handler(rw http.ResponseWriter, req *http.Request) {
+func (au *AuthUser) Handler(rw http.ResponseWriter, req *http.Request) {
 
 	if req.Method != "POST" {
 		rw.WriteHeader(http.StatusUnauthorized)
@@ -38,19 +39,20 @@ func (a *AuthUser) Handler(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	rw.Header().Set("Access-Control-Allow-Origin", "*")
-	rw.Header().Set("Content-Type", "application/json")
-
 	param := mux.Vars(req)
 	id := param["id"]
 	secrets := param["secrets"]
 
-	token, err := a.Authenticator(id, secrets)
+	token, userInfo, err := au.Authenticator(id, secrets)
 	if err != nil {
 		rw.WriteHeader(http.StatusUnauthorized)
 		return
 	}
 
+	rw.Header().Set(internal.HTTPHeaderAccessControllerAllowOrigin, "*")
+	rw.Header().Set(internal.HTTPHeaderContentType, "application/json")
+	rw.Header().Set(internal.HTTPHeaderAuthorization, fmt.Sprintf("Bearer %v", token))
+
 	rw.WriteHeader(http.StatusOK)
-	rw.Write(token)
+	rw.Write(userInfo)
 }

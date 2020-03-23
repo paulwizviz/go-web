@@ -9,9 +9,18 @@ import (
 )
 
 func authUserHandler(rw http.ResponseWriter, req *http.Request) {
+
+	userInfo := usermgmt.UserInfo{
+		ID:          "john",
+		DisplayName: "John Doe",
+	}
+	userInfoInBytes, _ := userInfo.Marshal()
+
+	token := []byte("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c")
+
 	authUser := usermgmt.AuthUser{}
-	authUser.Authenticator = func(id string, secret string) ([]byte, error) {
-		return []byte("bearer: 12d4f122"), nil
+	authUser.Authenticator = func(id string, secret string) ([]byte, []byte, error) {
+		return token, userInfoInBytes, nil
 	}
 	authUser.Handler(rw, req)
 }
