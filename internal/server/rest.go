@@ -16,10 +16,10 @@ func authUserHandler(rw http.ResponseWriter, req *http.Request) {
 	}
 	userInfoInBytes, _ := userInfo.Marshal()
 
-	token := []byte("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c")
+	token := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
 
 	authUser := usermgmt.AuthUser{}
-	authUser.Authenticator = func(id string, secret string) ([]byte, []byte, error) {
+	authUser.Authenticator = func(id string, secret string) (string, []byte, error) {
 		return token, userInfoInBytes, nil
 	}
 	authUser.Handler(rw, req)
