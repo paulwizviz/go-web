@@ -17,7 +17,6 @@ const initialAuthState = {
     autheticated: false,
     user: {
         id: null,
-        token: null,
         displayName: null
     },
     error: null
@@ -31,12 +30,12 @@ const authReducer = (state = initialAuthState, action) => {
             authenticating: true
         };
     }
-    case 'AUTH_USER_FULFILED': {
+    case 'AUTH_USER_FULFILLED': {
         return {
             ...state,
             authenticating: false,
             authenticated: true,
-            user: action.payload
+            user: action.payload,
         };
     }
     case 'AUTH_USER_REJECTED': {
