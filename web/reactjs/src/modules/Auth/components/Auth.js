@@ -53,8 +53,15 @@ class Auth extends React.Component {
         });
     }
 
+    componentDidUpdate(prevProp){
+        const {user, history} = this.props;
+        if (prevProp.user.id === null && user.id !== null){
+            history.push('/dashboard');
+        }
+    }
+
     render(){
-        const {classes, authenticate, user, history} = this.props;
+        const {classes, authenticate} = this.props;
         return (
             <div className={classes.root}>
                 <Grid container spacing={8} alignItems="flex-end">
@@ -71,9 +78,6 @@ class Auth extends React.Component {
                     <Button onClick={
                         async () => {
                             await authenticate(this.state.username, this.state.password);
-                            if (user.id != null) {
-                                history.push('/Dashboard');
-                            }
                         }
                     }
                     variant="outlined" 

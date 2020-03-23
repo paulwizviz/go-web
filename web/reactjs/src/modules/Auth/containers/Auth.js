@@ -16,15 +16,23 @@ import { connect } from 'react-redux';
 import { Auth } from '../components';
 import axios from 'axios';
 
-const mapStateToProps = (state) => {
+const fetchAuthUser = async (userName, password) => {
+    const resp = await axios.post('/api/auth',{'id':userName, 'secrets':password});
+    return resp.data;
+};
+
+const mapStateToProps = (store) => {
     return {
-        user: state.authReducer.user
+        user: store.authReducer.user
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        authenticate: (userName, password) => dispatch({type: 'AUTH_USER', payload: axios.post('/api/auth',{'id':userName, 'secrets':password})})
+        authenticate: async (userName, password) => dispatch({
+            type: 'AUTH_USER_FULFILLED', 
+            payload: await fetchAuthUser(userName, password),
+        })
     };
 };
 
