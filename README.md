@@ -32,7 +32,7 @@ In order to build apps based on this template ensure you have the following item
 
 2. [Go toolkit version 1.11 onwards](https://blog.golang.org/)
 
-3. (Optional) Node (out-of-the-box you don't need this because this template uses Docker to build the node part)
+3. Node
 
 ## How do I see the sample app in action?
 
