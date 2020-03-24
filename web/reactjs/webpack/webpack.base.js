@@ -6,7 +6,7 @@ const BUILD_DIR = path.resolve(__dirname, '..', 'public');
 const SRC_DIR = path.resolve(__dirname, '..', 'src');
 
 module.exports = {
-  entry: `${SRC_DIR}/index.js`,
+  entry: [`@babel/polyfill`,`${SRC_DIR}/index.js`],
   output: {
     path: BUILD_DIR,
     publicPath: '/',
