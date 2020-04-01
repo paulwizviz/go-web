@@ -29,7 +29,7 @@ c6c3bfb538ce        binocarlos/noxy           "bash /run.sh"           21 second
 
 ### Native macOS, Linux and Windows
 
-2. Run the command `./scripts/production/native/build.sh package`
+2. Run the command `./scripts/production/build.sh native`
 
 3. You will find your build arfects in the folder `./build/native/<native platform>`
 
@@ -37,15 +37,13 @@ c6c3bfb538ce        binocarlos/noxy           "bash /run.sh"           21 second
 
 2. Edit the script `./scripts/production/container/build.sh` and modify the variable `$IMAGE_NAME` to one that suits your project
 
-3. Run the command `./scripts/production/container/build.sh package <image tag>`, where `<image tag>` is any unique string value e.g. version number
+3. Run the command `./scripts/production/build.sh container`, where `<image tag>` is any unique string value e.g. version number
 
 4. Run the command `docker images` and out-of-the-box, you will see the following Docker images listed:
 ```
-paulwizviz/go-react-container   0.0                 273d6b7a1b46        5 minutes ago       9.07MB
+paulwizviz/go-react-container   current                 273d6b7a1b46        5 minutes ago       9.07MB
 ```
 
 ## Clean project
 
-* Native apps run the command `./scripts/production/native/build.sh clean`
-
-* Container run the command `./scripts/production/container/build.sh clean <image tag>` 
+Run the command `./scripts/production/build.sh clean`
