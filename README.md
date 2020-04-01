@@ -42,10 +42,10 @@ Follow these steps:
 
 2. Open an terminal and navigate to `./build/native/<platform of your choice>`
 
-3. Activate the app `goreact` (for macOS and Linux) or `goreact.exe` (for windows)
+3. Start app `goreact` (for macOS and Linux) or `goreact.exe` (for windows)
 NOTE: By default the app will run require port 80 to be available. If you need the app to use other ports type the command `goreact --help`.
 
-4. Assuming you have no problem with STEP 3, open a browser with url to `localhost`.
+4. Assuming you have no problem with STEP 3, run the command `goreact frontend` open a browser with url to `localhost`.
 
 ## How do I extend/modify my scaffold?
 

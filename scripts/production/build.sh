@@ -16,27 +16,27 @@
 
 COMMAND="$1"
 
-# Feel free to modify these variables accordingly
-IMAGE_TAG=current
-IMAGE_NAME=paulwizviz/go-react-native
+export IMAGE_TAG=current
 
-function build() {
-    docker build -f ./build/package/production/native/Dockerfile -t ${IMAGE_NAME}:${IMAGE_TAG} .
-}
+export IMAGE_NAME=paulwizviz/go-react-container
 
-function container() {
-    id=$(docker create ${IMAGE_NAME}:${IMAGE_TAG})
-    CONTAINER_ID="${id:0:12}"
-}
-
-function cleanPackage() {
-    if [ -d ./build/native ]; then
-        rm -rf ./build/native
+function checkImageTag() {
+    if [ -z "$IMAGE_TAG" ]; then
+        echo "$0 $COMMAND image_tag"
+        exit 2
     fi
 }
 
-function package() {
-    cleanPackage
+function packageContainer() {
+    docker build -f ./build/package/production/Dockerfile -t ${IMAGE_NAME}:${IMAGE_TAG} .
+}
+
+function packageNative(){
+    local native_build_image=hls_devkit/native_build_image:current
+    docker build -f ./build/package/production/Dockerfile --target native -t ${native_build_image} .
+    cleanNative
+    id=$(docker create ${native_build_image})
+    CONTAINER_ID="${id:0:12}"
     mkdir -p ./build/native/linux
     docker cp $CONTAINER_ID:/opt/build/package/linux/ ./build/native
     mkdir -p ./build/native/macOS
@@ -44,24 +44,32 @@ function package() {
     mkdir -p ./build/native/windows
     docker cp $CONTAINER_ID:/opt/build/package/windows/ ./build/native
     docker rm -f $CONTAINER_ID
+    docker rmi -f ${native_build_image}
 }
 
-function cleanDocker() {
+function cleanNative() {
+    if [ -d ./build/native ]; then
+        rm -rf ./build/native
+    fi
+}
+
+function cleanImages() {
     docker rmi -f ${IMAGE_NAME}:${IMAGE_TAG}
     docker rmi -f $(docker images --filter "dangling=true" -q)
 }
 
 case $COMMAND in
-    "package")
-        build
-        container
-        package
+    "native")
+        packageNative
+        ;;
+    "container")
+        packageContainer
         ;;
     "clean")
-        cleanPackage
-        cleanDocker
+        cleanNative
+        cleanImages
         ;;
     *)
-        echo "$0 [package | clean]"
+        echo "$0 [container | native | clean ]"
         ;;
 esac
