@@ -8,4 +8,8 @@ jobs:
       - uses: actions/checkout@v2
       - run: ./scripts/production/build.sh container
       - run: ./scripts/production/build.sh native
+      - uses: actions/upload-artifact@v1
+        with:
+          name: native-go-web
+          path: ./build/native
 
