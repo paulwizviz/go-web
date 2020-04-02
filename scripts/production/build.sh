@@ -16,9 +16,11 @@
 
 COMMAND="$1"
 
+export IMAGE_NAME=paulwizviz/go-react-container
 export IMAGE_TAG=current
 
-export IMAGE_NAME=paulwizviz/go-react-container
+native_build_image=hls_devkit/native_build_image:current
+test_build_image=hls_devkit/test_build_image:current
 
 function checkImageTag() {
     if [ -z "$IMAGE_TAG" ]; then
@@ -32,8 +34,7 @@ function packageContainer() {
 }
 
 function packageNative(){
-    local native_build_image=hls_devkit/native_build_image:current
-    docker build -f ./build/package/production/Dockerfile --target native -t ${native_build_image} .
+    docker build -f ./build/package/production/Dockerfile --target gobuild -t ${native_build_image} .
     cleanNative
     id=$(docker create ${native_build_image})
     CONTAINER_ID="${id:0:12}"
@@ -47,6 +48,10 @@ function packageNative(){
     docker rmi -f ${native_build_image}
 }
 
+function goUnitTest(){
+    docker build -f ./build/package/production/Dockerfile --target gotest -t ${test_build_image} .
+}
+
 function cleanNative() {
     if [ -d ./build/native ]; then
         rm -rf ./build/native
@@ -55,21 +60,23 @@ function cleanNative() {
 
 function cleanImages() {
     docker rmi -f ${IMAGE_NAME}:${IMAGE_TAG}
+    docker rmi -f ${test_build_image}
     docker rmi -f $(docker images --filter "dangling=true" -q)
 }
 
 case $COMMAND in
-    "native")
+    "package")
         packageNative
-        ;;
-    "container")
         packageContainer
+        ;;
+    "unit")
+        goUnitTest
         ;;
     "clean")
         cleanNative
         cleanImages
         ;;
     *)
-        echo "$0 [container | native | clean ]"
+        echo "$0 [ package | unit | clean ]"
         ;;
 esac
