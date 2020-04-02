@@ -70,7 +70,7 @@ case $COMMAND in
         packageContainer
         ;;
     "unit")
-        goTest
+        goUnitTest
         ;;
     "clean")
         cleanNative
