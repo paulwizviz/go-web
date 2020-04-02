@@ -6,7 +6,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run: ./scripts/production/build.sh test
+      - run: ./scripts/production/build.sh unit
       - run: ./scripts/production/build.sh package
       # - uses: actions/upload-artifact@v1
       #   with:
