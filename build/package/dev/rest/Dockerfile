@@ -23,4 +23,4 @@ COPY ./go.mod ./go.mod
 COPY ./go.sum ./go.sum
 
 RUN go mod download && \
-    go build -o /usr/local/bin/gorest ./cmd/gorest
+    go build -o /usr/local/bin/goreact ./cmd/goreact
