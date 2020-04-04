@@ -46,6 +46,6 @@ func init() {
 		router := mux.NewRouter()
 		server.RESTRun(router)
 		log.Printf("Starting on port %v", restendCmdBuilder.port)
-		log.Fatal(http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", frontendCmdBuilder.port), router))
+		log.Fatal(http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", restendCmdBuilder.port), router))
 	}
 }
