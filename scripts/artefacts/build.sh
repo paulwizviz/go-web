@@ -14,27 +14,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-COMMAND="$1"
+. ./scripts/common.sh
 
-export IMAGE_NAME=paulwizviz/go-react-container
-export IMAGE_TAG=current
+COMMAND="$1"
 
 native_build_image=hls_devkit/native_build_image:current
 test_build_image=hls_devkit/test_build_image:current
 
-function checkImageTag() {
-    if [ -z "$IMAGE_TAG" ]; then
-        echo "$0 $COMMAND image_tag"
-        exit 2
-    fi
-}
-
 function packageContainer() {
-    docker build -f ./build/package/production/Dockerfile -t ${IMAGE_NAME}:${IMAGE_TAG} .
+    docker build -f ./build/package/artefacts/Dockerfile -t ${APP_IMAGE_NAME}:${APP_IMAGE_TAG} .
 }
 
 function packageNative(){
-    docker build -f ./build/package/production/Dockerfile --target gobuild -t ${native_build_image} .
+    docker build -f ./build/package/artefacts/Dockerfile --target gobuild -t ${native_build_image} .
     cleanNative
     id=$(docker create ${native_build_image})
     CONTAINER_ID="${id:0:12}"
@@ -49,7 +41,7 @@ function packageNative(){
 }
 
 function goUnitTest(){
-    docker build -f ./build/package/production/Dockerfile --target gotest -t ${test_build_image} .
+    docker build -f ./build/package/artefacts/Dockerfile --target gotest -t ${test_build_image} .
 }
 
 function cleanNative() {
@@ -59,7 +51,7 @@ function cleanNative() {
 }
 
 function cleanImages() {
-    docker rmi -f ${IMAGE_NAME}:${IMAGE_TAG}
+    docker rmi -f ${APP_IMAGE_TAG}:${APP_IMAGE_TAG}
     docker rmi -f ${test_build_image}
     docker rmi -f $(docker images --filter "dangling=true" -q)
 }
