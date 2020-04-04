@@ -51,7 +51,7 @@ function cleanNative() {
 }
 
 function cleanImages() {
-    docker rmi -f ${APP_IMAGE_TAG}:${APP_IMAGE_TAG}
+    docker rmi -f ${APP_IMAGE_NAME}:${APP_IMAGE_TAG}
     docker rmi -f ${test_build_image}
     docker rmi -f $(docker images --filter "dangling=true" -q)
 }
