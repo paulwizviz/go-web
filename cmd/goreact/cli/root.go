@@ -21,22 +21,23 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var port int
+var restendComd = restendCmdBuilder.cli()
 
-func goreactUseCase() string {
-	return `goreact is a example cli toolkit to startup a ReactJS web`
-}
+var frontendCmd = frontendCmdBuilder.cli()
 
 var rootCmd = &cobra.Command{
 	Use:   "goreact",
 	Short: "goreact is a cli app",
-	Long:  goreactUseCase(),
+	Long:  `goreact is a example cli toolkit to startup a ReactJS web`,
 }
 
 func init() {
 	rootCmd.AddCommand(frontendCmd)
+	rootCmd.AddCommand(restendComd)
 
-	rootCmd.PersistentFlags().IntVarP(&port, "port", "p", 80, "startup default port 80")
+	frontendCmd.Flags().IntVarP(&frontendCmdBuilder.port, "port", "p", 80, "default port 80")
+
+	restendComd.Flags().IntVarP(&restendCmdBuilder.port, "port", "p", 8080, "default port 8080")
 }
 
 // Execute is the cli entry point
