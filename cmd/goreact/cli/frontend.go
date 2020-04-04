@@ -10,14 +10,29 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var frontendCmd = &cobra.Command{
-	Use:   "frontend",
-	Short: "frontend is a subcommand start frontend services",
-	Run: func(cmd *cobra.Command, args []string) {
+type FrontendCmdBuilder struct {
+	port     int
+	services func()
+}
+
+func (f *FrontendCmdBuilder) cli() *cobra.Command {
+	return &cobra.Command{
+		Use:   "frontend",
+		Short: "starts the UI and RESTFul servers.",
+		Run: func(cmd *cobra.Command, args []string) {
+			f.services()
+		},
+	}
+}
+
+var frontendCmdBuilder = FrontendCmdBuilder{}
+
+func init() {
+	frontendCmdBuilder.services = func() {
 		router := mux.NewRouter()
 		server.RESTRun(router)
 		server.WebRun(router)
-		log.Printf("Starting on port %v", port)
-		log.Fatal(http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", port), router))
-	},
+		log.Printf("Starting on port %v", frontendCmdBuilder.port)
+		log.Fatal(http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", frontendCmdBuilder.port), router))
+	}
 }
