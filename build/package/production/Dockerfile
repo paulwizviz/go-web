@@ -47,7 +47,8 @@ COPY ./go.sum ./go.sum
 RUN go get github.com/GeertJohan/go.rice/rice && \
     ./build/go-rice.sh && \
     go mod download && \
-    go test -v goweb/internal/usermgmt
+    go test -v goweb/internal/usermgmt && \
+    go test -v goweb/cmd/goreact/cli
 
 # Go build phase
 # Utilising a go packaging tool github.com/GeertJohan/go.rice
