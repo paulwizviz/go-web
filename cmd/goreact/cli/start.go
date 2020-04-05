@@ -15,47 +15,21 @@
 package cli
 
 import (
-	"fmt"
-	"goweb/internal/server"
-	"log"
-	"net/http"
-
-	"github.com/gorilla/mux"
 	"github.com/spf13/cobra"
 )
 
-type StartCmdBuilder struct {
-	port    int
-	ui      bool
-	service func()
-}
-
-func (s *StartCmdBuilder) cli() *cobra.Command {
-	return &cobra.Command{
-		Use:   "start",
-		Short: "start application",
-		Run: func(cmd *cobra.Command, args []string) {
-			s.service()
-		},
-	}
-}
-
-var startCmdBuilder = StartCmdBuilder{
-	ui: true,
+var startCmd = &cobra.Command{
+	Use:   "start",
+	Short: "Activate goweb by feature",
+	Long:  `Command to activate goweb to run with UI or no UI`,
 }
 
 func init() {
-	startCmdBuilder.service = func() {
-		router := mux.NewRouter()
-		if startCmdBuilder.ui {
-			server.RESTRun(router)
-			server.WebRun(router)
-			log.Printf("Starting with UI on port %v", startCmdBuilder.port)
-			log.Fatal(http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", startCmdBuilder.port), router))
-		} else {
-			server.RESTRun(router)
-			log.Printf("Starting with no UI on port %v", startCmdBuilder.port)
-			log.Fatal(http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", startCmdBuilder.port), router))
-		}
-	}
+	uiCmd := uiCmdBuilder.cli()
+	startCmd.AddCommand(uiCmd)
+	uiCmd.Flags().IntVarP(&uiCmdBuilder.port, "port", "p", 80, "startup default port 80")
+
+	noUICmd := noUICmdBuilder.cli()
+	startCmd.AddCommand(noUICmd)
+	noUICmd.Flags().IntVarP(&noUICmdBuilder.port, "port", "p", 8080, "startup default port 8080")
 }
