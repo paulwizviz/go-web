@@ -15,7 +15,7 @@ services:
             - NOXY_API_HOST=rest
             - NOXY_API_PORT=9000
         networks:
-            - go_web_network
+            - goweb_dev_network
 
     react:
         image: ${REACT_IMAGE_NAME}:${IMAGE_TAG}
@@ -27,18 +27,18 @@ services:
         volumes:
             - ../../web/reactjs/src:/opt/src
         networks:
-            - go_web_network
+            - goweb_dev_network
 
     rest:
         image: ${REST_IMAGE_NAME}:${IMAGE_TAG}
-        command: ["/usr/local/bin/goreact","start","--ui=false","-p","9000"]
+        command: ["/usr/local/bin/goreact","start","noui","-p","9000"]
         container_name: rest
         expose:
             - 9000
         ports:
             - 9000:9000
         networks:
-            - go_web_network
+            - goweb_dev_network
 
 networks:
-    go_web_network:
+    goweb_dev_network:

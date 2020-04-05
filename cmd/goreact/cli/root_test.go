@@ -14,27 +14,12 @@
 
 package cli
 
-import (
-	"fmt"
-	"os"
+import "testing"
 
-	"github.com/spf13/cobra"
-)
-
-var rootCmd = &cobra.Command{
-	Use:   "goreact",
-	Short: "goreact is a cli app",
-	Long:  `goreact is a example cli toolkit to startup a ReactJS web`,
-}
-
-func init() {
-	rootCmd.AddCommand(startCmd)
-}
-
-// Execute is the cli entry point
-func Execute() {
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+func TestRootCmdName(t *testing.T) {
+	expected := "goreact"
+	got := rootCmd.Use
+	if expected != got {
+		t.Errorf("Expected: %v Got: %v", expected, got)
 	}
 }

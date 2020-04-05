@@ -16,10 +16,34 @@ package cli
 
 import "testing"
 
-func TestStartCmdName(t *testing.T) {
-	expected := "start"
-	got := startCmd.Use
+func TestNoUICmdName(t *testing.T) {
+	builder := NoUICmdBuilder{}
+	builder.service = func() {}
+
+	cmd := builder.cli()
+	expected := "noui"
+	got := cmd.Use
 	if expected != got {
 		t.Errorf("Expected: %v Got: %v", expected, got)
+	}
+}
+
+func TestNoUICmdPortFlag(t *testing.T) {
+	builder := NoUICmdBuilder{
+		port: 8080,
+	}
+	builder.service = func() {
+		expected := 1000
+		got := builder.port
+		if expected != got {
+			t.Errorf("Expected: %v Got: %v", expected, got)
+		}
+	}
+	cmd := builder.cli()
+	// The following simulates port sets to 1000
+	cmd.Flags().IntVarP(&builder.port, "port", "p", 1000, "startup default port 80")
+	err := cmd.Execute()
+	if err != nil {
+		t.Fatalf("Unable to execute command. Reason: %v", err)
 	}
 }
