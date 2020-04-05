@@ -14,27 +14,46 @@
 
 package cli
 
-import (
-	"testing"
-)
+import "testing"
 
-func TestFrontendCmdName(t *testing.T) {
+func TestStartCmdName(t *testing.T) {
 
-	builder := FrontendCmdBuilder{}
-	builder.services = func() {
+	builder := StartCmdBuilder{}
+	builder.service = func() {
 	}
 
 	cmd := builder.cli()
-	expected := "frontend"
+	expected := "start"
 	got := cmd.Use
 	if expected != got {
 		t.Errorf("Expected: %v Got: %v", expected, got)
 	}
 }
 
-func TestFrontendCmdFlag(t *testing.T) {
-	builder := FrontendCmdBuilder{}
-	builder.services = func() {
+func TestStartCmdNoUIFlag(t *testing.T) {
+	builder := StartCmdBuilder{
+		ui: true,
+	}
+	builder.service = func() {
+		expected := false
+		got := builder.ui
+		if expected != got {
+			t.Errorf("Expected: %v Got: %v", expected, got)
+		}
+	}
+	cmd := builder.cli()
+	cmd.Flags().BoolVar(&builder.ui, "ui", false, "default true")
+	err := cmd.Execute()
+	if err != nil {
+		t.Fatalf("Unable to execute command. Reason: %v", err)
+	}
+}
+
+func TestStartCmdPortFlag(t *testing.T) {
+	builder := StartCmdBuilder{
+		port: 8080,
+	}
+	builder.service = func() {
 		expected := 80
 		got := builder.port
 		if expected != got {

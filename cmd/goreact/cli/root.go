@@ -21,9 +21,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var restendComd = restendCmdBuilder.cli()
-
-var frontendCmd = frontendCmdBuilder.cli()
+var startCmd = startCmdBuilder.cli()
 
 var rootCmd = &cobra.Command{
 	Use:   "goreact",
@@ -32,12 +30,9 @@ var rootCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(frontendCmd)
-	rootCmd.AddCommand(restendComd)
-
-	frontendCmd.Flags().IntVarP(&frontendCmdBuilder.port, "port", "p", 80, "default port 80")
-
-	restendComd.Flags().IntVarP(&restendCmdBuilder.port, "port", "p", 8080, "default port 8080")
+	rootCmd.AddCommand(startCmd)
+	startCmd.Flags().BoolVar(&startCmdBuilder.ui, "ui", true, "default true")
+	startCmd.Flags().IntVarP(&startCmdBuilder.port, "port", "p", 80, "default 80")
 }
 
 // Execute is the cli entry point
