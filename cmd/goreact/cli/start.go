@@ -24,28 +24,38 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type RESTEndCmdBuilder struct {
-	port     int
-	services func()
+type StartCmdBuilder struct {
+	port    int
+	ui      bool
+	service func()
 }
 
-func (s *RESTEndCmdBuilder) cli() *cobra.Command {
+func (s *StartCmdBuilder) cli() *cobra.Command {
 	return &cobra.Command{
-		Use:   "rest",
-		Short: "starts the orchestrator RESTFul server only.",
+		Use:   "start",
+		Short: "start application",
 		Run: func(cmd *cobra.Command, args []string) {
-			s.services()
+			s.service()
 		},
 	}
 }
 
-var restendCmdBuilder = RESTEndCmdBuilder{}
+var startCmdBuilder = StartCmdBuilder{
+	ui: true,
+}
 
 func init() {
-	restendCmdBuilder.services = func() {
+	startCmdBuilder.service = func() {
 		router := mux.NewRouter()
-		server.RESTRun(router)
-		log.Printf("Starting on port %v", restendCmdBuilder.port)
-		log.Fatal(http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", restendCmdBuilder.port), router))
+		if startCmdBuilder.ui {
+			server.RESTRun(router)
+			server.WebRun(router)
+			log.Printf("Starting with UI on port %v", startCmdBuilder.port)
+			log.Fatal(http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", startCmdBuilder.port), router))
+		} else {
+			server.RESTRun(router)
+			log.Printf("Starting with no UI on port %v", startCmdBuilder.port)
+			log.Fatal(http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", startCmdBuilder.port), router))
+		}
 	}
 }
