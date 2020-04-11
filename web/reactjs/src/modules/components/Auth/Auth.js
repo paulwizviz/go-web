@@ -55,7 +55,9 @@ const Auth = props =>{
             <Grid container justify="center" style={{ marginTop: '10px' }}>
                 <Button onClick={
                     async () => {
-                        await authenticate(username, password);
+                        if (username !== '' && password !== ''){
+                            await authenticate(username, password);
+                        }
                     }
                 }
                 variant="outlined" 
