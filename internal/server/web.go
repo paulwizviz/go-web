@@ -22,6 +22,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func WebRun(router *mux.Router) {
+func RunWeb(router *mux.Router) {
 	router.PathPrefix(internal.URLRootPath).Handler(http.FileServer(rice.MustFindBox("../../web").HTTPBox()))
 }
