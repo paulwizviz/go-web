@@ -1,3 +1,5 @@
+![build](https://github.com/paulwizviz/go-web/workflows/build/badge.svg)
+
 # Overview
 
 This a template to help you scaffold a project to create macOS, Linux and Windows native app or Docker base app that combine Web UI framework (e.g. ReactJS, Vue, etc) in a single package.
