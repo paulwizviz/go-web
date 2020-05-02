@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Modify the following environment variables to suit your requirements
 export APP_IMAGE_NAME=paulwizviz/go-react-container
 export APP_IMAGE_TAG=current
 
