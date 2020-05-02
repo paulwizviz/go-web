@@ -4,7 +4,7 @@ This project has been architect to support you, as developers, create and packag
 
 ## Project layout
 
-The layout of your scaffold is based on the [standard Go project layout](https://github.com/golang-standards/project-layout).
+The layout of your scaffold is based on the [standard Go project layout][1].
 
 Out-of-the-box, you will find the following folders and these are as follows:
 
@@ -14,31 +14,29 @@ This folder includes artefacts to help you build development and production arte
 
 * [./build/package/dev](../build/package/dev) folder includes Dockerfiles to create a container of the sample ReactJS UI found in this project and a container of Go based REST server to support development activities.
 
-* [./build/package/production](../build/package/production) folder containers Dockerfiles to produce native macOS, Linux and Windows app or a Docker image for a containerisable version of your app.
+* [./build/package/artefacts](../build/package/artefacts) folder containers Dockerfiles to produce native macOS, Linux and Windows app or a Docker image for a containerisable version of your app.
 
 * [./build/package/go-rice.sh](../build/package/go-rice.sh) script to pre-generate a Go source file embedding the ReactJS artefacts in byte code form.
 
-A folder named `package`, not version controlled, will be generated containing native apps for macOS, Linux and Windows platform.
+A folder named `native`, not version controlled, will be generated containing native apps for macOS, Linux and Windows platform.
 
 ### `./cmd`
 
-This folder includes source codes to create two types of cli executables:
+This folder includes source codes to create your app entrypoint (i.e. main). 
 
-* `goreact` to activate a combined ReactJS and REST app;
-
-* `gorest` to activate a standalone RESTFul server.
-
-These executables is based on the following Go frameworks [Cobra](https://github.com/spf13/cobra) and [Viper](https://github.com/spf13/viper)
+These executables is based on the following Go frameworks [Cobra](https://github.com/spf13/cobra)
 
 ### `./deployments`
 
-This folder contains a `docker-compose.yaml` use to deploy a local docker network comprising of three containers to support development work. The containers are:
+This folder contains two types of deployment scripts:
 
-* An nginx-styled reverse proxy known as noxy based on this [implementation](https://github.com/binocarlos/noxy)
+1. To support local development activities, you will find the following [docker-compose.yaml](../deployments/docker-compose.yaml). This script will generate the following containers locally:
 
-* A react container built from this project see [./build/dev/react/Dockerfile](../build/dev/react/Dockerfile)
+    1.1. An nginx-styled reverse proxy known as noxy based on this [implementation](https://github.com/binocarlos/noxy)
 
-* A Go based RESTFul container built from this project see [./build/dev/rest/Dockerfile](../build/dev/rest/Dockerfile)
+    1.2. A react container built from this project see [./build/dev/react/Dockerfile](../build/dev/react/Dockerfile) with features for hot javascript loading.
+
+    1.3. A Go based RESTFul container built from this project see [./build/dev/rest/Dockerfile](../build/dev/rest/Dockerfile)
 
 ### `./internal`
 
@@ -56,4 +54,19 @@ This folder contains a demonstration RectJS sub project where you have all the n
 
 ## Modifying/extending scaffold
 
-TO-DO
+* Keep the layout intact and if you need to extends try to follow the recommendations describe [here][1]. Most importantly, retain the folder `internal` for your Go codes that you are creating as part of your application offerings. If you wish to make your project codes externally available for others to `go get` create the folder `pkg` and place your codes there. Keep anything related to your final build artefacts under these two folders `internal` and or `pkg` only. If you are planning to build another component of a microservices architecture, the recommendation is to create it as a separate Go module under a different github or equivalent repository.
+
+* If you have specialise codes like GRPC protobufs or even non Go and non-web subprojects (Java, Python, etc), feel free to create one at the top level. Please use appropriate names (e.g. `java` for Java subprojects).
+
+* The recommendation is to use Docker as the basis to build your project. If you stick to this recommendation, all you need to do is to modify/add dockerfiles found in the [build/package][2] folder.
+
+* You will need to modify the module name in [go.mod](../go.mod) to one that suits your project. Please use appropriate naming conventions particularly if you plan to make your Go codes externally or `go get` visible.
+
+* You will need to modify the folder under the top level folder `cmd` to one that is appropriate for your project. Remember to change modify the build script [build/package][2] accordingly. All you need to do is to is to get `go build` to reference the folder `./cmd` and sub folder with containing the main function. For example `go build -o <target location> ./cmd/<folder to your main file>`
+
+* Replace the sample codes under the folder `internal` and `web` to one appropriate for your project. If you wish to build from the sample, keep and modify accordingly.
+
+* Modify the copyright notices appropriate for your project.
+
+[1]: https://github.com/golang-standards/project-layout
+[2]: ../build/package
