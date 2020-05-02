@@ -46,7 +46,7 @@ var uiCmdBuilder = UICmdBuilder{
 func init() {
 	uiCmdBuilder.service = func() {
 		router := mux.NewRouter()
-		server.RunREST(router)
+		server.RESTRun(router)
 		server.RunWeb(router)
 		log.Printf("Starting with UI on port %v", uiCmdBuilder.port)
 		log.Fatal(http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", uiCmdBuilder.port), router))

@@ -56,6 +56,12 @@ This folder contains a demonstration RectJS sub project where you have all the n
 
 This folder containers operational scripts to enable you trigger build processes and to execute various deployment scenarios.
 
+## Development environment
+
+This template provides a mini development environment to help you develop the UI element. During development, especially of the UI elements, you may not need to connect to an actual backend service but simply to mock APIs. A separate dev environment build script is provided so you can create mocks of backend. It is also setup to enable hot loading of, out-of-the-box, ReactJS code.
+
+For examples of how you can mock backends for dev enviornment, please refer to the [dev build scripts](../build/package/dev/rest.dockerfile) and this [Go code](../internal/usersmgmt/handlers/authuser/authhandler.go) to get a sense of how you can mock RESTFul interfaces.
+
 ## Modifying/extending scaffold
 
 * Keep the layout intact and if you need to extends try to follow the recommendations describe [here][1]. Most importantly, retain the folder `internal` for your Go codes that you are creating as part of your application offerings. If you wish to make your project codes externally available for others to `go get` create the folder `pkg` and place your codes there. Keep anything related to your final build artefacts under these two folders `internal` and or `pkg` only. If you are planning to build another component of a microservices architecture, the recommendation is to create it as a separate Go module under a different github or equivalent repository.
