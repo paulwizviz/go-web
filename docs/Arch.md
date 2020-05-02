@@ -50,7 +50,11 @@ The name of this folder has a special impact on project scoping. Please refer to
 
 ### `./web`
 
-This folder contains a demonstration RectJS sub project where you have all the necessary artefacts to create a web UI. 
+This folder contains a demonstration RectJS sub project where you have all the necessary artefacts to create a web UI.
+
+### `./scripts`
+
+This folder containers operational scripts to enable you trigger build processes and to execute various deployment scenarios.
 
 ## Modifying/extending scaffold
 
