@@ -2,11 +2,11 @@
 
 # Overview
 
-This a template to help you scaffold a project to create macOS, Linux and Windows native app or Docker base app that combine Web UI framework (e.g. ReactJS, Vue, etc) in a single package.
+This a template to help you scaffold a project to create macOS, Linux and Windows native app or Docker base app incorporating a Web frontend (e.g. ReactJS, Vue, etc) into a single package.
 
 This project is **NOT** a Go module or library where you would `go get` packages for inclusion into your project.
 
-The scaffold generated from this template includes a sample app. The app is intended to demonstrates steps involve in building functional apps. The sample app does **NOT** represent any specific use case but you can extend it into a fully functional production release or deployment. You may also elect to replace the sample app with one configured to work within the context of the scaffold.
+The scaffold generated from this template includes a sample with a frontend implemented using ReactJS. The sample is intended to demonstrates steps involve in building functional apps. The sample does **NOT** represent any specific use case but you can extend it into a fully functional production native or container app. You may also elect to replace the sample app with one configured to work within the context of the scaffold or to modify and extend the sample to meet your requirement.
 
 ## How do I scaffold a project from this template?
 
@@ -16,38 +16,57 @@ At the top this page, you should see a green coloured button named `Use this tem
 
 You'll get the following:
 
-1. A ReactJS sub-project
+* A ReactJS sub-project.
 
-2. Go codes to manage app configuration, startup sequence and network operations
+* Go codes to manage app configuration, startup sequence and network operations.
 
-3. Go implementation of a webserver and RESTful server
+* Go implementation of a webserver and RESTful server
 
-4. Build scripts -- Docker based -- to create native (macOS, Linux and Windows) app or Docker image app.
+* Build scripts -- Docker based -- to create native (macOS, Linux and Windows) app or Docker image app.
 
-5. A locally deployable development environment
+* A locally deployable development environment
 
 ## Prerequisite
 
 In order to build apps based on this template ensure you have the following items installed:
 
-1. Docker and Docker compose
+* Docker and Docker compose
 
-2. [Go toolkit version 1.11 onwards](https://blog.golang.org/)
+* [Go toolkit version 1.11 onwards](https://blog.golang.org/)
 
-3. Node
+* Node
 
-## How do I see the sample app in action?
+## How do I see the sample in action?
 
-Follow these steps:
+There are two options for you to see the sample in action. In both cases, you will need to build the sample first. Please follow this [doc](./docs/Build.md) for instruction.
 
-1. Build the sample app (please refer to [doc](./docs/Build.md) for instruction 
+### Native apps
 
-2. Open an terminal and navigate to `./build/native/<platform of your choice>`
+To see a native app in action, follow these steps:
 
-3. Start app `goreact` (for macOS and Linux) or `goreact.exe` (for windows)
+1. Open an terminal and navigate to `./build/native/<platform of your choice>`
+
+2. You have the following options:
+
+    2.1. To run the app with a UI frontend, execute the command `goreact start ui` (for macOS and Linux) or `goreact.exe start ui` (for Windows).
+
+    2.2. To run the app with no UI frontend (i.e. headless), execute the command `goreact start noui` (for macOS and Linux) or `goreact.exec start noui`
+
 NOTE: By default the app will run require port 80 to be available. If you need the app to use other ports type the command `goreact --help`.
 
-4. Assuming you have no problem with STEP 3, run the command `goreact frontend` open a browser with url to `localhost`.
+3. Assuming you have no problem with STEP 2.1 and operating on port 80, open a browser with url to `localhost`.
+
+### Container app
+
+1. Execute the following command `./scripts/test/e2e.sh start`. This will start-up a container with port 80 open.
+
+NOTE: If you wish to have the container expose a different port modify the docker-compose deployment found here [script](./deployments/e2e/docker-compose.yaml)
+
+2. Assuming you have no problem with STEP 1 and operating on port 80, open a browser with url to `localhost`.
+
+3. To stop you app, execute the following command `./scripts/test/e2e.sh stop`.
+
+4. To clean up your workspace, `./scripts/test/e2e.sh clean`.
 
 ## How do I extend/modify my scaffold?
 
