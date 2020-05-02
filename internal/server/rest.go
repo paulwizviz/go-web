@@ -16,12 +16,12 @@ package server
 
 import (
 	"goweb/internal"
-	"goweb/internal/usersmgmt/authuser"
+	"goweb/internal/usersmgmt/handlers/authuser"
 
 	"github.com/gorilla/mux"
 )
 
-func RunREST(router *mux.Router) {
-	router.Use(mux.CORSMethodMiddleware(router))
+func RESTRun(router *mux.Router) {
 	router.HandleFunc(internal.URLAuthPath, authuser.Handler)
+	router.Use(mux.CORSMethodMiddleware(router))
 }

@@ -46,7 +46,7 @@ var noUICmdBuilder = NoUICmdBuilder{
 func init() {
 	noUICmdBuilder.service = func() {
 		router := mux.NewRouter()
-		server.RunREST(router)
+		server.RESTRun(router)
 		log.Printf("Starting with no UI on port %v", noUICmdBuilder.port)
 		log.Fatal(http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", noUICmdBuilder.port), router))
 	}
