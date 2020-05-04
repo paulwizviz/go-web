@@ -23,5 +23,4 @@ COPY ./go.mod ./go.mod
 COPY ./go.sum ./go.sum
 
 RUN go mod download && \
-    go test -v goweb/internal/usersmgmt/handlers/authuser && \
-    go test -v goweb/cmd/goreact/cli
+    go test -v  ./...
