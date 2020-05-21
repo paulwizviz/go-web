@@ -14,14 +14,12 @@
 
 package server
 
-import (
-	"goweb/internal"
-	"goweb/internal/auth"
+const (
+	URLRootPath = "/"
+	URLAPIPath  = "/api"
+	URLAuthPath = "/api/auth"
 
-	"github.com/gorilla/mux"
+	HTTPHeaderAccessControllerAllowOrigin = "Access-Control-Allow-Origin"
+	HTTPHeaderContentType                 = "Content-Type"
+	HTTPHeaderAuthorization               = "Authorization"
 )
-
-func RESTRun(router *mux.Router) {
-	router.HandleFunc(internal.URLAuthPath, auth.Handler)
-	router.Use(mux.CORSMethodMiddleware(router))
-}

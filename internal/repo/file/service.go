@@ -12,16 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package server
+package file
 
-import (
-	"goweb/internal"
-	"goweb/internal/auth"
+import "goweb/internal/authuser"
 
-	"github.com/gorilla/mux"
-)
+// FindLoginCredSvc is an implementation of FindLoginCredAdapter
+func FindLoginCredSvc(id string) (authuser.LoginCredential, error) {
+	return FindLoginCredMock(id)
+}
 
-func RESTRun(router *mux.Router) {
-	router.HandleFunc(internal.URLAuthPath, auth.Handler)
-	router.Use(mux.CORSMethodMiddleware(router))
+// FindLoginCredMock implementation of FindLoginCredAdapter
+func FindLoginCredMock(id string) (authuser.LoginCredential, error) {
+	return authuser.LoginCredential{
+		ID:      "hello",
+		Secrets: "hello",
+	}, nil
 }

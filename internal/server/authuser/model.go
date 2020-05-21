@@ -12,16 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package server
+package authuser
 
 import (
-	"goweb/internal"
-	"goweb/internal/auth"
-
-	"github.com/gorilla/mux"
+	"fmt"
+	"strings"
 )
 
-func RESTRun(router *mux.Router) {
-	router.HandleFunc(internal.URLAuthPath, auth.Handler)
-	router.Use(mux.CORSMethodMiddleware(router))
+const bearerPrefix = "Bearer"
+
+type jwtToken string
+
+func (t jwtToken) addBearerPrefix() jwtToken {
+	prefix := fmt.Sprintf("%s %s", bearerPrefix, string(t))
+	return jwtToken(prefix)
+}
+
+// RemoveBearerPrefix remove bearer proefix
+func (t jwtToken) removeBearerPrefix() jwtToken {
+	if strings.Contains(string(t), bearerPrefix) {
+		result := strings.TrimLeft(string(t), bearerPrefix)
+		result = strings.TrimSpace(result)
+		return jwtToken(result)
+	}
+	return t
 }

@@ -12,16 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package server
+package authuser
 
-import (
-	"goweb/internal"
-	"goweb/internal/auth"
+// FindLoginCred is a callback to find login credential from
+// a user repository
+type FindLoginCred func(string) (LoginCredential, error)
 
-	"github.com/gorilla/mux"
-)
-
-func RESTRun(router *mux.Router) {
-	router.HandleFunc(internal.URLAuthPath, auth.Handler)
-	router.Use(mux.CORSMethodMiddleware(router))
-}
+// WithLoginCred is a callback authentication service again a user
+// login credential
+type WithLoginCred func(LoginCredential) (AccessCredential, error)

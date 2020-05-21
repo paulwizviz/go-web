@@ -17,22 +17,17 @@ package authuser
 import (
 	"encoding/json"
 	"goweb/internal"
-	"goweb/internal/usersmgmt"
-	"goweb/internal/usersmgmt/authenticators/jwt"
 	"io/ioutil"
 	"net/http"
-	"os"
 )
 
-var authenticator usersmgmt.Authenticator
-
 func init() {
-	_, exists := os.LookupEnv("DEV")
-	if exists {
-		authenticator = jwt.MockAuthenticator
-	} else {
-		authenticator = jwt.Authenticator
-	}
+	// _, exists := os.LookupEnv("DEV")
+	// if exists {
+	// 	authenticator = jwt.MockAuthenticator
+	// } else {
+	// 	authenticator = jwt.Authenticator
+	// }
 }
 
 type credentials struct {
@@ -55,6 +50,7 @@ func parseAuthBody(req *http.Request) (*credentials, error) {
 
 }
 
+// Handler for http
 func Handler(rw http.ResponseWriter, req *http.Request) {
 
 	if req.Method != "POST" {
@@ -73,24 +69,14 @@ func Handler(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	authResponse, err := authenticator(cred.ID, cred.Secrets)
-	if err != nil {
-		rw.WriteHeader(http.StatusUnauthorized)
-		return
-	}
+	// authResponse, err := authenticator(cred.ID, cred.Secrets)
+	// if err != nil {
+	// 	rw.WriteHeader(http.StatusUnauthorized)
+	// 	return
+	// }
 
 	rw.Header().Set(internal.HTTPHeaderAccessControllerAllowOrigin, "*")
 	rw.Header().Set(internal.HTTPHeaderContentType, "application/json")
-
-	var userInfo usersmgmt.UserInfo
-	switch v := authResponse.(type) {
-	case jwt.Response:
-		rw.Header().Set(internal.HTTPHeaderAuthorization, jwt.AddBearerPrefix(v.Token))
-		userInfo = v.UserInfo
-	default:
-		rw.WriteHeader(http.StatusNoContent)
-		return
-	}
 
 	userInfoInBytes, err := json.Marshal(userInfo)
 	if err != nil {

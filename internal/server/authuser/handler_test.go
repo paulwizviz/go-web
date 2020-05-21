@@ -15,12 +15,8 @@
 package authuser
 
 import (
-	"bytes"
 	"encoding/json"
 	"goweb/internal"
-	"goweb/internal/usersmgmt"
-	"goweb/internal/usersmgmt/authenticators/jwt"
-	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -70,60 +66,4 @@ func mockAuthUserRequestBody(t *testing.T) []byte {
 	}
 
 	return bodyBytes
-}
-
-func TestJWTAutheticator(t *testing.T) {
-
-	// Mocking
-	reqBody := mockAuthUserRequestBody(t)
-	expectedBearerToken := "<token value>"
-
-	authenticator = func(id string, secrets string) (usersmgmt.AuthenticatorResponse, error) {
-		info := usersmgmt.UserInfo{
-			ID:          id,
-			DisplayName: id,
-		}
-		response := jwt.Response{
-			Token:    expectedBearerToken,
-			UserInfo: info,
-		}
-		return response, nil
-	}
-
-	// Initiate http test
-	req, err := http.NewRequest("POST", internal.URLAuthPath, bytes.NewReader(reqBody))
-	if err != nil {
-		t.Fatalf("Unable to create a new request: %v", err)
-	}
-
-	rr := httptest.NewRecorder()
-	http.HandlerFunc(Handler).ServeHTTP(rr, req)
-
-	if rr.Code != http.StatusOK {
-		t.Fatalf("Expected status: %v Got status: %v", http.StatusOK, rr.Code)
-	}
-
-	resHeader := rr.Header()
-	bearer := resHeader.Get(internal.HTTPHeaderAuthorization)
-	actualToken := jwt.RemoveBearerPrefix(bearer)
-	if expectedBearerToken != actualToken {
-		t.Errorf("Expected: %v Got: %v", expectedBearerToken, actualToken)
-	}
-
-	resBody, err := ioutil.ReadAll(rr.Body)
-	if err != nil {
-		t.Fatalf("Unable to extract response body. Reason: %v", err)
-	}
-	var info usersmgmt.UserInfo
-	err = json.Unmarshal(resBody, &info)
-	if err != nil {
-		t.Fatalf("Unable to unmarshal user info. Reason: %v", err)
-	}
-	if info.ID != "John" {
-		t.Errorf("Expected: John Got: %v", info.ID)
-	}
-
-	if info.DisplayName != "John" {
-		t.Errorf("Expected: John Got: %v", info.DisplayName)
-	}
 }
