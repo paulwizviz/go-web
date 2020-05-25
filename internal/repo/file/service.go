@@ -23,6 +23,7 @@ import (
 type credentialRepo struct{}
 
 func (c *credentialRepo) FindLoginCred(id string) (*authuser.LoginCredential, error) {
+	// TODO Read from file
 	return &authuser.LoginCredential{
 		ID:      "id",
 		Secrets: "secrets",
@@ -30,6 +31,7 @@ func (c *credentialRepo) FindLoginCred(id string) (*authuser.LoginCredential, er
 }
 
 func (c *credentialRepo) FindAccessCred(id string) (*authuser.AccessCredential, error) {
+	// TODO Read from file
 	return &authuser.AccessCredential{
 		ID:          "id",
 		DisplayName: "Test",

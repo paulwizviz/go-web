@@ -20,6 +20,7 @@ import (
 	jsonserializer "goweb/internal/serializer/json"
 	"io/ioutil"
 	"net/http"
+	"os"
 )
 
 var (
@@ -29,15 +30,15 @@ var (
 )
 
 func init() {
-	// _, exists := os.LookupEnv("DEV")
-	// if exists {
-	// 	authenticator = jwt.MockAuthenticator
-	// } else {
-	// 	authenticator = jwt.Authenticator
-	// }
-	credRepo = file.NewMockCredentialRepoService()
-	authenticate = authuser.NewMockAuthenticateService(credRepo)
 	serializer = jsonserializer.NewSerializer()
+	_, exists := os.LookupEnv("DEV")
+	if exists {
+		credRepo = file.NewMockCredentialRepoService()
+		authenticate = authuser.NewMockAuthenticateService(credRepo)
+	} else {
+		credRepo = file.NewCredentialRepoService()
+		authenticate = authuser.NewAuthenticationService(credRepo)
+	}
 }
 
 func authUserHdler(rw http.ResponseWriter, req *http.Request) {
@@ -70,6 +71,9 @@ func authUserHdler(rw http.ResponseWriter, req *http.Request) {
 		rw.WriteHeader(http.StatusUnauthorized)
 		return
 	}
+
+	// TODO create security services
+	// Add jwt token to accessCred token field
 
 	rw.Header().Set(HTTPHeaderAccessControllerAllowOrigin, "*")
 	rw.Header().Set(HTTPHeaderContentType, "application/json")
