@@ -12,4 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package authuser
+package json
+
+import (
+	jsonstl "encoding/json"
+	"goweb/internal/authuser"
+)
+
+type seralizerSvc struct{}
+
+func (s *seralizerSvc) MarshalAccessCred(accessCred *authuser.AccessCredential) ([]byte, error) {
+	return jsonstl.Marshal(accessCred)
+}
+func (s *seralizerSvc) UnmarshalLoginCred(cred []byte) (*authuser.LoginCredential, error) {
+
+	var loginCred authuser.LoginCredential
+
+	err := jsonstl.Unmarshal(cred, &loginCred)
+	if err != nil {
+		return nil, err
+	}
+
+	return &loginCred, nil
+}
+
+func NewSerializer() authuser.Seralizer {
+	return &seralizerSvc{}
+}

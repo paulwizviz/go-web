@@ -12,28 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package authuser
+package file
 
-import (
-	"fmt"
-	"strings"
-)
+import "testing"
 
-const bearerPrefix = "Bearer"
-
-type jwtToken string
-
-func (t jwtToken) addBearerPrefix() jwtToken {
-	prefix := fmt.Sprintf("%s %s", bearerPrefix, string(t))
-	return jwtToken(prefix)
-}
-
-// RemoveBearerPrefix remove bearer proefix
-func (t jwtToken) removeBearerPrefix() jwtToken {
-	if strings.Contains(string(t), bearerPrefix) {
-		result := strings.TrimLeft(string(t), bearerPrefix)
-		result = strings.TrimSpace(result)
-		return jwtToken(result)
-	}
-	return t
+func TestMockCredentialRepo(t *testing.T) {
+	credRepo := NewMockCredentialRepoService()
+	cred, _ := credRepo.FindAccessCred("id")
+	t.Log(cred)
 }

@@ -14,10 +14,19 @@
 
 package authuser
 
-// FindLoginCred is a callback to find login credential from
-// a user repository
-type FindLoginCred func(string) (LoginCredential, error)
+// Seralizer user credentials
+type Seralizer interface {
+	MarshalAccessCred(*AccessCredential) ([]byte, error)
+	UnmarshalLoginCred([]byte) (*LoginCredential, error)
+}
 
-// WithLoginCred is a callback authentication service again a user
-// login credential
-type WithLoginCred func(LoginCredential) (AccessCredential, error)
+// CredentialRepo is an interface to the cred repository
+type CredentialRepo interface {
+	FindLoginCred(string) (*LoginCredential, error)
+	FindAccessCred(string) (*AccessCredential, error)
+}
+
+// Authenticator is an interface to a credential service
+type Authenticator interface {
+	WithLoginCred(*LoginCredential) (*AccessCredential, error)
+}

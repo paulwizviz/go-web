@@ -12,13 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package authuser
+package server
 
 import (
-	"encoding/json"
-	"goweb/internal"
+	"goweb/internal/authuser"
+	"goweb/internal/repo/file"
+	jsonserializer "goweb/internal/serializer/json"
 	"io/ioutil"
 	"net/http"
+)
+
+var (
+	authenticate authuser.Authenticator
+	serializer   authuser.Seralizer
+	credRepo     authuser.CredentialRepo
 )
 
 func init() {
@@ -28,61 +35,50 @@ func init() {
 	// } else {
 	// 	authenticator = jwt.Authenticator
 	// }
+	credRepo = file.NewMockCredentialRepoService()
+	authenticate = authuser.NewMockAuthenticateService(credRepo)
+	serializer = jsonserializer.NewSerializer()
 }
 
-type credentials struct {
-	ID      string `json:"id"`
-	Secrets string `json:"secrets"`
-}
-
-func parseAuthBody(req *http.Request) (*credentials, error) {
-	body, err := ioutil.ReadAll(req.Body)
-	if err != nil {
-		return nil, err
-	}
-	defer req.Body.Close()
-	var cred credentials
-	err = json.Unmarshal(body, &cred)
-	if err != nil {
-		return nil, err
-	}
-	return &cred, nil
-
-}
-
-// Handler for http
-func Handler(rw http.ResponseWriter, req *http.Request) {
+func authUserHdler(rw http.ResponseWriter, req *http.Request) {
 
 	if req.Method != "POST" {
 		rw.WriteHeader(http.StatusUnauthorized)
 		return
 	}
 
-	if req.URL.Path != internal.URLAuthPath {
+	if req.URL.Path != URLAuthPath {
 		rw.WriteHeader(http.StatusUnauthorized)
 		return
 	}
 
-	cred, err := parseAuthBody(req)
+	body, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		rw.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+	defer req.Body.Close()
+
+	loginCred, err := serializer.UnmarshalLoginCred(body)
 	if err != nil {
 		rw.WriteHeader(http.StatusUnauthorized)
 		return
 	}
 
-	// authResponse, err := authenticator(cred.ID, cred.Secrets)
-	// if err != nil {
-	// 	rw.WriteHeader(http.StatusUnauthorized)
-	// 	return
-	// }
+	accessCred, err := authenticate.WithLoginCred(loginCred)
+	if err != nil {
+		rw.WriteHeader(http.StatusUnauthorized)
+		return
+	}
 
-	rw.Header().Set(internal.HTTPHeaderAccessControllerAllowOrigin, "*")
-	rw.Header().Set(internal.HTTPHeaderContentType, "application/json")
+	rw.Header().Set(HTTPHeaderAccessControllerAllowOrigin, "*")
+	rw.Header().Set(HTTPHeaderContentType, "application/json")
 
-	userInfoInBytes, err := json.Marshal(userInfo)
+	accessCredBytes, err := serializer.MarshalAccessCred(accessCred)
 	if err != nil {
 		rw.WriteHeader(http.StatusNoContent)
 		return
 	}
 	rw.WriteHeader(http.StatusOK)
-	rw.Write(userInfoInBytes)
+	rw.Write(accessCredBytes)
 }

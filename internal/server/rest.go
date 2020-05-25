@@ -15,13 +15,10 @@
 package server
 
 import (
-	"goweb/internal"
-	"goweb/internal/auth"
-
 	"github.com/gorilla/mux"
 )
 
 func RESTRun(router *mux.Router) {
-	router.HandleFunc(internal.URLAuthPath, auth.Handler)
+	router.HandleFunc(URLAuthPath, authUserHdler)
 	router.Use(mux.CORSMethodMiddleware(router))
 }

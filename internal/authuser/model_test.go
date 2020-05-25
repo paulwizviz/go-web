@@ -15,56 +15,330 @@
 package authuser
 
 import (
+	"fmt"
 	"testing"
 )
 
-func TestVerifyLoginCredForm(t *testing.T) {
-
+func TestIsValidLoginCred(t *testing.T) {
 	dataSet := []struct {
-		cred     LoginCredential
-		expected error
+		input *LoginCredential
+		err   error
 	}{
 		{
-			cred: LoginCredential{},
-			expected: &fieldError{
+			input: nil,
+			err:   fmt.Errorf("Input loginCredential is nil"),
+		},
+		{
+			input: &LoginCredential{},
+			err: &fieldError{
 				FieldName: "ID",
 			},
 		},
 		{
-			cred: LoginCredential{
+			input: &LoginCredential{
+				ID: "",
+			},
+			err: &fieldError{
+				FieldName: "ID",
+			},
+		},
+		{
+			input: &LoginCredential{
 				ID: "id",
 			},
-			expected: &fieldError{
+			err: &fieldError{
+				FieldName: "Secrets",
+			},
+		},
+		{
+			input: &LoginCredential{
+				ID:      "id",
+				Secrets: "",
+			},
+			err: &fieldError{
+				FieldName: "Secrets",
+			},
+		},
+		{
+			input: &LoginCredential{
+				ID:      "id",
+				Secrets: "secrets",
+			},
+			err: nil,
+		},
+	}
+
+	for _, dataItem := range dataSet {
+		err := IsValidLoginCred(dataItem.input)
+		if dataItem.err == nil {
+			if dataItem.err != err {
+				t.Fatalf("Expected: %v Got: %v", dataItem.err, err)
+			}
+		} else {
+			if dataItem.err.Error() != err.Error() {
+				t.Fatalf("Expected: %v Got: %v", dataItem.err, err)
+			}
+		}
+	}
+}
+
+func TestIsValidAccessCred(t *testing.T) {
+	dataSet := []struct {
+		input *AccessCredential
+		err   error
+	}{
+		{
+			input: nil,
+			err:   fmt.Errorf("Input loginCredential is nil"),
+		},
+		{
+			input: &AccessCredential{},
+			err: &fieldError{
+				FieldName: "ID",
+			},
+		},
+		{
+			input: &AccessCredential{
+				ID: "",
+			},
+			err: &fieldError{
+				FieldName: "ID",
+			},
+		},
+		{
+			input: &AccessCredential{
+				ID: "id",
+			},
+			err: nil,
+		},
+	}
+	for _, dataItem := range dataSet {
+		err := IsValidAccessCred(dataItem.input)
+		if dataItem.err == nil {
+			if dataItem.err != err {
+				t.Fatalf("Expected: %v Got: %v", dataItem.err, err)
+			}
+		} else {
+			if dataItem.err.Error() != err.Error() {
+				t.Fatalf("Expected: %v Got: %v", dataItem.err, err)
+			}
+		}
+	}
+}
+
+func TestCompareLoginCred(t *testing.T) {
+	dataSet := []struct {
+		tocompare   *LoginCredential
+		comparewith *LoginCredential
+		expected    bool
+		err         error
+	}{
+		{
+			tocompare: &LoginCredential{
+				ID:      "id",
+				Secrets: "secrets",
+			},
+			comparewith: &LoginCredential{
+				ID:      "id",
+				Secrets: "secrets",
+			},
+			expected: true,
+			err:      nil,
+		},
+		{
+			tocompare: &LoginCredential{
+				ID:      "id",
+				Secrets: "secrets",
+			},
+			comparewith: &LoginCredential{
+				ID:      "id",
+				Secrets: "secret",
+			},
+			expected: false,
+			err:      fmt.Errorf("Login credentials not the same"),
+		},
+		{
+			tocompare: &LoginCredential{
+				ID:      "id",
+				Secrets: "secrets",
+			},
+			comparewith: &LoginCredential{
+				ID:      "i",
+				Secrets: "secrets",
+			},
+			expected: false,
+			err:      fmt.Errorf("Login credentials not the same"),
+		},
+		{
+			tocompare: &LoginCredential{
+				ID:      "",
+				Secrets: "secrets",
+			},
+			comparewith: &LoginCredential{
+				ID:      "id",
+				Secrets: "secret",
+			},
+			expected: false,
+			err: &fieldError{
+				FieldName: "ID",
+			},
+		},
+		{
+			tocompare: &LoginCredential{
+				ID:      "id",
+				Secrets: "",
+			},
+			comparewith: &LoginCredential{
+				ID:      "id",
+				Secrets: "secret",
+			},
+			expected: false,
+			err: &fieldError{
 				FieldName: "Secrets",
 			},
 		},
 	}
 
 	for _, dataItem := range dataSet {
-		err := VerifyLoginCredForm(dataItem.cred)
-		if err.Error() != dataItem.expected.Error() {
-			t.Fatalf("Expected: %v Got: %v", dataItem.expected, err)
+		same, err := CompareLoginCred(dataItem.tocompare, dataItem.comparewith)
+		if dataItem.err == nil {
+			if dataItem.err != err {
+				t.Fatalf("Expected: %v Got: %v", dataItem.err, err)
+			}
+			if dataItem.expected != same {
+				t.Fatalf("Expected: %v Got: %v", dataItem.expected, same)
+			}
+		} else {
+			if dataItem.err.Error() != err.Error() {
+				t.Fatalf("Expected: %v Got: %v", dataItem.err, err)
+			}
+			if dataItem.expected != same {
+				t.Fatalf("Expected: %v Got: %v", dataItem.expected, same)
+			}
 		}
 	}
 }
 
-func TestVerifyAccessCredForm(t *testing.T) {
+func TestCompareAccessCred(t *testing.T) {
 	dataSet := []struct {
-		input    AccessCredential
-		expected error
+		tocompare   *AccessCredential
+		comparewith *AccessCredential
+		expected    bool
+		err         error
 	}{
 		{
-			input: AccessCredential{},
-			expected: &fieldError{
+			tocompare: &AccessCredential{
+				DisplayName: "",
+				AccessToken: "",
+				AccessRole:  "",
+			},
+			comparewith: &AccessCredential{
+				ID:          "id",
+				DisplayName: "",
+				AccessToken: "",
+				AccessRole:  "",
+			},
+			expected: false,
+			err: &fieldError{
 				FieldName: "ID",
 			},
+		},
+		{
+			tocompare: &AccessCredential{
+				ID:          "id",
+				DisplayName: "",
+				AccessToken: "",
+				AccessRole:  "",
+			},
+			comparewith: &AccessCredential{
+				DisplayName: "",
+				AccessToken: "",
+				AccessRole:  "",
+			},
+			expected: false,
+			err: &fieldError{
+				FieldName: "ID",
+			},
+		},
+		{
+			tocompare: &AccessCredential{
+				ID:          "id",
+				DisplayName: "",
+				AccessToken: "",
+				AccessRole:  "",
+			},
+			comparewith: &AccessCredential{
+				ID:          "id",
+				DisplayName: "a",
+				AccessToken: "",
+				AccessRole:  "",
+			},
+			expected: false,
+			err:      fmt.Errorf("Access credentials not the same"),
+		},
+		{
+			tocompare: &AccessCredential{
+				ID: "id",
+			},
+			comparewith: &AccessCredential{
+				ID:          "id",
+				DisplayName: "",
+				AccessToken: "",
+				AccessRole:  "",
+			},
+			expected: true,
+			err:      nil,
+		},
+		{
+			tocompare: &AccessCredential{
+				ID:          "id",
+				DisplayName: "a",
+				AccessToken: "b",
+				AccessRole:  "c",
+			},
+			comparewith: &AccessCredential{
+				ID:          "id",
+				DisplayName: "a",
+				AccessToken: "b",
+				AccessRole:  "c",
+			},
+			expected: true,
+			err:      nil,
+		},
+		{
+			tocompare: &AccessCredential{
+				ID:          "id",
+				DisplayName: "",
+				AccessToken: "",
+				AccessRole:  "",
+			},
+			comparewith: &AccessCredential{
+				ID:          "id",
+				DisplayName: "",
+				AccessToken: "",
+				AccessRole:  "",
+			},
+			expected: true,
+			err:      nil,
 		},
 	}
 
 	for _, dataItem := range dataSet {
-		err := VerifyAccessCredForm(dataItem.input)
-		if err.Error() != dataItem.expected.Error() {
-			t.Fatalf("Expected: %v Got: %v", dataItem.expected, err)
+		same, err := CompareAccessCred(dataItem.tocompare, dataItem.comparewith)
+		if dataItem.err == nil {
+			if dataItem.err != err {
+				t.Fatalf("Expected: %v Got: %v", dataItem.err, err)
+			}
+			if dataItem.expected != same {
+				t.Fatalf("Expected: %v Got: %v", dataItem.expected, same)
+			}
+		} else {
+			if dataItem.err.Error() != err.Error() {
+				t.Fatalf("Expected: %v Got: %v", dataItem.err, err)
+			}
+			if dataItem.expected != same {
+				t.Fatalf("Expected: %v Got: %v", dataItem.expected, same)
+			}
 		}
 	}
 }

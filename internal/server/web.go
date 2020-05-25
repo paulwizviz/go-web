@@ -15,7 +15,6 @@
 package server
 
 import (
-	"goweb/internal"
 	"net/http"
 
 	rice "github.com/GeertJohan/go.rice"
@@ -23,5 +22,5 @@ import (
 )
 
 func RunWeb(router *mux.Router) {
-	router.PathPrefix(internal.URLRootPath).Handler(http.FileServer(rice.MustFindBox("../../web").HTTPBox()))
+	router.PathPrefix(URLRootPath).Handler(http.FileServer(rice.MustFindBox("../../web").HTTPBox()))
 }

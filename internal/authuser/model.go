@@ -19,6 +19,8 @@ import (
 	"reflect"
 )
 
+// Error handlers
+
 const errorPrefix = "Missing:"
 
 type fieldError struct {
@@ -27,11 +29,6 @@ type fieldError struct {
 
 func (e *fieldError) Error() string {
 	return fmt.Sprintf("%v %v", errorPrefix, e.FieldName)
-}
-
-// EmptyFieldError identify erroneous field
-func EmptyFieldError(err error) string {
-	return err.(*fieldError).FieldName
 }
 
 func isEmptyString(value string) bool {
@@ -49,21 +46,39 @@ type LoginCredential struct {
 	Secrets string `json:"secrets"`
 }
 
-// VerifyLoginCredForm determines if all fields have been set
-func VerifyLoginCredForm(cred LoginCredential) error {
+func IsValidLoginCred(cred *LoginCredential) error {
 
-	field := reflect.Indirect(reflect.ValueOf(cred))
+	if cred == nil {
+		return fmt.Errorf("Input loginCredential is nil")
+	}
+
 	if isEmptyString(cred.ID) {
 		return &fieldError{
-			FieldName: field.Type().Field(0).Name,
+			FieldName: "ID",
 		}
 	}
 	if isEmptyString(cred.Secrets) {
 		return &fieldError{
-			FieldName: field.Type().Field(1).Name,
+			FieldName: "Secrets",
 		}
 	}
 	return nil
+}
+
+func CompareLoginCred(cred *LoginCredential, compared *LoginCredential) (bool, error) {
+	err := IsValidLoginCred(cred)
+	if err != nil {
+		return false, err
+	}
+
+	err = IsValidLoginCred(compared)
+	if err != nil {
+		return false, err
+	}
+	if !reflect.DeepEqual(cred, compared) {
+		return false, fmt.Errorf("Login credentials not the same")
+	}
+	return true, nil
 }
 
 // AccessCredential contains information associated with a person
@@ -72,19 +87,39 @@ type AccessCredential struct {
 	ID string `json:"id"`
 	// DisplayName is an optional representation of a user name
 	// that can be read by a person
-	DisplayName string `json:"display_name"`
+	DisplayName string `json:"displayName"`
 	// JWTToken is an optional representation of a JWT Token.
-	AccessToken string `json:"access_token"`
+	AccessToken string `json:"accessToken"`
 	// AccessRole represents role
-	AccessRole string `json:"access_role"`
+	AccessRole string `json:"accessRole"`
 }
 
-// VerifyAccessCredForm determines if access credential has at least ID field set
-func VerifyAccessCredForm(cred AccessCredential) error {
+func IsValidAccessCred(cred *AccessCredential) error {
+
+	if cred == nil {
+		return fmt.Errorf("Input loginCredential is nil")
+	}
+
 	if isEmptyString(cred.ID) {
 		return &fieldError{
 			FieldName: "ID",
 		}
 	}
 	return nil
+}
+
+func CompareAccessCred(cred *AccessCredential, compared *AccessCredential) (bool, error) {
+	err := IsValidAccessCred(cred)
+	if err != nil {
+		return false, err
+	}
+
+	err = IsValidAccessCred(compared)
+	if err != nil {
+		return false, err
+	}
+	if !reflect.DeepEqual(cred, compared) {
+		return false, fmt.Errorf("Access credentials not the same")
+	}
+	return true, nil
 }

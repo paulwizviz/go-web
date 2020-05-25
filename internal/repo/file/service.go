@@ -14,17 +14,28 @@
 
 package file
 
-import "goweb/internal/authuser"
+import (
+	"goweb/internal/authuser"
+)
 
-// FindLoginCredSvc is an implementation of FindLoginCredAdapter
-func FindLoginCredSvc(id string) (authuser.LoginCredential, error) {
-	return FindLoginCredMock(id)
+type mockCredentialRepok struct{}
+
+func (c *mockCredentialRepok) FindLoginCred(id string) (*authuser.LoginCredential, error) {
+	return &authuser.LoginCredential{
+		ID:      "id",
+		Secrets: "secrets",
+	}, nil
 }
 
-// FindLoginCredMock implementation of FindLoginCredAdapter
-func FindLoginCredMock(id string) (authuser.LoginCredential, error) {
-	return authuser.LoginCredential{
-		ID:      "hello",
-		Secrets: "hello",
+func (c *mockCredentialRepok) FindAccessCred(id string) (*authuser.AccessCredential, error) {
+	return &authuser.AccessCredential{
+		ID:          "Test",
+		DisplayName: "Test",
+		AccessToken: "Test",
+		AccessRole:  "Test",
 	}, nil
+}
+
+func NewMockCredentialRepoService() authuser.CredentialRepo {
+	return &mockCredentialRepok{}
 }
