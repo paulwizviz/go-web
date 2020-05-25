@@ -17,6 +17,8 @@ package server
 import (
 	"bytes"
 	"encoding/json"
+	"goweb/internal/authuser"
+	"goweb/internal/repo/file"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -79,6 +81,10 @@ func mockRequestBody(t *testing.T) []byte {
 }
 
 func TestEmptyRequestBody(t *testing.T) {
+
+	credRepo = file.NewMockCredentialRepoService()
+	authenticate = authuser.NewMockAuthenticateService(credRepo)
+
 	reqBody := mockRequestBody(t)
 	dataSet := []struct {
 		body       *bytes.Reader
