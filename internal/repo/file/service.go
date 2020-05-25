@@ -40,6 +40,7 @@ func (c *credentialRepo) FindAccessCred(id string) (*authuser.AccessCredential, 
 	}, nil
 }
 
+// NewCredentialRepoService instantiate a credential repo
 func NewCredentialRepoService() authuser.CredentialRepo {
 	return &credentialRepo{}
 }
@@ -64,6 +65,7 @@ func (m *mockCredentialRepo) FindAccessCred(id string) (*authuser.AccessCredenti
 	}, nil
 }
 
+// NewMockCredentialRepoService instantiate a mock credential repo
 func NewMockCredentialRepoService() authuser.CredentialRepo {
 	return &mockCredentialRepo{}
 }
