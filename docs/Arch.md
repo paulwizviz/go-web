@@ -62,6 +62,14 @@ This template provides a mini development environment to help you develop the UI
 
 For examples of how you can mock backends for dev enviornment, please refer to the [dev build scripts](../build/package/dev/rest.dockerfile) and this [Go code](../internal/usersmgmt/handlers/authuser/authhandler.go) to get a sense of how you can mock RESTFul interfaces.
 
+## Domain Driven Design
+
+The sample app, particularly the Go Rest aspects, demonstrates domain driven design in addition to a hexagonal style layout for you to draw inspirations. The implementation is based on a pattern as described in the following videos:
+
+* [Building Hexagonal Microservices with Go - Part One](https://www.youtube.com/watch?v=rQnTtQZGpg8)
+* [Building Hexagonal Microservices with Go - Part Two](https://www.youtube.com/watch?v=xUYDkiPdfWs)
+* [Building Hexagonal Microservices with Go - Part Three](https://www.youtube.com/watch?v=QyBXz9SpPqE)
+
 ## Modifying/extending scaffold
 
 * Keep the layout intact and if you need to extends try to follow the recommendations describe [here][1]. Most importantly, retain the folder `internal` for your Go codes that you are creating as part of your application offerings. If you wish to make your project codes externally available for others to `go get` create the folder `pkg` and place your codes there. Keep anything related to your final build artefacts under these two folders `internal` and or `pkg` only. If you are planning to build another component of a microservices architecture, the recommendation is to create it as a separate Go module under a different github or equivalent repository.
