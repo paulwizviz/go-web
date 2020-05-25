@@ -18,16 +18,42 @@ import (
 	"goweb/internal/authuser"
 )
 
-type mockCredentialRepok struct{}
+// actual credential repo
 
-func (c *mockCredentialRepok) FindLoginCred(id string) (*authuser.LoginCredential, error) {
+type credentialRepo struct{}
+
+func (c *credentialRepo) FindLoginCred(id string) (*authuser.LoginCredential, error) {
 	return &authuser.LoginCredential{
 		ID:      "id",
 		Secrets: "secrets",
 	}, nil
 }
 
-func (c *mockCredentialRepok) FindAccessCred(id string) (*authuser.AccessCredential, error) {
+func (c *credentialRepo) FindAccessCred(id string) (*authuser.AccessCredential, error) {
+	return &authuser.AccessCredential{
+		ID:          "id",
+		DisplayName: "Test",
+		AccessToken: "Test",
+		AccessRole:  "Test",
+	}, nil
+}
+
+func NewCredentialRepoService() authuser.CredentialRepo {
+	return &credentialRepo{}
+}
+
+// mock Credential repo
+
+type mockCredentialRepo struct{}
+
+func (m *mockCredentialRepo) FindLoginCred(id string) (*authuser.LoginCredential, error) {
+	return &authuser.LoginCredential{
+		ID:      "id",
+		Secrets: "secrets",
+	}, nil
+}
+
+func (m *mockCredentialRepo) FindAccessCred(id string) (*authuser.AccessCredential, error) {
 	return &authuser.AccessCredential{
 		ID:          "Test",
 		DisplayName: "Test",
@@ -37,5 +63,5 @@ func (c *mockCredentialRepok) FindAccessCred(id string) (*authuser.AccessCredent
 }
 
 func NewMockCredentialRepoService() authuser.CredentialRepo {
-	return &mockCredentialRepok{}
+	return &mockCredentialRepo{}
 }
