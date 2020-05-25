@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package usersmgmt
+package file
 
-type AuthenticatorResponse interface{}
+import "testing"
 
-type Authenticator func(id string, secrets string) (AuthenticatorResponse, error)
-
-type UserInfo struct {
-	ID          string `json:"id"`
-	DisplayName string `json:"displayName"`
+func TestMockCredentialRepo(t *testing.T) {
+	credRepo := NewMockCredentialRepoService()
+	cred, _ := credRepo.FindAccessCred("id")
+	t.Log(cred)
 }
