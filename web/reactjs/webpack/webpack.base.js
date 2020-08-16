@@ -25,8 +25,10 @@ module.exports = {
     new HtmlWebpackPlugin({ 
       template: path.resolve(SRC_DIR,'index.html')
     }),
-    new CopyPlugin([
-      { from: path.resolve(__dirname,'..','images'), to: path.resolve(BUILD_DIR,'images') },
-    ]),
+    new CopyPlugin({
+      patterns: [
+        { from: path.resolve(__dirname,'..','images'), to: path.resolve(BUILD_DIR,'images') },
+      ]
+    }),
   ]
 }
