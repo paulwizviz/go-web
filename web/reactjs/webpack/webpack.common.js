@@ -23,6 +23,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({ 
+      minify: false,
       template: path.resolve(SRC_DIR,'index.html')
     }),
     new CopyPlugin({

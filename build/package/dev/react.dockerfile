@@ -21,9 +21,6 @@ COPY ./web/reactjs/dep.sh /opt/dep.sh
 
 RUN /opt/dep.sh
 
-RUN npm audit fix && \
-    npm audit
-
 FROM node:13.10.1
 
 WORKDIR /opt

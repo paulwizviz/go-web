@@ -40,5 +40,6 @@ npm install --save redux-logger
 npm install --save redux-promise-middleware
 npm install --save redux-thunk
 
-npm audit fix
+npm audit fix 
 npm audit
+cat ./package.json

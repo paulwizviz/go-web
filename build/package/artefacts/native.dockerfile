@@ -15,18 +15,28 @@
 # node build phase
 # In this phase, we pull artefacts to build ReactJS webapp for
 # development
+FROM node:13.10.1 as npminstall
+
+WORKDIR /opt
+
+COPY ./web/reactjs/dep.sh ./dep.sh
+COPY ./web/reactjs/package.json ./package.json
+
+RUN ./dep.sh
+
 FROM node:13.10.1 as nodebuild
 
 WORKDIR /opt
 
-COPY ./web/reactjs/package-lock.json /opt/package-lock.json
-COPY ./web/reactjs/package.json /opt/package.json
+COPY --from=npminstall /opt/node_modules ./node_modules
+COPY --from=npminstall /opt/package-lock.json ./package-lock.json
+COPY --from=npminstall /opt/package.json /opt/package.json
 COPY ./web/reactjs/webpack /opt/webpack
 COPY ./web/reactjs/.babelrc /opt/.babelrc
 COPY ./web/reactjs/images /opt/images
 COPY ./web/reactjs/src /opt/src
 
-RUN npm install && npm audit fix && npm run build
+RUN npm run build
 
 # Go build phase
 # Utilising a go packaging tool github.com/GeertJohan/go.rice
