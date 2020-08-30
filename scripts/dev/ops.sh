@@ -14,16 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-export REACT_IMAGE_NAME=paulwizviz/go-dev-react
-export REST_IMAGE_NAME=paulwizviz/go-dev-rest
+export REACT_IMAGE_NAME=paulwizviz/goweb-dev-react
+export REST_IMAGE_NAME=paulwizviz/goweb-dev-rest
 export IMAGE_TAG=dev
 export NODE_IMAGE_TAG=13.10.1
 
 COMMAND="$1"
-
-function node(){
-     docker run -v ${PWD}/web/reactjs:/opt -w /opt -t --rm node:${NODE_IMAGE_TAG} ./dep.sh
-}
 
 function package() {
     docker build -f ./build/package/dev/react.dockerfile -t ${REACT_IMAGE_NAME}:${IMAGE_TAG} .

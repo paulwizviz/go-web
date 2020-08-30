@@ -18,7 +18,7 @@
 
 COMMAND="$1"
 
-native_build_image=hls_devkit/native_build_image:current
+native_build_image=paulwizviz/goweb-native_build_image:current
 
 function packageContainer() {
     docker build -f ./build/package/artefacts/container.dockerfile -t ${APP_IMAGE_NAME}:${APP_IMAGE_TAG} .
@@ -35,7 +35,7 @@ function packageNative(){
     docker cp $CONTAINER_ID:/opt/build/package/macOS/ ./build/native
     mkdir -p ./build/native/windows
     docker cp $CONTAINER_ID:/opt/build/package/windows/ ./build/native
-    docker rm -f $CONTAINER_ID
+    docker rm -f $id
     docker rmi -f ${native_build_image}
 }
 
