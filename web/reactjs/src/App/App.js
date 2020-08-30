@@ -13,29 +13,33 @@
 // limitations under the License.
 
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
 
-import { Provider } from 'react-redux';
+import { 
+    makeStyles,
+    TextField,
+    Button
+} from '@material-ui/core';
 
-import { ThemeProvider } from '@material-ui/styles';
+const useStyles = makeStyles((theme) => ({
+    root: {
+        '& > *': {
+            margin: theme.spacing(1),
+            width: '25ch',
+        },
+    },
+}));
 
-import { createBrowserHistory } from 'history';
-const browserHistory = createBrowserHistory();
+const App = () =>{
+    const classes = useStyles();
 
-import { Routes } from '../Routes';
-import theme from './theme';
-import {store} from '../modules/store';
+    return (
+        <div>
+            <form className={classes.root} noValidate autoComplete="off">
+                <TextField id="standard-basic" label="Standard" />
+            </form>
+            <Button>Send</Button>
+        </div>
+    );
+};
 
-export default class App extends React.Component {
-    render() {
-        return (
-            <Provider store={store}>
-                <ThemeProvider theme={theme}>
-                    <Router history={browserHistory}>
-                        <Routes />
-                    </Router>
-                </ThemeProvider>
-            </Provider>
-        );
-    }
-}
+export default App;
