@@ -20,6 +20,8 @@ import {
     Button
 } from '@material-ui/core';
 
+import axios from 'axios';
+
 const useStyles = makeStyles((theme) => ({
     root: {
         '& > *': {
@@ -32,12 +34,22 @@ const useStyles = makeStyles((theme) => ({
 const App = () =>{
     const classes = useStyles();
 
+    const sendHandler = async () => {
+        try{
+            const resp = await axios.post('/api/auth',{'id':'id', 'secrets':'password'}, {timeout: 1000});
+            console.log(resp.data);
+        } catch (err){
+            console.log(err);
+        }
+    };
+
+
     return (
         <div>
             <form className={classes.root} noValidate autoComplete="off">
                 <TextField id="standard-basic" label="Standard" />
             </form>
-            <Button>Send</Button>
+            <Button onClick={sendHandler}>Send</Button>
         </div>
     );
 };
