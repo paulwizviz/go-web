@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React from 'react';
+import React, {useState} from 'react';
 
 import { 
     makeStyles,
-    TextField,
     Button
 } from '@material-ui/core';
 
@@ -34,22 +33,23 @@ const useStyles = makeStyles((theme) => ({
 const App = () =>{
     const classes = useStyles();
 
+    const [result, setResult] = useState('Waiting for results ...');
+
     const sendHandler = async () => {
         try{
-            const resp = await axios.post('/api/auth',{'id':'id', 'secrets':'password'}, {timeout: 1000});
-            console.log(resp.data);
+            const resp = await axios.post('/api/auth',{'id':'id', 'secrets':'secrets'}, {timeout: 1000});
+            setResult(resp.data);
         } catch (err){
-            console.log(err);
+            setResult(err);
         }
     };
 
-
     return (
-        <div>
-            <form className={classes.root} noValidate autoComplete="off">
-                <TextField id="standard-basic" label="Standard" />
-            </form>
-            <Button onClick={sendHandler}>Send</Button>
+        <div classes={classes}>
+            <Button onClick={sendHandler}>Click me to get result from backend</Button>
+            <h1>{ 
+                `${JSON.stringify(result)}`
+            }</h1>
         </div>
     );
 };
