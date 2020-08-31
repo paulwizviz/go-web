@@ -15,10 +15,39 @@
 package server
 
 import (
+	"io/ioutil"
+	"net/http"
+
 	"github.com/gorilla/mux"
 )
 
+func authHandler(rw http.ResponseWriter, req *http.Request) {
+	if req.Method != "POST" {
+		rw.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	if req.URL.Path != URLAuthPath {
+		rw.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	body, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		rw.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+	defer req.Body.Close()
+
+	rw.Header().Set(HTTPHeaderAccessControllerAllowOrigin, "*")
+	rw.Header().Set(HTTPHeaderContentType, "application/json")
+
+	rw.WriteHeader(http.StatusOK)
+	rw.Write(body)
+
+}
+
 func RESTRun(router *mux.Router) {
-	router.HandleFunc(URLAuthPath, authUserHdler)
+	router.HandleFunc(URLAuthPath, authHandler)
 	router.Use(mux.CORSMethodMiddleware(router))
 }
