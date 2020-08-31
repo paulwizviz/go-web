@@ -12,30 +12,46 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import React, {useState} from 'react';
 
-import { Provider } from 'react-redux';
+import { 
+    makeStyles,
+    Button
+} from '@material-ui/core';
 
-import { ThemeProvider } from '@material-ui/styles';
+import axios from 'axios';
 
-import { createBrowserHistory } from 'history';
-const browserHistory = createBrowserHistory();
+const useStyles = makeStyles((theme) => ({
+    root: {
+        '& > *': {
+            margin: theme.spacing(1),
+            width: '25ch',
+        },
+    },
+}));
 
-import { Routes } from '../Routes';
-import theme from './theme';
-import {store} from '../modules/store';
+const App = () =>{
+    const classes = useStyles();
 
-export default class App extends React.Component {
-    render() {
-        return (
-            <Provider store={store}>
-                <ThemeProvider theme={theme}>
-                    <Router history={browserHistory}>
-                        <Routes />
-                    </Router>
-                </ThemeProvider>
-            </Provider>
-        );
-    }
-}
+    const [result, setResult] = useState('Waiting for results ...');
+
+    const sendHandler = async () => {
+        try{
+            const resp = await axios.post('/api/auth',{'id':'id', 'secrets':'secrets'}, {timeout: 1000});
+            setResult(resp.data);
+        } catch (err){
+            setResult(err);
+        }
+    };
+
+    return (
+        <div classes={classes}>
+            <Button onClick={sendHandler}>Click me to get result from backend</Button>
+            <h1>{ 
+                `${JSON.stringify(result)}`
+            }</h1>
+        </div>
+    );
+};
+
+export default App;
