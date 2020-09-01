@@ -1,11 +1,6 @@
 # Build process
 
-Out-of-the-box you will find scripts to help you build sample native and container based apps based 
-on ReactJS and Go Rest API codebase. If you plan to extend from the skeletons, 
-you just need to extend from these scripts. If you plan to replace the skeletons, please use this
-build script as inspiration.
-
-NOTE: All scripts are BASH based and located in the folder `scripts`
+You scaffold contains scripts to build native and/or container-based apps. The scripts to trigger build process are located in the [scripts folder](../scripts).
 
 ## Build for development
 
@@ -24,6 +19,8 @@ c6c3bfb538ce        binocarlos/noxy           "bash /run.sh"           21 second
 ```
 
 4. Run the command `./scripts/dev/ops.sh stop` to stop you development environment.
+
+5. Run the command `./scripts/dev/ops.sh clean` to remove Docker images.
 
 ## Build for production
 
@@ -46,6 +43,6 @@ c6c3bfb538ce        binocarlos/noxy           "bash /run.sh"           21 second
 paulwizviz/go-react-container   current                 273d6b7a1b46        5 minutes ago       9.07MB
 ```
 
-## Clean project
+### Clean project
 
-Run the command `./scripts/artefacts/build.sh clean`
+5. Run the command `./scripts/artefacts/build.sh clean`
