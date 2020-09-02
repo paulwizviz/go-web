@@ -1,90 +1,73 @@
 # Architecture
 
-This project has been architect to support you, as developers, create and package your web UI and RESTful interfaces into a single macOS, Linux and Windows app or a single Docker container.
+Your scaffold has been architected to help you, as a developer, to create a native macOS, Linux and Windows app or a Docker-based container.
 
-## Project layout
+Your built native app embads the following items:
 
-The layout of your scaffold is based on the [standard Go project layout][1].
+* Your UI resources (html, Javascripts, images, etc) in a byte code;
 
-Out-of-the-box, you will find the following folders and these are as follows:
+* A web (serving your UI) and a RESTful server.
+
+When you elect to build container-based app, it will generate Docker images with the native app embedded.
+
+## Scaffold folders
+
+Your scaffold has the following folders you should retain. 
+
+These folders are based on recommendations described in [standard Go project layout](https://github.com/golang-standards/project-layout).
 
 ### `./build`
 
-This folder includes artefacts to help you build development and production artefacts.
+This folder contains the following:
 
-* [./build/package/dev](../build/package/dev) folder includes Dockerfiles to create a container of the sample ReactJS UI found in this project and a container of Go based REST server to support development activities.
+* [./build/package/dev](../build/package/dev) folder includes Dockerfiles to build development apps;
 
-* [./build/package/artefacts](../build/package/artefacts) folder containers Dockerfiles to produce native macOS, Linux and Windows app or a Docker image for a containerisable version of your app.
+* [./build/package/artefacts](../build/package/artefacts) folder containers Dockerfiles to produce native macOS, Linux and Windows app or a Docker image;
 
-* [./build/package/go-rice.sh](../build/package/go-rice.sh) script to pre-generate a Go source file embedding the ReactJS artefacts in byte code form.
+* [./build/package/go-rice.sh](../build/package/go-rice.sh) script to pre-generate Go source files embedding the ReactJS artefacts in byte code form. DO NOT REMOVE THIS FILE.
 
-A folder named `native`, not version controlled, will be generated containing native apps for macOS, Linux and Windows platform.
+If you wish to extend the build process please to do it in this folder [./build/package](../build/package)
+
+This will folder will also create a folder named `native`, which is git ignored, when you generate native apps. You will find native apps for macOS, Linux and Windows.
 
 ### `./cmd`
 
-This folder includes source codes to create your app entrypoint (i.e. main). 
-
-These executables is based on the following Go frameworks [Cobra](https://github.com/spf13/cobra)
+This folder contains basic Go codes to manage the lifecycle (i.e. start and stop) of your build artefacts. It is based on the [Cobra framework](https://github.com/spf13/cobra). Extend the codes to meet your commandline requirement requirements (e.g. adding command line to interact with your running code).
 
 ### `./deployments`
 
-This folder contains two types of deployment scripts:
+This folder contains basic `docker-compose` files to support:
 
-1. To support local development activities, you will find the following [docker-compose.yaml](../deployments/docker-compose.yaml). This script will generate the following containers locally:
+* [./deployments/dev/docker-compose.yaml](./deployments/dev/docker-compose.yaml) development work.
 
-    1.1. An nginx-styled reverse proxy known as noxy based on this [implementation](https://github.com/binocarlos/noxy)
-
-    1.2. A react container built from this project see [./build/dev/react/Dockerfile](../build/dev/react/Dockerfile) with features for hot javascript loading.
-
-    1.3. A Go based RESTFul container built from this project see [./build/dev/rest/Dockerfile](../build/dev/rest/Dockerfile)
+* [./deployment/e2e/docker-compose.yaml](../deployment/e2e/docker-compose.yaml) container based end-to-end testing.
 
 ### `./internal`
 
-This folder container source codes to build an embedded webserver package and RESTFul endpoints. The codes are packaged as follows:
-
-* `server` containing codes for a RESTful and web servers;
-
-* `usermgmt` containing codes for user management handler.
-
-The name of this folder has a special impact on project scoping. Please refer to this [doc](https://blog.learngoprogramming.com/special-packages-and-directories-in-go-1d6295690a6b) for explanation before you modify it.
+This folder contains skeleton Go source codes for the body your native or container apps. Please retain the folder `internal/server` and the Go files amd follow the Go coding conventions to extend your Go code.
 
 ### `./web`
 
-This folder contains a demonstration RectJS sub project where you have all the necessary artefacts to create a web UI.
+This folder contains a skeleton RectJS codes found in the sub-folder `./web/reactjs`.
+
+If you wish to work with other Javascript UI framework create an appropriate subfolder. For example, `./web/vue` for Vue framework, etc.
 
 ### `./scripts`
 
-This folder containers operational scripts to enable you trigger build processes and to execute various deployment scenarios.
+This folder containers Bash scripts to trigger build processes and to execute various deployment scenarios. In your scaffold you will find the follow:
 
-## Development environment
+* [./scripts/artefacts](../scripts/artefacts) to trigger the build process for production native apps;
 
-This template provides a mini development environment to help you develop the UI element. During development, especially of the UI elements, you may not need to connect to an actual backend service but simply to mock APIs. A separate dev environment build script is provided so you can create mocks of backend. It is also setup to enable hot loading of, out-of-the-box, ReactJS code.
+* [./scripts/dev](../scripts/dev) to trigger the build process for apps configure for development activities;
 
-For examples of how you can mock backends for dev enviornment, please refer to the [dev build scripts](../build/package/dev/rest.dockerfile) and this [Go code](../internal/usersmgmt/handlers/authuser/authhandler.go) to get a sense of how you can mock RESTFul interfaces.
+* [./scripts/test](../scripts/test) to trigger test processes (unit and e2e).
 
-## Domain Driven Design
+## Development Environment
 
-The sample app, particularly the Go Rest aspects, demonstrates domain driven design in addition to a hexagonal style layout for you to draw inspirations. The implementation is based on a pattern as described in the following videos:
+Your scaffold contains a development environment based on [docker-compose.yaml](../deployments/docker-compose.yaml) found in deployment folder. The `docker-compose` generates the following containers:
 
-* [Building Hexagonal Microservices with Go - Part One](https://www.youtube.com/watch?v=rQnTtQZGpg8)
-* [Building Hexagonal Microservices with Go - Part Two](https://www.youtube.com/watch?v=xUYDkiPdfWs)
-* [Building Hexagonal Microservices with Go - Part Three](https://www.youtube.com/watch?v=QyBXz9SpPqE)
+* An nginx-styled reverse proxy container based on this Docker image [implementation](https://github.com/binocarlos/noxy);
 
-## Modifying/extending scaffold
+* A ReactJS container created from this [./build/dev/react/Dockerfile](../build/dev/react/Dockerfile) with code hot loading to enable you to modify your code and see changes immediately;
 
-* Keep the layout intact and if you need to extends try to follow the recommendations describe [here][1]. Most importantly, retain the folder `internal` for your Go codes that you are creating as part of your application offerings. If you wish to make your project codes externally available for others to `go get` create the folder `pkg` and place your codes there. Keep anything related to your final build artefacts under these two folders `internal` and or `pkg` only. If you are planning to build another component of a microservices architecture, the recommendation is to create it as a separate Go module under a different github or equivalent repository.
-
-* If you have specialise codes like GRPC protobufs or even non Go and non-web subprojects (Java, Python, etc), feel free to create one at the top level. Please use appropriate names (e.g. `java` for Java subprojects).
-
-* The recommendation is to use Docker as the basis to build your project. If you stick to this recommendation, all you need to do is to modify/add dockerfiles found in the [build/package][2] folder.
-
-* You will need to modify the module name in [go.mod](../go.mod) to one that suits your project. Please use appropriate naming conventions particularly if you plan to make your Go codes externally or `go get` visible.
-
-* You will need to modify the folder under the top level folder `cmd` to one that is appropriate for your project. Remember to change modify the build script [build/package][2] accordingly. All you need to do is to is to get `go build` to reference the folder `./cmd` and sub folder with containing the main function. For example `go build -o <target location> ./cmd/<folder to your main file>`
-
-* Replace the sample codes under the folder `internal` and `web` to one appropriate for your project. If you wish to build from the sample, keep and modify accordingly.
-
-* Modify the copyright notices appropriate for your project.
-
-[1]: https://github.com/golang-standards/project-layout
-[2]: ../build/package
+* A Go based RESTFul container created from this [./build/dev/rest/Dockerfile](../build/dev/rest/Dockerfile).
