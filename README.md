@@ -2,9 +2,11 @@
 
 # Overview
 
-This a template to help you scaffold a project to create macOS, Linux and Windows native app or Docker base app incorporating a Web-based frontend (e.g. ReactJS, Vue, etc) in a single package.
+This a template to help you scaffold a project for creating macOS, Linux and Windows native app or Docker base app incorporating a Web-based frontend (e.g. ReactJS, Vue, etc) with a web and RESTFul server. 
 
-This project is **NOT** a Go module or library where you would `go get` packages for inclusion into your project. Neither is it an npm module.
+To understand how the app is built please refer to this [doc](./docs/Build.md).
+
+**NOTE:** This project is **NOT** a Go module or library where you would `go get` packages for inclusion into your project. Neither is it an npm module.
 
 ## How do I scaffold a project from this template?
 
