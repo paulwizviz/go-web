@@ -41,12 +41,16 @@ function clean(){
     docker rmi -f $(docker images --filter "dangling=true" -q)
 }
 
+message="Usage: $0 [package | run | stop | clean ]"
+
+if [ "$#" -ne 1 ]; then
+    echo $message
+    exit 1
+fi
+
 case $COMMAND in
     "clean")
         clean
-        ;;
-    "node")
-        node
         ;;
     "package")
         package
@@ -58,6 +62,6 @@ case $COMMAND in
         stop
         ;;
     *)
-        echo "$0 [package | run | stop | clean ]"
+        echo $message
         ;;
 esac
