@@ -2,6 +2,20 @@
 
 You scaffold contains scripts to build native and/or container-based apps. The scripts to trigger build process are located in the [scripts folder](../scripts).
 
+## What happens when you build your project?
+
+When you build your project, this happens:
+
+1. Your web app, ReactJS in out-of-box scaffold, is reduced to a combination of html, Javascript and other resources, placed in a folder named public.
+
+2. A built script `./build/package/go-rice.sh` converts html, Javascript and resources into source code containing byte codes.
+
+3. Your Go code is complied into native executables (macOS, Linux and Windows) embedding web and REST server, and web artefacts.
+
+4. If you opt to do so, your Linux executable is package into a docker container. 
+
+**NOTE:** These steps occurs in Docker based built scripts (Please refer to `./build/package`).
+
 ## Build for development
 
 The scaffold provides a mini development environment to support your development effort. Follow these steps to build, run, stop and clean your environment.
