@@ -28,11 +28,5 @@ WORKDIR /opt
 COPY --from=npminstaller /opt/package-lock.json /opt/package-lock.json
 COPY --from=npminstaller /opt/package.json /opt/package.json
 COPY --from=npminstaller /opt/node_modules /opt/node_modules
-COPY ./web/reactjs/webpack /opt/webpack
-COPY ./web/reactjs/.babelrc /opt/.babelrc
-COPY ./web/reactjs/images /opt/images
-COPY ./web/reactjs/.eslintrc.json /opt/.eslintrc.json
-
-RUN npm install
 
 CMD ["npm","run","dev:run"]
