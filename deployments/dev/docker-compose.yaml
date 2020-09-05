@@ -26,6 +26,10 @@ services:
             - 3030:3030
         volumes:
             - ../../web/reactjs/src:/opt/src
+            - ../../web/reactjs/webpack:/opt/webpack
+            - ../../web/reactjs/.babelrc:/opt/.babelrc
+            - ../../web/reactjs/images:/opt/images
+            - ../..//web/reactjs/.eslintrc.json:/opt/.eslintrc.json
         networks:
             - goweb_dev_network
 
