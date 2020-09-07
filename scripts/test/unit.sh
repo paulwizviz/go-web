@@ -16,8 +16,8 @@
 
 COMMAND="$1"
 
-go_unit_image=hls_devkit/go_unit_image:current
-react_unit_image=hls_devkit/react_unit_image:current
+go_unit_image=paulwizviz/go_unit_image:current
+react_unit_image=paulwizviz/react_unit_image:current
 
 case $COMMAND in
     "go")
