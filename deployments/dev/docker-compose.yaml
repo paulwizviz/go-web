@@ -35,7 +35,7 @@ services:
 
     rest:
         image: ${REST_IMAGE_NAME}:${IMAGE_TAG}
-        command: ["/usr/local/bin/goreact","start","noui","-p","9000"]
+        command: ["/usr/local/bin/dev"]
         container_name: rest
         expose:
             - 9000
@@ -44,5 +44,6 @@ services:
         networks:
             - goweb_dev_network
 
+# Replace network name 
 networks:
     goweb_dev_network:

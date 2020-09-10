@@ -56,6 +56,7 @@ COPY --from=nodebuild /opt/public ./web
 COPY ./go.mod ./go.mod
 COPY ./go.sum ./go.sum
 
+# Replace appname {./cmd/goreact} with a name of the cmd path {./cmd/<your-app-name>}
 RUN go get github.com/GeertJohan/go.rice/rice && \
     ./build/go-rice.sh && \
     go mod download && \

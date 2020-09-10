@@ -15,6 +15,12 @@
 # limitations under the License.
 
 # Modify the following environment variables to suit your requirements
-export APP_IMAGE_NAME=paulwizviz/go-react-container
+
+export IMAGE_BASE_NAME=paulwizviz
+
+export APP_IMAGE_NAME=${IMAGE_BASE_NAME}/go-react-container
 export APP_IMAGE_TAG=current
 
+export REACT_IMAGE_NAME=${IMAGE_BASE_NAME}/goweb-dev-react
+export REST_IMAGE_NAME=${IMAGE_BASE_NAME}/goweb-dev-rest
+export IMAGE_TAG=dev

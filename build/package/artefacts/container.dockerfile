@@ -56,6 +56,7 @@ COPY --from=nodebuild /opt/public ./web
 COPY ./go.mod ./go.mod
 COPY ./go.sum ./go.sum
 
+# Replace app name {./cmd/goreact} here with name of your choice {./cmd/<your-choice>}
 RUN go get github.com/GeertJohan/go.rice/rice && \
     ./build/go-rice.sh && \
     go mod download && \
@@ -64,6 +65,8 @@ RUN go get github.com/GeertJohan/go.rice/rice && \
 # Pack linux artefact into scratch container
 FROM scratch
 
+# Replace app name {goreact} here with name of your choice
 COPY --from=gobuild /opt/build/package/container/goreact /goreact
 
+# Replace app name {goreact} here with name of your choice
 CMD ["/goreact"]

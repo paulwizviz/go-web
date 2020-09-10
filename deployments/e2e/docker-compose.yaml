@@ -2,29 +2,18 @@ version: '3.4'
 
 services:
 
+    # This is an example to support container based
+    # tesing. Replace this with a version appropriate
+    # for your project.
     goreact:
         image: ${APP_IMAGE_NAME}:${APP_IMAGE_TAG}
         container_name: goreact
-        command: ["/goreact","start","ui"]
+        command: ["/goreact"]
         ports:
             - 80:80
         networks:
             - goweb_e2e_network
 
-    # TODO: ADD database to mock your authentication server
-    # db:
-    #     image: ${DB_IMAGE_NAME}:${DB_IMAGE_TAG}
-    #     container_name: db
-    #     user: postgres
-    #     ports:
-    #         - 5432:5432
-    #     environment:
-    #         - POSTGRES_DB=goweb_db
-    #         - POSTGRES_PASSWORD=adminpw
-    #     working_dir: /opt
-    #     networks:
-    #         - goweb_e2e_network
-
-
+# Replace network name 
 networks:
     goweb_e2e_network:

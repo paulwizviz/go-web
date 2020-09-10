@@ -14,10 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-export REACT_IMAGE_NAME=paulwizviz/goweb-dev-react
-export REST_IMAGE_NAME=paulwizviz/goweb-dev-rest
-export IMAGE_TAG=dev
-export NODE_IMAGE_TAG=13.10.1
+. ./scripts/common.sh
 
 COMMAND="$1"
 

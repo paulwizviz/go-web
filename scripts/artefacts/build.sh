@@ -18,7 +18,7 @@
 
 COMMAND="$1"
 
-native_build_image=paulwizviz/goweb-native_build_image:current
+native_build_image=${IMAGE_BASE_NAME}/native_build_image:current
 
 function packageContainer() {
     docker build -f ./build/package/artefacts/container.dockerfile -t ${APP_IMAGE_NAME}:${APP_IMAGE_TAG} .
