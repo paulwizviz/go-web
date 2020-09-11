@@ -16,11 +16,11 @@
 
 # Modify the following environment variables to suit your requirements
 
-export IMAGE_BASE_NAME=paulwizviz
+export IMAGE_BASE_NAME=paulwizviz 
 
 export APP_IMAGE_NAME=${IMAGE_BASE_NAME}/go-react-container
 export APP_IMAGE_TAG=current
-export APP_NAME=goreact
+export APP_NAME=goreact # This should match the basename ./cmd/<youur-choice>, out-of-the-box this is call goreact
 
 export REACT_IMAGE_NAME=${IMAGE_BASE_NAME}/goweb-dev-react
 export REST_IMAGE_NAME=${IMAGE_BASE_NAME}/goweb-dev-rest

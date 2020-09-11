@@ -2,11 +2,7 @@
 
 # Overview
 
-This a template to help you scaffold a project for creating macOS, Linux and Windows native app or Docker base app incorporating a Web-based frontend (e.g. ReactJS, Vue, etc) with a web and RESTFul server. 
-
-To understand how the app is built please refer to this [doc](./docs/Build.md).
-
-**NOTE:** This project is **NOT** a Go module or library where you would `go get` packages for inclusion into your project. Neither is it an npm module.
+Use this template to scaffold a project for creating macOS, Linux and Windows native app or Docker base app incorporating a Web-based frontend (e.g. ReactJS, Vue, etc) with a web and RESTFul server.
 
 ## How do I scaffold a project from this template?
 
@@ -18,13 +14,13 @@ You'll get the following:
 
 * A ReactJS-based skeleton sub-project.
 
-* Go codes to create commandlines operation to configuration, startup sequence and network operations.
+* A layout based on [Standard Go Project Layout](https://github.com/golang-standards/project-layout)
 
-* Go based skeleton webserver and RESTful server.
+* A skeleton Go source code to generate webserver and RESTful server.
 
 * Docker based build scripts to help you create native (macOS, Linux and Windows) app or Docker image app.
 
-* A locally deployable development environment.
+* A locally deployable development environment to help you see the interactions between your web source code and Go RESTFul API
 
 ## Prerequisite
 
@@ -36,7 +32,7 @@ You should also install the following items to help you edit source codes:
 
 * Node
 
-NOTE: These toolkits are not use to build your projects.
+**NOTE:** These toolkits are not use to build your projects.
 
 ## How do I extend/modify my scaffold?
 
