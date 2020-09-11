@@ -1,14 +1,14 @@
 # Architecture
 
-Your scaffold has been architected to help you, as a developer, to create a native macOS, Linux and Windows app or a Docker-based container.
+Your scaffold has been architected to help you, as a developer, create a native macOS, Linux and Windows app or a Docker-based container.
 
-Your built native app embads the following items:
+## Customising the scaffold
 
-* Your UI resources (html, Javascripts, images, etc) in a byte code;
+1. Modify the Go module name in `go.mod` to suite your requirement; 
 
-* A web (serving your UI) and a RESTful server.
+2. Modify the folder name `./cmd/goreact` to one of your choice `./cmd/<youur-choice>`
 
-When you elect to build container-based app, it will generate Docker images with the native app embedded.
+3. Modify the content `./scripts/common.sh`
 
 ## Scaffold folders
 
@@ -20,7 +20,7 @@ These folders are based on recommendations described in [standard Go project lay
 
 This folder contains the following:
 
-* [./build/package/dev](../build/package/dev) folder includes Dockerfiles to build development apps;
+* [./build/package/dev](../build/package/dev) folder includes Dockerfiles to build artefacts to support your development effort;
 
 * [./build/package/artefacts](../build/package/artefacts) folder containers Dockerfiles to produce native macOS, Linux and Windows app or a Docker image;
 
@@ -32,7 +32,7 @@ This will folder will also create a folder named `native`, which is git ignored,
 
 ### `./cmd`
 
-This folder contains basic Go codes to manage the lifecycle (i.e. start and stop) of your build artefacts. It is based on the [Cobra framework](https://github.com/spf13/cobra). Extend the codes to meet your commandline requirement requirements (e.g. adding command line to interact with your running code).
+This folder contains basic Go codes to manage the lifecycle (i.e. start and stop) of your build artefacts. Extend the codes to meet your commandline requirement requirements (e.g. adding command line to interact with your running code).
 
 ### `./deployments`
 
@@ -44,7 +44,7 @@ This folder contains basic `docker-compose` files to support:
 
 ### `./internal`
 
-This folder contains skeleton Go source codes for the body your native or container apps. Please retain the folder `internal/server` and the Go files amd follow the Go coding conventions to extend your Go code.
+This folder contains skeleton Go source codes for the body your native or container apps. Please retain the folder `internal/server` and the Go files.
 
 ### `./web`
 
@@ -60,7 +60,9 @@ This folder containers Bash scripts to trigger build processes and to execute va
 
 * [./scripts/dev](../scripts/dev) to trigger the build process for apps configure for development activities;
 
-* [./scripts/test](../scripts/test) to trigger test processes (unit and e2e).
+* [./scripts/test](../scripts/test) to trigger test processes (unit and e2e);
+
+* `./common.sh` - modify the to suit your requirement. 
 
 ## Development Environment
 

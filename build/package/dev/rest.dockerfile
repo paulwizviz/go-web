@@ -14,15 +14,14 @@
 
 FROM golang:1.13.3
 
+ARG REST_SERVER_NAME
+
 WORKDIR /opt
 
 COPY ./cmd ./cmd
 COPY ./internal ./internal
-
 COPY ./go.mod ./go.mod
 COPY ./go.sum ./go.sum
 
-ENV DEV="dev"
-
 RUN go mod download && \
-    go build -o /usr/local/bin/goreact ./cmd/goreact
+    go build -o /usr/local/bin/$REST_SERVER_NAME ./cmd/$REST_SERVER_NAME

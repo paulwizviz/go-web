@@ -18,14 +18,14 @@
 
 COMMAND="$1"
 
-native_build_image=paulwizviz/goweb-native_build_image:current
+native_build_image=${IMAGE_BASE_NAME}/native_build_image:current
 
 function packageContainer() {
-    docker build -f ./build/package/artefacts/container.dockerfile -t ${APP_IMAGE_NAME}:${APP_IMAGE_TAG} .
+    docker build -f ./build/package/artefacts/container.dockerfile --build-arg APP_NAME=${APP_NAME} -t ${APP_IMAGE_NAME}:${APP_IMAGE_TAG} .
 }
 
 function packageNative(){
-    docker build -f ./build/package/artefacts/native.dockerfile -t ${native_build_image} .
+    docker build -f ./build/package/artefacts/native.dockerfile --build-arg APP_NAME=${APP_NAME} -t ${native_build_image} .
     cleanNative
     id=$(docker create ${native_build_image})
     CONTAINER_ID="${id:0:12}"
@@ -51,6 +51,13 @@ function cleanImages() {
     docker rmi -f $(docker images --filter "dangling=true" -q)
 }
 
+message="$0 clean | container | native "
+
+if [ "$#" -ne 1 ]; then
+    echo $message
+    exit 1
+fi
+
 case $COMMAND in
     "clean")
         cleanNative
@@ -63,6 +70,6 @@ case $COMMAND in
         packageNative
         ;;
     *)
-        echo "$0 [ clean | container | native ]"
+        echo $message
         ;;
 esac

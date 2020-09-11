@@ -14,16 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-export REACT_IMAGE_NAME=paulwizviz/goweb-dev-react
-export REST_IMAGE_NAME=paulwizviz/goweb-dev-rest
-export IMAGE_TAG=dev
-export NODE_IMAGE_TAG=13.10.1
+. ./scripts/common.sh
+
+export REST_SERVER_NAME=gorest
 
 COMMAND="$1"
 
-function package() {
+function build() {
     docker build -f ./build/package/dev/react.dockerfile -t ${REACT_IMAGE_NAME}:${IMAGE_TAG} .
-    docker build -f ./build/package/dev/rest.dockerfile -t ${REST_IMAGE_NAME}:${IMAGE_TAG} .
+    docker build -f ./build/package/dev/rest.dockerfile --build-arg REST_SERVER_NAME=${REST_SERVER_NAME} -t ${REST_IMAGE_NAME}:${IMAGE_TAG} .
 }
 
 function run() {
@@ -36,12 +35,13 @@ function stop(){
 
 function clean(){
     docker-compose -f ./deployments/dev/docker-compose.yaml down
+    docker rm -f $(docker ps -aq)
     docker rmi -f ${REACT_IMAGE_NAME}:${IMAGE_TAG}
     docker rmi -f ${REST_IMAGE_NAME}:${IMAGE_TAG}
     docker rmi -f $(docker images --filter "dangling=true" -q)
 }
 
-message="Usage: $0 [package | run | stop | clean ]"
+message="Usage: $0 build | run | stop | clean"
 
 if [ "$#" -ne 1 ]; then
     echo $message
@@ -49,11 +49,11 @@ if [ "$#" -ne 1 ]; then
 fi
 
 case $COMMAND in
+    "build")
+        build
+        ;;
     "clean")
         clean
-        ;;
-    "package")
-        package
         ;;
     "run")
         run

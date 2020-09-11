@@ -14,10 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+. ./scripts/common.sh
+
 COMMAND="$1"
 
-go_unit_image=paulwizviz/go_unit_image:current
-react_unit_image=paulwizviz/react_unit_image:current
+go_unit_image=${IMAGE_BASE_NAME}/go_unit_image:current
+react_unit_image=${IMAGE_BASE_NAME}/react_unit_image:current
 
 case $COMMAND in
     "go")

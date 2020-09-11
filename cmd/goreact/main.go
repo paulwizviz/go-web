@@ -15,9 +15,25 @@
 package main
 
 import (
-	"goweb/cmd/goreact/cli"
+	"flag"
+	"fmt"
+	"goweb/internal/server"
+	"log"
+	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 func main() {
-	cli.Execute()
+
+	portPtr := flag.Int("port", 80, "Default port: 80")
+	flag.Parse()
+
+	router := mux.NewRouter()
+
+	server.RESTRun(router)
+	server.RunWeb(router)
+	log.Printf("Starting with UI on port %v", *portPtr)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", *portPtr), router))
+
 }

@@ -18,9 +18,6 @@
 
 COMMAND="$1"
 
-export DB_IMAGE_NAME=postgres
-export DB_IMAGE_TAG=12
-
 function start(){
     docker-compose -f ./deployments/e2e/docker-compose.yaml up -d
 }
@@ -39,6 +36,13 @@ function clean(){
     docker rmi -f $(docker images --filter "dangling=true" -q)
 }
 
+message="$0 start | status | stop "
+
+if [ "$#" -ne 1 ]; then
+    echo $message
+    exit 1
+fi
+
 case $COMMAND in
     "start")
         start
@@ -49,10 +53,7 @@ case $COMMAND in
     "stop")
         stop
         ;;
-    "clean")
-        clean
-        ;;
     *)
-        echo "$0 [ start | stop | clean ]"
+        echo $message
         ;;
 esac

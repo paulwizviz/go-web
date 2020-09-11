@@ -14,7 +14,11 @@ When you build your project, this happens:
 
 4. If you opt to do so, your Linux executable is package into a docker container. 
 
-**NOTE:** These steps occurs in Docker based built scripts (Please refer to `./build/package`).
+**NOTE:** 
+
+* These steps occurs in Docker based built scripts (Please refer to `./build/package`).
+
+* Out-of-the-box, your built artefact is named `goreact` which is generated from `./cmd/goreact`.
 
 ## Build for development
 
@@ -22,7 +26,7 @@ The scaffold provides a mini development environment to support your development
 
 1. Open terminal and navigate to the root of your scaffold
 
-2. Run the command `./scripts/dev/ops.sh package` to build container images for react and rest
+2. Run the command `./scripts/dev/ops.sh build` to build container images for react and rest
 
 3. Run the command `./scripts/dev/ops.sh run` to start a development environment comprising of three docker containers: router, frontend and rest server (see eaxmple below)
 ```
