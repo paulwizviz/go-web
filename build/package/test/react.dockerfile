@@ -16,11 +16,11 @@ FROM node:13.10.1
 
 WORKDIR /opt
 
-COPY ./web/reactjs/package-lock.json /opt/package-lock.json
+COPY ./web/reactjs/dep.sh /opt/dep.sh
 COPY ./web/reactjs/package.json /opt/package.json
 COPY ./web/reactjs/webpack /opt/webpack
 COPY ./web/reactjs/.babelrc /opt/.babelrc
 COPY ./web/reactjs/images /opt/images
 COPY ./web/reactjs/src /opt/src
 
-RUN npm install && npm audit fix && npm test
+RUN ./dep.sh && npm test

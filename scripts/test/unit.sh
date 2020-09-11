@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+. ./scripts/common.sh
+
 COMMAND="$1"
 
 go_unit_image=${IMAGE_BASE_NAME}/go_unit_image:current
