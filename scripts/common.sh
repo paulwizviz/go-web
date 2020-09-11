@@ -20,6 +20,7 @@ export IMAGE_BASE_NAME=paulwizviz
 
 export APP_IMAGE_NAME=${IMAGE_BASE_NAME}/go-react-container
 export APP_IMAGE_TAG=current
+export APP_NAME=goreact
 
 export REACT_IMAGE_NAME=${IMAGE_BASE_NAME}/goweb-dev-react
 export REST_IMAGE_NAME=${IMAGE_BASE_NAME}/goweb-dev-rest

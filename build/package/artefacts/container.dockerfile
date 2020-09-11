@@ -44,7 +44,7 @@ RUN npm run build
 # Go builder then generates a version for linux platform.
 FROM golang:1.13.3 as gobuild
 
-WORKDIR /opt
+ARG APP_NAME
 
 WORKDIR /opt
 
@@ -60,13 +60,15 @@ COPY ./go.sum ./go.sum
 RUN go get github.com/GeertJohan/go.rice/rice && \
     ./build/go-rice.sh && \
     go mod download && \
-    env CGO_ENABLED=0 env GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o ./build/package/container/goreact ./cmd/goreact
+    env CGO_ENABLED=0 env GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o ./build/package/container/${APP_NAME} ./cmd/${APP_NAME}
 
 # Pack linux artefact into scratch container
 FROM scratch
 
-# Replace app name {goreact} here with name of your choice
-COPY --from=gobuild /opt/build/package/container/goreact /goreact
+ARG APP_NAME
 
 # Replace app name {goreact} here with name of your choice
-CMD ["/goreact"]
+COPY --from=gobuild /opt/build/package/container/${APP_NAME} /${APP_NAME}
+
+# Replace app name {goreact} here with name of your choice
+CMD ["/${APP_NAME}"]

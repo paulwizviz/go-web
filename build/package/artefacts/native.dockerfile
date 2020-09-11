@@ -46,8 +46,6 @@ FROM golang:1.13.3
 
 WORKDIR /opt
 
-WORKDIR /opt
-
 COPY ./cmd ./cmd
 COPY ./internal ./internal
 COPY ./build/package/go-rice.sh ./build/go-rice.sh
@@ -56,10 +54,11 @@ COPY --from=nodebuild /opt/public ./web
 COPY ./go.mod ./go.mod
 COPY ./go.sum ./go.sum
 
-# Replace appname {./cmd/goreact} with a name of the cmd path {./cmd/<your-app-name>}
+ARG APP_NAME
+
 RUN go get github.com/GeertJohan/go.rice/rice && \
     ./build/go-rice.sh && \
     go mod download && \
-    env GOOS=linux GOARCH=amd64 go build -o ./build/package/linux/goreact ./cmd/goreact && \
-    env GOOS=darwin GOARCH=amd64 go build -o ./build/package/macOS/goreact ./cmd/goreact && \
-    env GOOS=windows GOARCH=amd64 go build -o ./build/package/windows/goreact.exe ./cmd/goreact
+    env GOOS=linux GOARCH=amd64 go build -o ./build/package/linux/${APP_NAME} ./cmd/${APP_NAME} && \
+    env GOOS=darwin GOARCH=amd64 go build -o ./build/package/macOS/${APP_NAME} ./cmd/${APP_NAME} && \
+    env GOOS=windows GOARCH=amd64 go build -o ./build/package/windows/${APP_NAME}.exe ./cmd/${APP_NAME}
