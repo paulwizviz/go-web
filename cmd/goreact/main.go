@@ -24,24 +24,16 @@ import (
 	"github.com/gorilla/mux"
 )
 
-const defaultPort = 80
-const devPort = 9000
-
 func main() {
 
-	devPtr := flag.Bool("noui", false, "Run with no ui")
+	portPtr := flag.Int("port", 80, "Default port: 80")
+	flag.Parse()
 
 	router := mux.NewRouter()
 
-	if *devPtr == true {
-		server.RESTRun(router)
-		log.Printf("Starting REST server on port %v", devPort)
-		log.Fatal(http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", devPort), router))
-	} else {
-		server.RESTRun(router)
-		server.RunWeb(router)
-		log.Printf("Starting with UI on port %v", defaultPort)
-		log.Fatal(http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", defaultPort), router))
-	}
+	server.RESTRun(router)
+	server.RunWeb(router)
+	log.Printf("Starting with UI on port %v", *portPtr)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", *portPtr), router))
 
 }
