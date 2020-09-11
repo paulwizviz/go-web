@@ -35,7 +35,7 @@ services:
 
     rest:
         image: ${REST_IMAGE_NAME}:${IMAGE_TAG}
-        command: ["/usr/local/bin/dev"]
+        command: ["/usr/local/bin/${REST_SERVER_NAME}"]
         container_name: rest
         expose:
             - 9000
