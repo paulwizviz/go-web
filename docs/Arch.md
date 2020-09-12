@@ -2,19 +2,9 @@
 
 Your scaffold has been architected to help you, as a developer, create a native macOS, Linux and Windows app or a Docker-based container.
 
-## Customising the scaffold
-
-1. Modify the Go module name in `go.mod` to suite your requirement; 
-
-2. Modify the folder name `./cmd/goreact` to one of your choice `./cmd/<youur-choice>`
-
-3. Modify the content `./scripts/common.sh`
-
 ## Scaffold folders
 
-Your scaffold has the following folders you should retain. 
-
-These folders are based on recommendations described in [standard Go project layout](https://github.com/golang-standards/project-layout).
+Your scaffold include folders layout based on recommendations described in [standard Go project layout](https://github.com/golang-standards/project-layout).
 
 ### `./build`
 
@@ -28,11 +18,15 @@ This folder contains the following:
 
 If you wish to extend the build process please to do it in this folder [./build/package](../build/package)
 
-This will folder will also create a folder named `native`, which is git ignored, when you generate native apps. You will find native apps for macOS, Linux and Windows.
+This will folder will also create a folder named `native`, which is git ignored, when you generate native apps. You will find the generated native apps for macOS, Linux and Windows here.
 
 ### `./cmd`
 
-This folder contains basic Go codes to manage the lifecycle (i.e. start and stop) of your build artefacts. Extend the codes to meet your commandline requirement requirements (e.g. adding command line to interact with your running code).
+This folder contains basic Go codes to create cli commands, subcommands, arguments and flags to manage the lifecycle (start, stop, configure, etc) of your built artefacts.
+
+Any subfolders here with `main.go` are treated as the entry point of your built artefacts. Out-of-the-box `./cmd/goreact`, which you should customised to fit your requirement, serve as the entry point to the native app wrapping Web and a REST service in one package. 
+
+You will also find the artefact `./cmd/gorest` which will be use to generate a REST server to support you in the development phase. Keep this intact.
 
 ### `./deployments`
 
@@ -44,17 +38,17 @@ This folder contains basic `docker-compose` files to support:
 
 ### `./internal`
 
-This folder contains skeleton Go source codes for the body your native or container apps. Please retain the folder `internal/server` and the Go files.
+This folder contains skeleton Go source codes for the body your native or container apps. Please retain the folder `internal/server` and the Go files. It is needed to generate you web and REST servers.
 
 ### `./web`
 
 This folder contains a skeleton RectJS codes found in the sub-folder `./web/reactjs`.
 
-If you wish to work with other Javascript UI framework create an appropriate subfolder. For example, `./web/vue` for Vue framework, etc.
+If you wish to work with other Javascript UI framework create an appropriate subfolder. For example, `./web/vue` for Vue framework, etc. You will need to make changes in the built scripts in `./build/package`.
 
 ### `./scripts`
 
-This folder containers Bash scripts to trigger build processes and to execute various deployment scenarios. In your scaffold you will find the follow:
+This folder containers Bash scripts to trigger build processes and to execute various deployment scenarios. Out-of-the-box scaffold you will find the follow:
 
 * [./scripts/artefacts](../scripts/artefacts) to trigger the build process for production native apps;
 
@@ -72,4 +66,4 @@ Your scaffold contains a development environment based on [docker-compose.yaml](
 
 * A ReactJS container created from this [./build/dev/react/Dockerfile](../build/dev/react/Dockerfile) with code hot loading to enable you to modify your code and see changes immediately;
 
-* A Go based RESTFul container created from this [./build/dev/rest/Dockerfile](../build/dev/rest/Dockerfile).
+* A Go based REST container created from this [./build/dev/rest/Dockerfile](../build/dev/rest/Dockerfile).
