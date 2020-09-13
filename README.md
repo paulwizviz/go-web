@@ -24,11 +24,11 @@ You will get the following:
 
 * A ReactJS-based skeleton sub-project;
 
-* A skeleton Go source code to generate webserver and RESTful server;
+* A skeleton Go source code to generate webserver and REST server;
 
 * Docker based build scripts to help you create native (macOS, Linux and Windows) app or Docker image app.
 
-* A locally deployable development environment to help you see the interactions between your web source code and Go RESTFul API;
+* A locally deployable development environment to help you see the interactions between your web source code and Go REST API;
 
 * Docker-based testing framework.
 

@@ -10,8 +10,6 @@ Your scaffold include folders layout based on recommendations described in [stan
 
 This folder contains the following:
 
-* [./build/package/dev](../build/package/dev) folder includes Dockerfiles to build artefacts to support your development effort;
-
 * [./build/package/artefacts](../build/package/artefacts) folder containers Dockerfiles to produce native macOS, Linux and Windows app or a Docker image;
 
 * [./build/package/go-rice.sh](../build/package/go-rice.sh) script to pre-generate Go source files embedding the ReactJS artefacts in byte code form. DO NOT REMOVE THIS FILE.
@@ -56,7 +54,11 @@ This folder containers Bash scripts to trigger build processes and to execute va
 
 * [./scripts/test](../scripts/test) to trigger test processes (unit and e2e);
 
-* `./common.sh` - modify the to suit your requirement. 
+* `./common.sh` - central location for your to customise your built artefacts.
+
+### `./test`
+
+This folder contains minimum resources (dockerfiles and bash scripts) specifically to support your testing. You will find [scripts](../test/unit) to support ReactJS and Go unit test. When you plan to extend your test frameworks (smoke tests, end-to-end, etc), place your support resources (mocks, etc) here.
 
 ## Development Environment
 
