@@ -21,8 +21,7 @@ export REST_SERVER_NAME=gorest
 COMMAND="$1"
 
 function build() {
-    docker build -f ./build/package/dev/react.dockerfile -t ${REACT_IMAGE_NAME}:${IMAGE_TAG} .
-    docker build -f ./build/package/dev/rest.dockerfile --build-arg REST_SERVER_NAME=${REST_SERVER_NAME} -t ${REST_IMAGE_NAME}:${IMAGE_TAG} .
+    docker-compose -f ./deployments/dev/docker-compose.yaml build
 }
 
 function run() {
@@ -37,7 +36,6 @@ function clean(){
     docker-compose -f ./deployments/dev/docker-compose.yaml down
     docker rm -f $(docker ps -aq)
     docker rmi -f ${REACT_IMAGE_NAME}:${IMAGE_TAG}
-    docker rmi -f ${REST_IMAGE_NAME}:${IMAGE_TAG}
     docker rmi -f $(docker images --filter "dangling=true" -q)
 }
 

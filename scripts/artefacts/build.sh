@@ -21,11 +21,21 @@ COMMAND="$1"
 native_build_image=${IMAGE_BASE_NAME}/native_build_image:current
 
 function packageContainer() {
-    docker build -f ./build/package/artefacts/container.dockerfile --build-arg APP_NAME=${APP_NAME} -t ${APP_IMAGE_NAME}:${APP_IMAGE_TAG} .
+    docker build -f ./build/package/artefacts/container.dockerfile \
+            --build-arg APP_NAME=${APP_NAME} \
+            --build-arg NODE_VER=${NODE_VER} \
+            --build-arg GO_VER=${GO_VER} \
+            --build-arg WEB_FRAMEWORK=${WEB_FRAMEWORK} \
+            -t ${APP_IMAGE_NAME}:${APP_IMAGE_TAG} .
 }
 
 function packageNative(){
-    docker build -f ./build/package/artefacts/native.dockerfile --build-arg APP_NAME=${APP_NAME} -t ${native_build_image} .
+    docker build -f ./build/package/artefacts/native.dockerfile \
+                --build-arg APP_NAME=${APP_NAME} \
+                --build-arg NODE_VER=${NODE_VER} \
+                --build-arg GO_VER=${GO_VER} \
+                --build-arg WEB_FRAMEWORK=${WEB_FRAMEWORK} \
+                -t ${native_build_image} .
     cleanNative
     id=$(docker create ${native_build_image})
     CONTAINER_ID="${id:0:12}"
