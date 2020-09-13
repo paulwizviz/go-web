@@ -12,21 +12,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM node:13.10.1 as npminstaller
+ARG NODE_VER
+
+FROM node:${NODE_VER} as npminstall
 
 WORKDIR /opt
 
-COPY ./web/reactjs/package.json /opt/package.json
-COPY ./web/reactjs/dep.sh /opt/dep.sh
+ARG WEB_FRAMEWORK
 
-RUN /opt/dep.sh
+COPY ./web/${WEB_FRAMEWORK}/dep.sh ./dep.sh
+COPY ./web/${WEB_FRAMEWORK}/package.json ./package.json
 
-FROM node:13.10.1
+RUN ./dep.sh
+
+FROM node:${NODE_VER}
 
 WORKDIR /opt
 
-COPY --from=npminstaller /opt/package-lock.json /opt/package-lock.json
-COPY --from=npminstaller /opt/package.json /opt/package.json
-COPY --from=npminstaller /opt/node_modules /opt/node_modules
+ARG WEB_FRAMEWORK
 
-CMD ["npm","run","dev:run"]
+COPY --from=npminstall /opt/node_modules ./node_modules
+COPY --from=npminstall /opt/package-lock.json ./package-lock.json
+COPY --from=npminstall /opt/package.json /opt/package.json
+COPY ./web/${WEB_FRAMEWORK}/webpack /opt/webpack
+COPY ./web/${WEB_FRAMEWORK}/.babelrc /opt/.babelrc
+COPY ./web/${WEB_FRAMEWORK}/images /opt/images
+COPY ./web/${WEB_FRAMEWORK}/src /opt/src
+
+RUN npm test

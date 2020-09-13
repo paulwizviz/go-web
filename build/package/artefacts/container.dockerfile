@@ -15,26 +15,34 @@
 # node build phase
 # In this phase, we pull artefacts to build ReactJS webapp for
 # development
-FROM node:13.10.1 as npminstall
+
+ARG NODE_VER
+ARG GO_VER
+
+FROM node:${NODE_VER} as npminstall
 
 WORKDIR /opt
 
-COPY ./web/reactjs/dep.sh ./dep.sh
-COPY ./web/reactjs/package.json ./package.json
+ARG WEB_FRAMEWORK
+
+COPY ./web/${WEB_FRAMEWORK}/dep.sh ./dep.sh
+COPY ./web/${WEB_FRAMEWORK}/package.json ./package.json
 
 RUN ./dep.sh
 
-FROM node:13.10.1 as nodebuild
+FROM node:${NODE_VER} as nodebuild
 
 WORKDIR /opt
+
+ARG WEB_FRAMEWORK
 
 COPY --from=npminstall /opt/node_modules ./node_modules
 COPY --from=npminstall /opt/package-lock.json ./package-lock.json
 COPY --from=npminstall /opt/package.json /opt/package.json
-COPY ./web/reactjs/webpack /opt/webpack
-COPY ./web/reactjs/.babelrc /opt/.babelrc
-COPY ./web/reactjs/images /opt/images
-COPY ./web/reactjs/src /opt/src
+COPY ./web/${WEB_FRAMEWORK}/webpack /opt/webpack
+COPY ./web/${WEB_FRAMEWORK}/.babelrc /opt/.babelrc
+COPY ./web/${WEB_FRAMEWORK}/images /opt/images
+COPY ./web/${WEB_FRAMEWORK}/src /opt/src
 
 RUN npm run build
 
@@ -42,7 +50,7 @@ RUN npm run build
 # Utilising a go packaging tool github.com/GeertJohan/go.rice
 # the web artefacts is packaged into a file name rice-box.go.
 # Go builder then generates a version for linux platform.
-FROM golang:1.13.3 as gobuild
+FROM golang:${GO_VER} as gobuild
 
 ARG APP_NAME
 

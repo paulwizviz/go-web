@@ -1,7 +1,3 @@
-#!/bin/bash
-
-# Copyright 2020 Paul Sitoh
-# 
 # Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -14,7 +10,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Modify the following environment variables to suit your requirements
+## Modify the following environment variables to suit your requirements
 
 export IMAGE_BASE_NAME=paulwizviz 
 
@@ -25,3 +21,8 @@ export APP_NAME=goreact # This should match the basename ./cmd/<youur-choice>, o
 export REACT_IMAGE_NAME=${IMAGE_BASE_NAME}/goweb-dev-react
 export REST_IMAGE_NAME=${IMAGE_BASE_NAME}/goweb-dev-rest
 export IMAGE_TAG=dev
+
+export WEB_FRAMEWORK=reactjs
+
+export NODE_VER=13.10.1
+export GO_VER=1.13.3
