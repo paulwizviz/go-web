@@ -1,5 +1,4 @@
 // Change the module name to suit your project requirements
-
 module goweb
 
 go 1.13
