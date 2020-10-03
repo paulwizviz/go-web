@@ -21,15 +21,15 @@ export REST_SERVER_NAME=gorest
 COMMAND="$1"
 
 function build() {
-    docker-compose -f ./deployments/dev/docker-compose.yaml build
+    docker-compose -f ./deployments/dev/artefacts/docker-compose.yaml build
 }
 
 function run() {
-    docker-compose -f ./deployments/dev/docker-compose.yaml up -d
+    docker-compose -f ./deployments/dev/artefacts/docker-compose.yaml up -d
 }
 
 function stop(){
-    docker-compose -f ./deployments/dev/docker-compose.yaml down
+    docker-compose -f ./deployments/dev/artefacts/docker-compose.yaml down
 }
 
 function clean(){

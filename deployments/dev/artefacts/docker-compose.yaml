@@ -1,0 +1,61 @@
+version: '3.4'
+
+services:
+
+    router:
+        image: binocarlos/noxy
+        ports:
+            - 80:80
+        container_name: router
+        environment:
+            - NOXY_DEFAULT_HOST=react-artefacts
+            - NOXY_DEFAULT_PORT=3030
+            - NOXY_DEFAULT_WS=1
+            - NOXY_API_FRONT=/api
+            - NOXY_API_HOST=rest-artefacts
+            - NOXY_API_PORT=9000
+        networks:
+            - artefacts_dev_network
+
+    react-artefacts:
+        build:
+            context: ../../../
+            dockerfile: ./deployments/dev/artefacts/react.dockerfile
+            args: 
+                node_ver: ${NODE_VER}
+        image: ${REACT_IMAGE_NAME}:${IMAGE_TAG}
+        container_name: react-artefacts
+        expose:
+            - 3030
+        ports:
+            - 3030:3030
+        volumes:
+            - ../../../web/${WEB_FRAMEWORK}/src:/opt/src
+            - ../../../web/${WEB_FRAMEWORK}/webpack:/opt/webpack
+            - ../../../web/${WEB_FRAMEWORK}/.babelrc:/opt/.babelrc
+            - ../../../web/${WEB_FRAMEWORK}/images:/opt/images
+            - ../../../web/${WEB_FRAMEWORK}/.eslintrc.json:/opt/.eslintrc.json
+        networks:
+            - artefacts_dev_network
+
+    rest-artefacts:
+        image: golang:${GO_VER}
+        working_dir: /opt
+        command: ["./go-run.sh"]
+        container_name: rest-artefacts
+        expose:
+            - 9000
+        ports:
+            - 9000:9000
+        volumes: 
+            - ../../../cmd:/opt/cmd
+            - ../../../internal:/opt/internal
+            - ../../../go.mod:/opt/go.mod
+            - ../../../go.sum:/opt/go.sum
+            - ./go-run.sh:/opt/go-run.sh
+        networks:
+            - artefacts_dev_network
+
+# Replace network name 
+networks:
+    artefacts_dev_network:
