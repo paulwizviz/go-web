@@ -20,3 +20,14 @@ services:
         volumes:
             - ./gobuild.sh:/opt/gobuild.sh
             - ../../../build/native/artefacts:/opt/build/package
+
+    container:
+        build:
+            context: ../../../
+            dockerfile: ./build/package/artefacts/container.dockerfile
+            args:
+                NODE_VER: 13.10.1
+                GO_VER: 1.13.3
+                WEB_FRAMEWORK: reactjs
+                APP_NAME: goreact
+        image: ${APP_IMAGE_NAME}

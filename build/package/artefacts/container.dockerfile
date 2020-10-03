@@ -58,7 +58,7 @@ WORKDIR /opt
 
 COPY ./cmd ./cmd
 COPY ./internal ./internal
-COPY ./build/package/go-rice.sh ./build/go-rice.sh
+COPY ./build/package/artefacts/go-rice.sh ./build/go-rice.sh
 COPY --from=nodebuild /opt/public ./web
 
 COPY ./go.mod ./go.mod
@@ -77,6 +77,3 @@ ARG APP_NAME
 
 # Replace app name {goreact} here with name of your choice
 COPY --from=gobuild /opt/build/package/container/${APP_NAME} /${APP_NAME}
-
-# Replace app name {goreact} here with name of your choice
-CMD ["/${APP_NAME}"]
