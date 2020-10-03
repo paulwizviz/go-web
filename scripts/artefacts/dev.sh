@@ -14,9 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-. ./scripts/common.sh
-
 export REST_SERVER_NAME=gorest
+export REACT_IMAGE_NAME=paulwizviz/goweb-dev-react
+export IMAGE_TAG=dev
 
 COMMAND="$1"
 
