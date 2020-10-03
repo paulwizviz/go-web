@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-export REST_SERVER_NAME=gorest
+export REST_SERVER_NAME=goreact
 export REACT_IMAGE_NAME=paulwizviz/goweb-dev-react
 export IMAGE_TAG=dev
 
@@ -33,8 +33,7 @@ function stop(){
 }
 
 function clean(){
-    docker-compose -f ./deployments/dev/docker-compose.yaml down
-    docker rm -f $(docker ps -aq)
+    docker-compose -f ./deployments/dev/artefacts/docker-compose.yaml down
     docker rmi -f ${REACT_IMAGE_NAME}:${IMAGE_TAG}
     docker rmi -f $(docker images --filter "dangling=true" -q)
 }

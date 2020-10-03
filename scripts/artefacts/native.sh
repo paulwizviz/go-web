@@ -14,8 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-. ./scripts/common.sh
-
 COMMAND="$1"
 
 export NATIVE_BUILD_IMAGE=paulwizviz/native_build_image:current
