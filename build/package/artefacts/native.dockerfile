@@ -56,7 +56,7 @@ WORKDIR /opt
 
 COPY ./cmd ./cmd
 COPY ./internal ./internal
-COPY ./build/package/go-rice.sh ./build/go-rice.sh
+COPY ./build/package/artefacts/go-rice.sh ./build/go-rice.sh
 COPY --from=nodebuild /opt/public ./web
 
 COPY ./go.mod ./go.mod
@@ -64,9 +64,3 @@ COPY ./go.sum ./go.sum
 
 ARG APP_NAME
 
-RUN go get github.com/GeertJohan/go.rice/rice && \
-    ./build/go-rice.sh && \
-    go mod download && \
-    env GOOS=linux GOARCH=amd64 go build -o ./build/package/linux/${APP_NAME} ./cmd/${APP_NAME} && \
-    env GOOS=darwin GOARCH=amd64 go build -o ./build/package/macOS/${APP_NAME} ./cmd/${APP_NAME} && \
-    env GOOS=windows GOARCH=amd64 go build -o ./build/package/windows/${APP_NAME}.exe ./cmd/${APP_NAME}

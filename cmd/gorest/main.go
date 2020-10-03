@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"goweb/internal/server"
+	server "goweb/internal/artefactserv"
 	"log"
 	"net/http"
 

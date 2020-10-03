@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+
+    native:
+        build:
+            context: ../../../
+            dockerfile: ./build/package/artefacts/native.dockerfile
+            args:
+                NODE_VER: 13.10.1
+                GO_VER: 1.13.3
+                WEB_FRAMEWORK: reactjs
+                APP_NAME: goreact
+        image: ${NATIVE_BUILD_IMAGE}
+        container_name: ${NATIVE_BUILD_CONTAINER}
+        working_dir: /opt
+        command: ./gobuild.sh
+        environment:
+            - APP_NAME=goreact
+        volumes:
+            - ./gobuild.sh:/opt/gobuild.sh
+            - ../../../build/native/artefacts:/opt/build/package

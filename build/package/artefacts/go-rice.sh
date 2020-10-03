@@ -1,5 +1,5 @@
 #!/bin/bash
 
-pushd ./internal/server
+pushd ./internal/artefactserv
     rice embed-go
 popd
