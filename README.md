@@ -43,7 +43,7 @@ Please follow these steps:
 * STEP 1: At the top this page, click the green coloured button named `Use this template` and follow the instructions from Github;
 * STEP 2: Modify [go.mod](./go.mod);
 * STEP 3: Rename this folder [./cmd/goreat](./cmd/goreact) to one of your choice (`./cmd/<your-choice>`);
-* STEP 4: Modify the following scripts [./build/package/builder.yaml](./build/package/builder.yaml) and [./deployments/dev/docker-compose.yaml];
+* STEP 4: Modify the following scripts [./build/package/builder.yaml](./build/package/builder.yaml) and [./deployments/dev/docker-compose.yaml](./deployments/dev/docker-compose.yaml);
 * STEP 5: Extends the web code in [./web/reactjs](./web/reactjs);
 * STEP 6: Extend and add Go codes in `./cmd/<your-choice>` and [./internal](./internal);
 * STEP 7: Build your project, please refer to [build doc](./docs/Build.md);
