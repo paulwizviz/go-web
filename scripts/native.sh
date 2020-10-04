@@ -16,7 +16,7 @@
 
 COMMAND="$1"
 
-export NATIVE_BUILD_IMAGE=paulwizviz/native_build_image:current
+export NATIVE_BUILD_IMAGE=native_build_image:current
 export NATIVE_BUILD_CONTAINER=native_build_container
 
 function cleanBuildContainer(){

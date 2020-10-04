@@ -17,17 +17,27 @@
 COMMAND="$1"
 
 export APP_IMAGE_NAME=paulwizviz/goreact:current
+export APP_TEST_CONTAINER_NAME=test_container
 
 function build() {
     docker-compose -f ./build/package/builder.yaml build container
 }
 
 function clean() {
+    docker rm -f ${APP_TEST_CONTAINER_NAME}
     docker rmi -f ${APP_IMAGE_NAME}
     docker rmi -f $(docker images --filter "dangling=true" -q)
 }
 
-message="$0 build | clean "
+function run(){
+    docker-compose -f ./build/package/builder.yaml up -d container
+}
+
+function stop(){
+    docker rm -f $(docker ps -aqf "name=${APP_TEST_CONTAINER_NAME}")
+}
+
+message="$0 build | clean | run "
 
 if [ "$#" -ne 1 ]; then
     echo $message
@@ -40,6 +50,12 @@ case $COMMAND in
         ;;
     "clean")
         clean
+        ;;
+    "run")
+        run
+        ;;
+    "stop")
+        stop ${id}
         ;;
     *)
         echo $message

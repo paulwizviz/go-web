@@ -44,7 +44,7 @@ services:
         command: ["./go-run.sh"]
         container_name: rest-artefacts
         environment: 
-            - REST_SERVER_NAME=goreact
+            - REST_SERVER_NAME=goreact # This corresponds with ./cmd/goreact {modify this to meet your requirement}
         expose:
             - 9000
         ports:
