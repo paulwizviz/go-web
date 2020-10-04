@@ -2,7 +2,11 @@
 
 # Overview
 
-Use this template to scaffold a project for creating macOS, Linux and Windows native app or Docker base app incorporating a Web-based frontend (ReactJS, Vue, etc) with Go bases backend services (Web server, REST server and etc).
+This is a template to help developers scaffold a project for creating macOS, Linux and Windows native app or Docker base app incorporating a Web-based frontend (ReactJS, Vue, etc) with Go bases backend services (Web server, REST server and etc).
+
+What problem is this template meant to solve?
+
+Often Go developers are faced with a need to provide a user interface to support backend services. For Go developers that do not want spend time writing frontend codes, they would like to be able to just pick-up pre-developed user interfaces and just integrate as part of their Go project. Web based user interfaces are prevalent that could be reused. Hence, the purpose of this template is to help Go developers quickly provide a web based user interace for their deskop and container based project.
 
 ## Prerequisite
 
@@ -12,13 +16,13 @@ You will also need to install these artefacts:
 
 * [Go toolkit version 1.11 onwards](https://blog.golang.org/)
 
-* Node
+* Node (version depends on the web framework you are using)
 
 These are used to help you when you are editing codes in your scaffold. However, these are not to build your native and/or container apps.
 
 ## <a name="out-of-the-box">What do I get out-of-the-box when I create a scaffold</a>?
 
-You will get the following:
+When you derive a project directly from this template, you will get the following:
 
 * A layout based on [Standard Go Project Layout](https://github.com/golang-standards/project-layout);
 
@@ -28,30 +32,27 @@ You will get the following:
 
 * Docker based build scripts to help you create native (macOS, Linux and Windows) app or Docker image app.
 
-* A locally deployable development environment to help you see the interactions between your web source code and Go REST API;
+* A locally deployable development environment to help you see the interactions between your web source code and Go REST API (including hot code reloading whilst you develop);
 
 * Docker-based testing framework.
 
 ## How do I use this template?
 
-If you work with the [out-of-the-box](#out-of-the-box) artefacts, please follow these steps:
+Please follow these steps:
 
 * STEP 1: At the top this page, click the green coloured button named `Use this template` and follow the instructions from Github;
-
 * STEP 2: Modify [go.mod](./go.mod);
+* STEP 3: Rename this folder [./cmd/goreat](./cmd/goreact) to one of your choice (`./cmd/<your-choice>`);
+* STEP 4: Modify the following scripts [./build/package/builder.yaml](./build/package/builder.yaml) and [./deployments/dev/docker-compose.yaml];
+* STEP 5: Extends the web code in [./web/reactjs](./web/reactjs);
+* STEP 6: Extend and add Go codes in `./cmd/<your-choice>` and [./internal](./internal);
+* STEP 7: Build your project, please refer to [build doc](./docs/Build.md);
+* STEP 8: To see you built artefacts (native or container) apps in action, please refer to [running the app](./docs/Run.md) doc.
 
-* STEP 3: Rename this folder [./cmd/goreat] to one of your choice (e.g. `./cmd/<your-choice>`) and modify the content of this file [./scripts/common.sh](./scripts/common.sh);
+## Advance customisation?
 
-* STEP 4: Extends the web code in [./web/reactjs](./web/reactjs);
+Please consult these docs for further information:
 
-* STEP 5: Extend and add Go codes in `./cmd/<your-choice>` and [./internal](./internal);
-
-* STEP 6: Build your project, please refer to [build doc](./docs/Build.md);
-
-* STEP 7: To see you built artefacts (native or container) apps, please refer to [running the app](./docs/Run.md) doc.
-
-## How do I extend/modify my scaffold?
-
- You can modify the [out-of-the-box](out-of-the-box) artefacts (folders, bash scripts, Dockerfiles, docker-compose file, etc). Please consult [architecture](./docs/Arch.md) docs for further information.
-
- 
+* [Architecture doc](./docs/Arch.md);
+* [Build doc](./docs/Build.md);
+* [Run your app](./docs/Run.md)

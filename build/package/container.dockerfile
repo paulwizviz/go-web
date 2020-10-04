@@ -50,7 +50,9 @@ RUN npm run build
 # Utilising a go packaging tool github.com/GeertJohan/go.rice
 # the web artefacts is packaged into a file name rice-box.go.
 # Go builder then generates a version for linux platform.
-FROM golang:${GO_VER}
+FROM golang:${GO_VER} as gobuild
+
+ARG APP_NAME
 
 WORKDIR /opt
 
@@ -62,11 +64,18 @@ COPY --from=nodebuild /opt/public ./web
 COPY ./go.mod ./go.mod
 COPY ./go.sum ./go.sum
 
-ARG APP_NAME
-
+# Replace app name {./cmd/goreact} here with name of your choice {./cmd/<your-choice>}
 RUN go get github.com/GeertJohan/go.rice/rice && \
     ./build/go-rice.sh && \
     go mod download && \
-    env GOOS=linux GOARCH=amd64 go build -o ./build/package/linux/${APP_NAME} ./cmd/${APP_NAME} && \
-    env GOOS=darwin GOARCH=amd64 go build -o ./build/package/macOS/${APP_NAME} ./cmd/${APP_NAME} && \
-    env GOOS=windows GOARCH=amd64 go build -o ./build/package/windows/${APP_NAME}.exe ./cmd/${APP_NAME}
+    env CGO_ENABLED=0 env GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o ./build/package/container/${APP_NAME} ./cmd/${APP_NAME}
+
+# Pack linux artefact into scratch container
+FROM scratch
+
+ARG APP_NAME
+
+# Replace app name {goreact} here with name of your choice
+COPY --from=gobuild /opt/build/package/container/${APP_NAME} /${APP_NAME}
+
+# CMD /${APP_NAME} start ui

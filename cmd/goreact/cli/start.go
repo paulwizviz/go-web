@@ -12,12 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package cli
 
 import (
-	"goweb/cmd/goreact/cli"
+	"github.com/spf13/cobra"
 )
 
-func main() {
-	cli.Execute()
+var startCmd = &cobra.Command{
+	Use:   "start",
+	Short: "Activate riker by feature",
+	Long:  `Command to activate goweb to run with UI or no UI`,
+}
+
+func init() {
+	uiCmd := uiCmdBuilder.cli()
+	startCmd.AddCommand(uiCmd)
+	uiCmd.Flags().IntVarP(&uiCmdBuilder.port, "port", "p", 80, "startup default port 80")
+
+	noUICmd := noUICmdBuilder.cli()
+	startCmd.AddCommand(noUICmd)
+	noUICmd.Flags().IntVarP(&noUICmdBuilder.port, "port", "p", 8080, "startup default port 8080")
 }

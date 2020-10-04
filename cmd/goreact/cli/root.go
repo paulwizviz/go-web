@@ -12,12 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package cli
 
 import (
-	"goweb/cmd/goreact/cli"
+	"fmt"
+	"os"
+
+	"github.com/spf13/cobra"
 )
 
-func main() {
-	cli.Execute()
+var rootCmd = &cobra.Command{
+	Use:   "goreact",
+	Short: "goreact is a cli app",
+	Long:  `goreact provides a web-based UI front end`,
+}
+
+func init() {
+	rootCmd.AddCommand(startCmd)
+}
+
+// Execute is the cli entry point
+func Execute() {
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 }

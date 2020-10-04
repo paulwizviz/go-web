@@ -14,32 +14,32 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-. ./scripts/common.sh
-
-export REST_SERVER_NAME=gorest
-
 COMMAND="$1"
 
-function build() {
-    docker-compose -f ./deployments/dev/docker-compose.yaml build
+export NATIVE_BUILD_IMAGE=native_build_image:current
+export NATIVE_BUILD_CONTAINER=native_build_container
+
+function cleanBuildContainer(){
+    docker rm -f ${NATIVE_BUILD_CONTAINER}
 }
 
-function run() {
-    docker-compose -f ./deployments/dev/docker-compose.yaml up -d
+function cleanNative() {
+    if [ -d ./build/native ]; then
+        rm -rf ./build/native
+    fi
 }
 
-function stop(){
-    docker-compose -f ./deployments/dev/docker-compose.yaml down
-}
-
-function clean(){
-    docker-compose -f ./deployments/dev/docker-compose.yaml down
-    docker rm -f $(docker ps -aq)
-    docker rmi -f ${REACT_IMAGE_NAME}:${IMAGE_TAG}
+function cleanImages() {
+    docker rmi -f ${NATIVE_BUILD_IMAGE}
     docker rmi -f $(docker images --filter "dangling=true" -q)
 }
 
-message="Usage: $0 build | run | stop | clean"
+function build(){
+    docker-compose -f ./build/package/builder.yaml build native
+    docker-compose -f ./build/package/builder.yaml up native
+}
+
+message="$0 build | clean "
 
 if [ "$#" -ne 1 ]; then
     echo $message
@@ -51,13 +51,9 @@ case $COMMAND in
         build
         ;;
     "clean")
-        clean
-        ;;
-    "run")
-        run
-        ;;
-    "stop")
-        stop
+        cleanBuildContainer
+        cleanNative
+        cleanImages
         ;;
     *)
         echo $message

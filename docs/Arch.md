@@ -2,7 +2,7 @@
 
 Your scaffold has been architected to help you, as a developer, create a native macOS, Linux and Windows app or a Docker-based container.
 
-## Scaffold folders
+## Folders
 
 Your scaffold include folders layout based on recommendations described in [standard Go project layout](https://github.com/golang-standards/project-layout).
 
@@ -10,29 +10,28 @@ Your scaffold include folders layout based on recommendations described in [stan
 
 This folder contains the following:
 
-* [./build/package/artefacts](../build/package/artefacts) folder containers Dockerfiles to produce native macOS, Linux and Windows app or a Docker image;
-
+* [./build/package](../build/package) folder containers build scripts in the form of docker and docker-compose files to produce native macOS, Linux and Windows app or a Docker-based image;
 * [./build/package/go-rice.sh](../build/package/go-rice.sh) script to pre-generate Go source files embedding the ReactJS artefacts in byte code form. DO NOT REMOVE THIS FILE.
 
-If you wish to extend the build process please to do it in this folder [./build/package](../build/package)
+If you wish to extend the build process please to do it in this folder [./build/package](../build/package).
 
-This will folder will also create a folder named `native`, which is git ignored, when you generate native apps. You will find the generated native apps for macOS, Linux and Windows here.
+When you execute the build scripts you will find a generated folder call `./build/native`, where you find native versions of executables (macOS, Linux and Windows).
 
 ### `./cmd`
 
 This folder contains basic Go codes to create cli commands, subcommands, arguments and flags to manage the lifecycle (start, stop, configure, etc) of your built artefacts.
 
-Any subfolders here with `main.go` are treated as the entry point of your built artefacts. Out-of-the-box `./cmd/goreact`, which you should customised to fit your requirement, serve as the entry point to the native app wrapping Web and a REST service in one package. 
-
-You will also find the artefact `./cmd/gorest` which will be use to generate a REST server to support you in the development phase. Keep this intact.
+Any subfolders here with `main.go` are treated as the entry point of your built artefacts. Out-of-the-box `./cmd/goreact`, which you should rename to fit your requirement.
 
 ### `./deployments`
 
-This folder contains basic `docker-compose` files to support:
+This folder contains a [./deployments/dev](../deployments/dev) to support you development effort. Here you will find the following:
 
-* [./deployments/dev/docker-compose.yaml](./deployments/dev/docker-compose.yaml) development work.
+* [./deployments/dev/docker-compose.yaml](../deployments/dev/docker-compose.yaml) to create a local development environment (see content of development environment);
+* [./deployments/dev/react.dockerfile](../deployments/dev/react.dockerfile) to help `docker-compose.yaml` create your ui container;
+* [./deployments/dev/go-run.sh](../deployments/dev/go-run.sh) to help `docker-compose.yaml` create REST container.
 
-* [./deployment/e2e/docker-compose.yaml](../deployment/e2e/docker-compose.yaml) container based end-to-end testing.
+Create more folders to support your operations to deploy your build artefacts to an infrastructure/platform of your choice (e.g. Kubernetes, etc).
 
 ### `./internal`
 
@@ -48,24 +47,18 @@ If you wish to work with other Javascript UI framework create an appropriate sub
 
 This folder containers Bash scripts to trigger build processes and to execute various deployment scenarios. Out-of-the-box scaffold you will find the follow:
 
-* [./scripts/artefacts](../scripts/artefacts) to trigger the build process for production native apps;
-
-* [./scripts/dev](../scripts/dev) to trigger the build process for apps configure for development activities;
-
-* [./scripts/test](../scripts/test) to trigger test processes (unit and e2e);
-
-* `./common.sh` - central location for your to customise your built artefacts.
+* [./scripts/container.sh](../scripts/container.sh) to trigger the build process for docker-images;
+* [./scripts/dev.sh](../scripts/dev.sh) to trigger the build process for apps configure for development activities;
+* [./scripts/native.sh](../scripts/native.sh) to trigger build processes to generate container apps.
 
 ### `./test`
 
-This folder contains minimum resources (dockerfiles and bash scripts) specifically to support your testing. You will find [scripts](../test/unit) to support ReactJS and Go unit test. When you plan to extend your test frameworks (smoke tests, end-to-end, etc), place your support resources (mocks, etc) here.
+This folder contains minimum resources (dockerfiles and bash scripts) specifically to support your testing effort.
 
 ## Development Environment
 
 Your scaffold contains a development environment based on [docker-compose.yaml](../deployments/docker-compose.yaml) found in deployment folder. The `docker-compose` generates the following containers:
 
 * An nginx-styled reverse proxy container based on this Docker image [implementation](https://github.com/binocarlos/noxy);
-
-* A ReactJS container created from this [./build/dev/react/Dockerfile](../build/dev/react/Dockerfile) with code hot loading to enable you to modify your code and see changes immediately;
-
-* A Go based REST container created from this [./build/dev/rest/Dockerfile](../build/dev/rest/Dockerfile).
+* A ReactJS container with code hot loading to enable you to modify your code and see changes immediately;
+* A Go based REST container.

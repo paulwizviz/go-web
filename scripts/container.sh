@@ -14,29 +14,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-. ./scripts/common.sh
-
 COMMAND="$1"
 
-function start(){
-    docker-compose -f ./deployments/e2e/docker-compose.yaml up -d
+export APP_IMAGE_NAME=paulwizviz/goreact:current
+export APP_TEST_CONTAINER_NAME=test_container
+
+function build() {
+    docker-compose -f ./build/package/builder.yaml build container
 }
 
-function stop(){
-    docker-compose -f ./deployments/e2e/docker-compose.yaml down
-}
-
-function status(){
-    docker-compose -f ./deployments/e2e/docker-compose.yaml ps
-}
-
-function clean(){
-    stop
-    docker rmi -f ${APP_IMAGE_TAG}:${APP_IMAGE_TAG}
+function clean() {
+    docker rm -f ${APP_TEST_CONTAINER_NAME}
+    docker rmi -f ${APP_IMAGE_NAME}
     docker rmi -f $(docker images --filter "dangling=true" -q)
 }
 
-message="$0 start | status | stop "
+function run(){
+    docker-compose -f ./build/package/builder.yaml up -d container
+}
+
+function stop(){
+    docker rm -f $(docker ps -aqf "name=${APP_TEST_CONTAINER_NAME}")
+}
+
+message="$0 build | clean | run "
 
 if [ "$#" -ne 1 ]; then
     echo $message
@@ -44,14 +45,17 @@ if [ "$#" -ne 1 ]; then
 fi
 
 case $COMMAND in
-    "start")
-        start
+    "build")
+        build
         ;;
-    "status")
-        status
+    "clean")
+        clean
+        ;;
+    "run")
+        run
         ;;
     "stop")
-        stop
+        stop ${id}
         ;;
     *)
         echo $message
