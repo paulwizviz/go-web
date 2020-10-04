@@ -20,20 +20,16 @@ export IMAGE_TAG=dev
 
 COMMAND="$1"
 
-function build() {
-    docker-compose -f ./deployments/dev/artefacts/docker-compose.yaml build
-}
-
 function run() {
-    docker-compose -f ./deployments/dev/artefacts/docker-compose.yaml up -d
+    docker-compose -f ./deployments/dev/docker-compose.yaml up -d
 }
 
 function stop(){
-    docker-compose -f ./deployments/dev/artefacts/docker-compose.yaml down
+    docker-compose -f ./deployments/dev/docker-compose.yaml down
 }
 
 function clean(){
-    docker-compose -f ./deployments/dev/artefacts/docker-compose.yaml down
+    docker-compose -f ./deployments/dev/docker-compose.yaml down
     docker rmi -f ${REACT_IMAGE_NAME}:${IMAGE_TAG}
     docker rmi -f $(docker images --filter "dangling=true" -q)
 }
@@ -46,9 +42,6 @@ if [ "$#" -ne 1 ]; then
 fi
 
 case $COMMAND in
-    "build")
-        build
-        ;;
     "clean")
         clean
         ;;
