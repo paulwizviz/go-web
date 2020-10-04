@@ -26,3 +26,10 @@ To verify that you have built your container accordingly, follow these steps:
 3. To stop you app, execute the following command `./scripts/container.sh stop`.
 4. To clean up your workspace, `./scripts/container.sh clean`.
 
+## Automated test
+
+Follow these steps to activate test scripts
+
+1. Run the command `./scripts/test.sh unit`
+2. Extend test accordingly.
+
