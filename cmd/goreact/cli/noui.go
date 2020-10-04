@@ -19,7 +19,7 @@ import (
 	"log"
 	"net/http"
 
-	server "goweb/internal/artefactserv"
+	"goweb/internal/server"
 
 	"github.com/gorilla/mux"
 	"github.com/spf13/cobra"

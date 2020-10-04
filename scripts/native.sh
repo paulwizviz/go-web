@@ -16,15 +16,27 @@
 
 COMMAND="$1"
 
-export APP_IMAGE_NAME=paulwizviz/goreact:current
+export NATIVE_BUILD_IMAGE=paulwizviz/native_build_image:current
+export NATIVE_BUILD_CONTAINER=native_build_container
 
-function build() {
-    docker-compose -f ./build/package/artefacts/builder.yaml build
+function cleanBuildContainer(){
+    docker rm -f ${NATIVE_BUILD_CONTAINER}
 }
 
-function clean() {
-    docker rmi -f ${APP_IMAGE_NAME}
+function cleanNative() {
+    if [ -d ./build/native ]; then
+        rm -rf ./build/native
+    fi
+}
+
+function cleanImages() {
+    docker rmi -f ${NATIVE_BUILD_IMAGE}
     docker rmi -f $(docker images --filter "dangling=true" -q)
+}
+
+function build(){
+    docker-compose -f ./build/package/builder.yaml build native
+    docker-compose -f ./build/package/builder.yaml up native
 }
 
 message="$0 build | clean "
@@ -39,7 +51,9 @@ case $COMMAND in
         build
         ;;
     "clean")
-        clean
+        cleanBuildContainer
+        cleanNative
+        cleanImages
         ;;
     *)
         echo $message

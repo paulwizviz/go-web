@@ -4,8 +4,8 @@ services:
 
     native:
         build:
-            context: ../../../
-            dockerfile: ./build/package/artefacts/native.dockerfile
+            context: ../../
+            dockerfile: ./build/package/native.dockerfile
             args:
                 NODE_VER: 13.10.1
                 GO_VER: 1.13.3
@@ -19,12 +19,12 @@ services:
             - APP_NAME=goreact
         volumes:
             - ./gobuild.sh:/opt/gobuild.sh
-            - ../../../build/native/artefacts:/opt/build/package
+            - ../../build/native:/opt/build/package
 
     container:
         build:
-            context: ../../../
-            dockerfile: ./build/package/artefacts/container.dockerfile
+            context: ../../
+            dockerfile: ./build/package/container.dockerfile
             args:
                 NODE_VER: 13.10.1
                 GO_VER: 1.13.3
