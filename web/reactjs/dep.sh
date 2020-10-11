@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Dev dependencies
+npm install --save-dev @babel/runtime@7.0.0
 npm install --save-dev @babel/core
 npm install --save-dev @babel/plugin-proposal-class-properties
 npm install --save-dev @babel/plugin-proposal-export-default-from
@@ -24,8 +25,7 @@ npm install --save-dev webpack-dev-server
 npm install --save-dev webpack-merge
 
 # Depedencies
-npm install --save @material-ui/core
-npm install --save @material-ui/icons
+npm install --save @material-ui/core@3.8.3
 npm install --save axios
 npm install --save classnames
 npm install --save clsx
@@ -33,12 +33,7 @@ npm install --save history
 npm install --save prop-types
 npm install --save react
 npm install --save react-dom
-npm install --save react-redux
 npm install --save react-router-dom
-npm install --save redux
-npm install --save redux-logger
-npm install --save redux-promise-middleware
-npm install --save redux-thunk
 
 npm audit fix 
 npm audit
