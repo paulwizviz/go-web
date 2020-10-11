@@ -62,3 +62,7 @@ Your scaffold contains a development environment based on [docker-compose.yaml](
 * An nginx-styled reverse proxy container based on this Docker image [implementation](https://github.com/binocarlos/noxy);
 * A ReactJS container with code hot loading to enable you to modify your code and see changes immediately;
 * A Go based REST container.
+
+## Copyright
+
+Copyright 2020 [go-web] Authors

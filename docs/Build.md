@@ -50,3 +50,7 @@ paulwizviz/go-react-container   current                 273d6b7a1b46        5 mi
 ### Clean project
 
 4. Run the command `./scripts/native.sh clean` to remove any built native artefacts or `./scripts/container.sh clean` to remove build docker images.
+
+## Copyright
+
+Copyright 2020 [go-web] Authors

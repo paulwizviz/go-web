@@ -56,3 +56,7 @@ Please consult these docs for further information:
 * [Architecture doc](./docs/Arch.md);
 * [Build doc](./docs/Build.md);
 * [Run your app](./docs/Run.md)
+
+## Copyright
+
+Copyright 2020 [go-web] Authors
