@@ -33,3 +33,6 @@ Follow these steps to activate test scripts
 1. Run the command `./scripts/test.sh unit`
 2. Extend test accordingly.
 
+## Copyright
+
+Copyright 2020 [go-web] Authors
