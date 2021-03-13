@@ -15,12 +15,16 @@
 package server
 
 import (
+	"embed"
 	"net/http"
 
-	rice "github.com/GeertJohan/go.rice"
 	"github.com/gorilla/mux"
 )
 
+//go:embed reactjs/images
+//go:embed reactjs/*
+var web embed.FS
+
 func RunWeb(router *mux.Router) {
-	router.PathPrefix(URLRootPath).Handler(http.FileServer(rice.MustFindBox("../../web").HTTPBox()))
+	router.PathPrefix(URLRootPath).Handler(http.FileServer(http.FS(web)))
 }

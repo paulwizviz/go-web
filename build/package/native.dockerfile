@@ -52,12 +52,13 @@ RUN npm run build
 # Go builder then generates a version for linux platform.
 FROM golang:${GO_VER}
 
+ARG WEB_FRAMEWORK
+
 WORKDIR /opt
 
 COPY ./cmd ./cmd
 COPY ./internal ./internal
-COPY ./build/package/go-rice.sh ./build/go-rice.sh
-COPY --from=nodebuild /opt/public ./web
+COPY --from=nodebuild /opt/public ./internal/server/${WEB_FRAMEWORK}
 
 COPY ./go.mod ./go.mod
 COPY ./go.sum ./go.sum

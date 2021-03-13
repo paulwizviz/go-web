@@ -53,21 +53,19 @@ RUN npm run build
 FROM golang:${GO_VER} as gobuild
 
 ARG APP_NAME
+ARG WEB_FRAMEWORK
 
 WORKDIR /opt
 
 COPY ./cmd ./cmd
 COPY ./internal ./internal
-COPY ./build/package/go-rice.sh ./build/go-rice.sh
-COPY --from=nodebuild /opt/public ./web
+COPY --from=nodebuild /opt/public ./internal/server/${WEB_FRAMEWORK}
 
 COPY ./go.mod ./go.mod
 COPY ./go.sum ./go.sum
 
 # Replace app name {./cmd/goreact} here with name of your choice {./cmd/<your-choice>}
-RUN go get github.com/GeertJohan/go.rice/rice && \
-    ./build/go-rice.sh && \
-    go mod download && \
+RUN go mod download && \
     env CGO_ENABLED=0 env GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o ./build/package/container/${APP_NAME} ./cmd/${APP_NAME}
 
 # Pack linux artefact into scratch container
