@@ -22,7 +22,7 @@ services:
             dockerfile: ./build/package/native.dockerfile
             args:
                 NODE_VER: 13.10.1
-                GO_VER: 1.13.3
+                GO_VER: 1.16.2
                 WEB_FRAMEWORK: reactjs
                 APP_NAME: goreact # This corresponds with ./cmd/goreact {modify to meet your requirements}
         image: ${NATIVE_BUILD_IMAGE:-native_build_image:current}
@@ -41,7 +41,7 @@ services:
             dockerfile: ./build/package/container.dockerfile # Modify this to your requirements
             args:
                 NODE_VER: 13.10.1
-                GO_VER: 1.13.3
+                GO_VER: 1.16.2
                 WEB_FRAMEWORK: reactjs
                 APP_NAME: goreact # This corresponds with ./cmd/goreact {modify to meet your requirements}
         image: ${APP_IMAGE_NAME:-paulwizviz/goreact:current}

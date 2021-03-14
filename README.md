@@ -14,7 +14,7 @@ You **must** install Docker and Docker compose as these toolkits are needed to b
 
 You will also need to install these artefacts:
 
-* [Go toolkit version 1.11 onwards](https://blog.golang.org/)
+* [Go toolkit version 1.16 onward](https://blog.golang.org/)
 
 * Node (version depends on the web framework you are using)
 
