@@ -15,7 +15,7 @@
 package main
 
 import (
-	"goweb/cmd/goreact/cli"
+	"goweb/internal/goreact/cli"
 )
 
 func main() {

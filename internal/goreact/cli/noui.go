@@ -19,37 +19,36 @@ import (
 	"log"
 	"net/http"
 
-	"goweb/internal/server"
+	"goweb/internal/goreact/server"
 
 	"github.com/gorilla/mux"
 	"github.com/spf13/cobra"
 )
 
-type UICmdBuilder struct {
+type NoUICmdBuilder struct {
 	port    int
 	service func()
 }
 
-func (s *UICmdBuilder) cli() *cobra.Command {
+func (s *NoUICmdBuilder) cli() *cobra.Command {
 	return &cobra.Command{
-		Use:   "ui",
-		Short: "application with ui",
+		Use:   "noui",
+		Short: "application starts only with RESTFul endpoints",
 		Run: func(cmd *cobra.Command, args []string) {
 			s.service()
 		},
 	}
 }
 
-var uiCmdBuilder = UICmdBuilder{
-	port: 80,
+var noUICmdBuilder = NoUICmdBuilder{
+	port: 8080,
 }
 
 func init() {
-	uiCmdBuilder.service = func() {
+	noUICmdBuilder.service = func() {
 		router := mux.NewRouter()
 		server.RESTRun(router)
-		server.RunWeb(router)
-		log.Printf("Starting with UI on port %v", uiCmdBuilder.port)
-		log.Fatal(http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", uiCmdBuilder.port), router))
+		log.Printf("Starting with no UI on port %v", noUICmdBuilder.port)
+		log.Fatal(http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", noUICmdBuilder.port), router))
 	}
 }

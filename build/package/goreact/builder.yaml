@@ -18,32 +18,31 @@ services:
 
     native:
         build:
-            context: ../../
-            dockerfile: ./build/package/native.dockerfile
+            context: ../../../
+            dockerfile: ./build/package/goreact/native.dockerfile
             args:
                 NODE_VER: 13.10.1
                 GO_VER: 1.16.2
                 WEB_FRAMEWORK: reactjs
-                APP_NAME: goreact # This corresponds with ./cmd/goreact {modify to meet your requirements}
         image: ${NATIVE_BUILD_IMAGE:-native_build_image:current}
         container_name: ${NATIVE_BUILD_CONTAINER:-native_build_container}
         working_dir: /opt
-        command: ./gobuild.sh
+        command: ./native.sh
         environment:
             - APP_NAME=goreact # This corresponds with ./cmd/goreact {modify to meet your requirements}
         volumes:
-            - ./gobuild.sh:/opt/gobuild.sh
-            - ../../build/native:/opt/build/package
+            - ./native.sh:/opt/native.sh
+            - ../../../build/native/goreact:/opt/build/package
 
     container:
         build:
-            context: ../../
-            dockerfile: ./build/package/container.dockerfile # Modify this to your requirements
+            context: ../../../
+            dockerfile: ./build/package/goreact/container.dockerfile # Modify this to your requirements
             args:
                 NODE_VER: 13.10.1
                 GO_VER: 1.16.2
                 WEB_FRAMEWORK: reactjs
-                APP_NAME: goreact # This corresponds with ./cmd/goreact {modify to meet your requirements}
+                APP_NAME: goreact # An app name for your choice
         image: ${APP_IMAGE_NAME:-paulwizviz/goreact:current}
         container_name: ${APP_TEST_CONTAINER_NAME:-test_container}
         command: ./goreact start ui # Modify this accordingly

@@ -21,8 +21,9 @@ import (
 	"github.com/gorilla/mux"
 )
 
-//go:embed reactjs/images
-//go:embed reactjs/*
+//go:embed index.html
+//go:embed bundle.js
+//go:embed images
 var web embed.FS
 
 func RunWeb(router *mux.Router) {
