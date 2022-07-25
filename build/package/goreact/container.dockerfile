@@ -58,9 +58,9 @@ WORKDIR /opt
 
 COPY ./cmd ./cmd
 COPY ./internal ./internal
-COPY --from=nodebuild /opt/public/index.html ./internal/goreact/server/index.html
-COPY --from=nodebuild /opt/public/bundle.js ./internal/goreact/server/bundle.js
-COPY --from=nodebuild /opt/public/images ./internal/goreact/server/images
+COPY --from=nodebuild /opt/public/index.html ./cmd/goreact/internal/server/index.html
+COPY --from=nodebuild /opt/public/bundle.js ./cmd/goreact/internal/server/bundle.js
+COPY --from=nodebuild /opt/public/images ./cmd/goreact/internal/server/images
 
 COPY ./go.mod ./go.mod
 COPY ./go.sum ./go.sum

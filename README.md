@@ -40,7 +40,7 @@ Out-of-the-box there is a working example, demonstrating integration between Go 
 
 * `./build/package/goreact` -- containing a series of docker based build scripts
 * `./cmd/goreact` -- main package for app name `goreact`
-* `./internal/goreact` -- basic packages for cli and server-side code
+* `./cmd/goreact/internal` -- non-exportable packages (cli and server) to support and internal to `goreact`
 * `./scripts/goreact` -- a collection of BASH scripts to help you initiate build processes
 * `./web/reactjs` -- a collection of reactjs projects
 

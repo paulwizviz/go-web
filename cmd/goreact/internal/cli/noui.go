@@ -19,7 +19,7 @@ import (
 	"log"
 	"net/http"
 
-	"goweb/internal/goreact/server"
+	"goweb/cmd/goreact/internal/server"
 
 	"github.com/gorilla/mux"
 	"github.com/spf13/cobra"
