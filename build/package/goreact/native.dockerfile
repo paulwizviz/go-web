@@ -16,10 +16,10 @@
 # In this phase, we pull artefacts to build ReactJS webapp for
 # development
 
-ARG NODE_VER
-ARG GO_VER
+ARG NODE_VER=13.10.1
+ARG GO_VER=1.25
 
-FROM node:${NODE_VER} as npminstall
+FROM node:${NODE_VER} AS npminstall
 
 ARG WEB_FRAMEWORK
 
@@ -30,7 +30,7 @@ COPY ./web/${WEB_FRAMEWORK}/package.json ./package.json
 
 RUN ./dep.sh
 
-FROM node:${NODE_VER} as nodebuild
+FROM node:${NODE_VER} AS nodebuild
 
 ARG WEB_FRAMEWORK
 
